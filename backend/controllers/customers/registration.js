@@ -1,23 +1,21 @@
+const CustomerModel = require("../../models/customer/CustomerModel");
+const createToken = require("../../utils/createToken")
 
-const CustomerModel = require("../../models/customer/CustomerModel")
 
-const customerRegistration = async (req , res)=>{
+const customerRegistration = async (req, res) => {
 
-    const {name , last_name ,phoneNumber} = req.body
+  const { name, last_name, phone_number } = req.body;
 
-    try {
-        
-       const newCustomer = new CustomerModel({name , last_name ,phoneNumber})
-       await newCustomer.save()
+  try {
+    const newCustomer = new CustomerModel({ name, last_name, phone_number });
+    await newCustomer.save();
 
-       res.status(200).json({
-        message:"ثبت‌نام شما با موفقیت انجام شد"
-       })
+    res.status(200).json({
+      message: "ثبت‌نام شما با موفقیت انجام شد",
+    });
+  } catch (error) {
+    console.error("error:", error.message);
+  }
+};
 
-    } catch (error) {
-        console.error('error:',error.message)
-    }
-
-}
-
-module.exports = {customerRegistration}
+module.exports = { customerRegistration };
