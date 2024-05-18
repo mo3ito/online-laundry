@@ -2,11 +2,10 @@ const CustomersModel = require("../../models/customer/CustomerModel");
 const CustomersAwaitingValidation = require("../../models/customer/validatePhoneNumbersModel");
 const createToken = require("../../utils/createToken");
 require("dotenv").config();
-const bcrypt = require("bcrypt");
 const generateRandomCode = require("../../utils/generateRandomCode");
 const sendSMS = require("../../utils/melipayamak");
 
-CustomersAwaitingValidation;
+
 
 const validationCustomers = async (req, res) => {
   const { phone_number } = req.body;
@@ -57,6 +56,7 @@ const validationCustomers = async (req, res) => {
   }
 };
 
+
 const checkRegister = async (req, res) => {
   const { code_number } = req.body;
 
@@ -80,8 +80,6 @@ const checkRegister = async (req, res) => {
 };
 
 
-
-
 const customerRegistration = async (req, res) => {
   const { phone_number, name, last_name } = req.body;
 
@@ -100,7 +98,7 @@ const customerRegistration = async (req, res) => {
       phone_number,
     };
 
-    const token = await createToken(customerInfos)
+    const token = await createToken(customerInfos);
 
     const newCustomer = new CustomersModel(customerInfos);
     await newCustomer.save();
@@ -108,7 +106,7 @@ const customerRegistration = async (req, res) => {
     customer.is_register = true;
     await customer.save();
 
-    res.status(200).json({ customerInfos , token });
+    res.status(200).json({ customerInfos, token });
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -116,6 +114,5 @@ const customerRegistration = async (req, res) => {
     });
   }
 };
-
 
 module.exports = { customerRegistration, validationCustomers, checkRegister };
