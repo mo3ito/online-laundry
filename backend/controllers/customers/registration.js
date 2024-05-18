@@ -5,8 +5,6 @@ require("dotenv").config();
 const generateRandomCode = require("../../utils/generateRandomCode");
 const sendSMS = require("../../utils/melipayamak");
 
-
-
 const validationCustomers = async (req, res) => {
   const { phone_number } = req.body;
 
@@ -56,7 +54,6 @@ const validationCustomers = async (req, res) => {
   }
 };
 
-
 const checkRegister = async (req, res) => {
   const { code_number } = req.body;
 
@@ -65,6 +62,7 @@ const checkRegister = async (req, res) => {
 
     if (customer) {
       const { code_number, ...customerWithoutCodeNumber } = customer.toObject();
+      await CustomersAwaitingValidation.updateOne({ _id: customer._id }, { $unset: { code_number: "" } });
       return res.status(200).json(customerWithoutCodeNumber);
     } else {
       return res.status(200).json({
@@ -85,10 +83,17 @@ const customerRegistration = async (req, res) => {
 
   try {
     let customer = await CustomersAwaitingValidation.findOne({ phone_number });
+    let isCustomerRegisterBefore = await CustomersModel.findOne({ phone_number })
 
     if (!customer) {
       return res.status(400).json({
         message: "مشتری با این مشخصات یافت نشد",
+      });
+    }
+
+    if (isCustomerRegisterBefore) {
+      return res.status(400).json({
+        message: "این مشتری قبلا ثبت‌نام کرده است",
       });
     }
 
