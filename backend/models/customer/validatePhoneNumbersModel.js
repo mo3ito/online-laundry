@@ -10,7 +10,7 @@ const ValidatePhoneNumberSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  codeNumber: {
+  code_number: {
     type: String,
     required: true,
   },

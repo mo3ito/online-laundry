@@ -19,14 +19,14 @@ const validationCustomers = async (req, res) => {
     const conditionCustomer = {
       phone_number,
       is_register: customerRecord ? customerRecord.is_register : false,
-      codeNumber: randomCode
+      code_number: randomCode
     };
 
     if (!customerRecord) {
       customerRecord = new ValidatePhoneNumberCustomers(conditionCustomer);
     } else {
       customerRecord.is_register = conditionCustomer.is_register;
-      customerRecord.codeNumber = conditionCustomer.codeNumber;
+      customerRecord.code_number = conditionCustomer.code_number;
     }
 
     await customerRecord.save();
@@ -53,15 +53,36 @@ const validationCustomers = async (req, res) => {
 };
 
 
+const checkRegister = async (req, res) => {
+  const { code_number } = req.body;
+
+  try {
+    const customer = await ValidatePhoneNumberCustomers.findOne({ code_number });
+
+    if (customer) {
+      const { code_number, ...customerWithoutCodeNumber } = customer.toObject();
+      return res.status(200).json(customerWithoutCodeNumber);
+    } else {
+      return res.status(200).json({
+      "compare_code" : false
+      });
+    }
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد"
+    });
+  }
+};
+
+
+
 const customerRegistration = async (req, res) => {
-  const { phone_number } = req.body;
+  const { phone_number , name , last_name } = req.body;
 
   try {
 
-
-
     const phoneNumber = await CustomersModel.findOne({phone_number})
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash("password", salt.toString());
 
@@ -80,4 +101,4 @@ const customerRegistration = async (req, res) => {
   }
 };
 
-module.exports = { customerRegistration , validationCustomers };
+module.exports = { customerRegistration , validationCustomers , checkRegister };
