@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const ValidatePhoneNumberSchema = new Schema({
+const CustomersAwaitingValidationSchema = new Schema({
   phone_number: {
     type: String,
     required: true,
@@ -16,9 +16,9 @@ const ValidatePhoneNumberSchema = new Schema({
   },
 });
 
-const ValidatePhonenumberCustomers = mongoose.model(
-  "validate-phone-numbers",
-  ValidatePhoneNumberSchema
+const CustomersAwaitingValidation = mongoose.model(
+  "customer-awaiting-validation",
+  CustomersAwaitingValidationSchema
 );
 
-module.exports = ValidatePhonenumberCustomers;
+module.exports = CustomersAwaitingValidation;
