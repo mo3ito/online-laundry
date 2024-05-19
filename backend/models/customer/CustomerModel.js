@@ -1,6 +1,24 @@
 const mongoose = require("mongoose")
 const {Schema} = mongoose;
 
+
+const OrderSchema = new Schema({
+    id: {
+        type: String,
+        required: true,
+    },
+    type_of_clothing: {
+        type: String,
+        required: true,
+    },
+    number: {
+        type: String,
+        required: true,
+    }
+});
+
+
+
 const CustomersSchema = new Schema({
     name: {
         type: String,
@@ -13,6 +31,11 @@ const CustomersSchema = new Schema({
     phone_number: {
         type: String,
         required: true,
+    },
+    orders:{
+        type: [OrderSchema],
+        default: []
+
     },
     created_at: {
         type: Date,
