@@ -9,3 +9,18 @@
     src: url("../public/fonts/IRANSans/IRANSans_Medium.ttf");
   }
 }
+@layer components{
+  .title-header {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  .title-header::before,
+  .title-header::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #a1a1aa; 
+    
+  }
+}
