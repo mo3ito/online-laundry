@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link"
 
 export default function Header() {
   return (
@@ -13,8 +14,8 @@ export default function Header() {
         </div>
     </div>   
     <div className="text-white">
-        <button className="bg-sky-500 px-2 py-2 rounded-md ml-2">ثبت سفارش</button>
-        <button className="bg-sky-500 px-2 py-2 rounded-md">دریافت اپلیکیشن</button>
+        <Link href="/application" className="bg-sky-500 px-2 py-2 rounded-md ml-2">ثبت سفارش / ثبت‌نام</Link>
+        <button  className="bg-sky-500 px-2 py-2 rounded-md">دریافت اپلیکیشن</button>
         </div>
         </div>
      <nav>  
