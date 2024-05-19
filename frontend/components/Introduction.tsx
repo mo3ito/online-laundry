@@ -4,7 +4,7 @@ export default function Introduction() {
   return (
     <div className="mt-10 mb-20">
       <Headline title=" خشکشویی آنلاین مسیتو پاک" />
-      <div className=" container mx-auto px-6 w-full flex text-zinc-600">
+      <div className=" container mx-auto px-6 w-full flex">
         <img
           src="/images/washing-machine.jpg"
           alt="washing machine"

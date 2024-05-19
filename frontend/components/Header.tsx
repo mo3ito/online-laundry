@@ -13,16 +13,16 @@ export default function Header() {
         </div>
     </div>   
     <div className="text-white">
-        <button className="bg-sky-600 px-2 py-2 rounded-md ml-2">ثبت سفارش</button>
-        <button className="bg-sky-600 px-2 py-2 rounded-md">دریافت اپلیکیشن</button>
+        <button className="bg-sky-500 px-2 py-2 rounded-md ml-2">ثبت سفارش</button>
+        <button className="bg-sky-500 px-2 py-2 rounded-md">دریافت اپلیکیشن</button>
         </div>
         </div>
      <nav>  
      <ul className="bg-gray-500 w-full h-16 flex items-center justify-between rounded-md">
-        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white transition-all delay-75  ease-out ">خانه</li>
-        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white transition-all delay-75  ease-out">خدمات خشکشویی</li>
-        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white transition-all delay-75  ease-out">قیمت خشکشویی</li>
-        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white transition-all delay-75  ease-out">تماس با ما</li>
+        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white  ">خانه</li>
+        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">خدمات خشکشویی</li>
+        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">قیمت خشکشویی</li>
+        <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">تماس با ما</li>
     </ul>
     </nav>    
         </div>

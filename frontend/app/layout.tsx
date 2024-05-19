@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl" lang="en">
-      <body className="bg-slate-100">
+      <body className="bg-slate-100 text-zinc-600">
         <Header />
         <main>{children}</main>
       </body>
