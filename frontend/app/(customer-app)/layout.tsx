@@ -13,9 +13,8 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl" lang="en">
-      <body className="bg-slate-100 text-zinc-600 container mx-auto">
+      <body className="bg-slate-100 text-zinc-600 container mx-auto  ">
         <main>{children}</main>
-        <p>ffg</p>
       </body>
     </html>
   );
