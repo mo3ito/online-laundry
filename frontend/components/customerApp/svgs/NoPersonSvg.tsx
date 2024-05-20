@@ -3,7 +3,7 @@ import React from "react";
 export default function NoPersonSvg() {
   return (
     <svg
-    className="size-24"
+    className="size-20 "
       width="256"
       height="256"
       viewBox="0 0 256 256"

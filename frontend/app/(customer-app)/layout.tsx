@@ -14,9 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl" >
-      <body className="bg-slate-100 text-zinc-600 container mx-auto ">
+      <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <Header/>
-        <main className=" w-full ">{children}</main>
+        <main className=" w-full h-screen">{children}</main>
+
+
       </body>
     </html>
   );
