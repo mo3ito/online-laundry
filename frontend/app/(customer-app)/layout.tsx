@@ -14,6 +14,16 @@ export default function RootLayout({
   return (
     <html dir="rtl" lang="en">
       <body className="bg-slate-100 text-zinc-600 container mx-auto  ">
+      <div className=" w-full flex items-center justify-between mb-3">
+     <div className="flex items-center gap-x-2 ">
+        <img src="/images/tshirt_2887535.png" className=" w-12 h-12" alt="T-shirt icon" />
+        <div>
+            <h1 className="font-bold text-xl text-sky-600">مسیتو پاک</h1>
+            <p className="text-sm">خشکشویی آنلاین</p>
+        </div>
+    </div>   
+
+        </div>
         <main>{children}</main>
       </body>
     </html>
