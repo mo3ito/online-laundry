@@ -5,7 +5,7 @@ type MenuItemProps = {
 
 export default function MenuItem({ srcImage, imageCaption }: MenuItemProps) {
   return (
-    <li className="size-48  bg-sky-300 p-2 rounded-xl cursor-pointer">
+    <li className="size-48  bg-sky-300 p-2 mb-12 rounded-xl cursor-pointer">
       <figure className="size-full ">
         <img
           src={srcImage}
