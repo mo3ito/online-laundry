@@ -2,7 +2,7 @@ import React from "react";
 
 export default function BottomMenu() {
   return (
-    <div className="  h-20 bg-sky-500 border-t shadow-xl   sticky bottom-0 flex items-center justify-between px-8 z-50">
+    <div className="  h-20 bg-sky-500 border-t sticky bottom-0 flex items-center justify-between px-8 z-50 mx-auto border border-sky-500  shadow-xl sm:w-5/6 md:w-5/6 lg:w-4/6 ">
       <button className="flex items-center flex-col justify-center">
         <svg
           className="size-8 fill-white"

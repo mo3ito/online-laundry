@@ -3,6 +3,7 @@ import "@neshan-maps-platform/mapbox-gl-react/dist/style.css";
 import nmp_mapboxgl from '@neshan-maps-platform/mapbox-gl';
 
 export default function NeshanMap() {
+
   return (
     <MapComponent
       options={{
@@ -12,8 +13,6 @@ export default function NeshanMap() {
         zoom:12,
         traffic:true,
         poi: true,
-        
-        
       }}
       
     />
