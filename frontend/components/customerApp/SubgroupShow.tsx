@@ -1,98 +1,75 @@
-import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import SwiperMenu from "./swiper/SwiperMenu";
 
 export default function SubgroupShow() {
   return (
-    <div className="w-full h-44  px-8 flex items-center justify-center bg-white">
-      <Swiper
-        slidesPerView={5}
-        spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
-        className="mySwiper h-40 "
-      >
-        <SwiperSlide className="size-40 rounded-lg ">
-          <div className="size-full flex items-center justify-center flex-col ">
-            <figure className="p-2 size-10/12 bg-sky-200 rounded-xl -translate-y-3 cursor-pointer">
-              <img
-                className="size-full rounded-xl"
-                src="/images/washing-machine.jpg"
-                alt="Washing Machine"
-              />
-              <figcaption className="text-center mt-3">زنانه</figcaption>
-            </figure>
-          </div>
-        </SwiperSlide>
+    <div>
+      <header className="sticky top-0 bg-slate-100  z-10">
+        <SwiperMenu />
+        <h1 className="font-bold text-center py-1">مردانه</h1>
+      </header>
+      <main className="px-8  ">
+        <section>
+        <ul className="w-full  ">
+        <li  className="w-full h-32 bg-white flex items-center justify-between px-4 mb-4 rounded-xl shadow-xl">
+                <article className="text-center">
+                  <h2>کت و شلوار مردانه</h2>
+                  <p>(دست)</p>
+                  <p>110000 - 190000</p>
+                </article>
+                <img
+                  className="size-32 rounded-xl p-2"
+                  src="/images/washing-machine.jpg"
+                  alt="Washing Machine"
+                />
+              </li>
 
-        <SwiperSlide className="size-40 rounded-lg ">
-          <div className="size-full flex items-center justify-center flex-col ">
-            <figure className="p-2 size-10/12 bg-sky-200 rounded-xl -translate-y-3 cursor-pointer">
-              <img
-                className="size-full rounded-xl"
-                src="/images/washing-machine.jpg"
-                alt="Washing Machine"
-              />
-              <figcaption className="text-center mt-3">زنانه</figcaption>
-            </figure>
-          </div>
-        </SwiperSlide>
+              <li  className="w-full h-32 bg-white flex items-center justify-between px-4 mb-4 rounded-xl shadow-xl">
+                <article className="text-center">
+                  <h2>کت مردانه</h2>
+                  <p>(عدد)</p>
+                  <p>110000 - 190000</p>
+                </article>
+                <img
+                  className="size-32 rounded-xl p-2"
+                  src="/images/washing-machine.jpg"
+                  alt="Washing Machine"
+                />
+              </li>
 
-        <SwiperSlide className="size-40 rounded-lg ">
-          <div className="size-full flex items-center justify-center flex-col ">
-            <figure className="p-2 size-10/12 bg-sky-200 rounded-xl -translate-y-3 cursor-pointer">
-              <img
-                className="size-full rounded-xl"
-                src="/images/washing-machine.jpg"
-                alt="Washing Machine"
-              />
-              <figcaption className="text-center mt-3">زنانه</figcaption>
-            </figure>
-          </div>
-        </SwiperSlide>
+              <li  className="w-full h-32 bg-white flex items-center justify-between px-4 mb-4 rounded-xl shadow-xl">
+                <article className="text-center">
+                  <h2>کت و شلوار مردانه</h2>
+                  <p>(دست)</p>
+                  <p>110000 - 190000</p>
+                </article>
+                <img
+                  className="size-32 rounded-xl p-2"
+                  src="/images/washing-machine.jpg"
+                  alt="Washing Machine"
+                />
+              </li>
 
-        <SwiperSlide className="size-40 rounded-lg ">
-          <div className="size-full flex items-center justify-center flex-col ">
-            <figure className="p-2 size-10/12 bg-sky-200 rounded-xl -translate-y-3 cursor-pointer">
-              <img
-                className="size-full rounded-xl"
-                src="/images/washing-machine.jpg"
-                alt="Washing Machine"
-              />
-              <figcaption className="text-center mt-3">زنانه</figcaption>
-            </figure>
-          </div>
-        </SwiperSlide>
+              <li  className="w-full h-32 bg-white flex items-center justify-between px-4 mb-4 rounded-xl shadow-xl">
+                <article className="text-center">
+                  <h2>کت و شلوار مردانه</h2>
+                  <p>(دست)</p>
+                  <p>110000 - 190000</p>
+                </article>
+                <img
+                  className="size-32 rounded-xl p-2"
+                  src="/images/washing-machine.jpg"
+                  alt="Washing Machine"
+                />
+              </li>
 
-        <SwiperSlide className="size-40 rounded-lg ">
-          <div className="size-full flex items-center justify-center flex-col ">
-            <figure className="p-2 size-10/12 bg-sky-200 rounded-xl -translate-y-3 cursor-pointer">
-              <img
-                className="size-full rounded-xl"
-                src="/images/washing-machine.jpg"
-                alt="Washing Machine"
-              />
-              <figcaption className="text-center mt-3">زنانه</figcaption>
-            </figure>
-          </div>
-        </SwiperSlide>
+        
 
-        <SwiperSlide className="size-40 rounded-lg ">
-          <div className="size-full flex items-center justify-center flex-col ">
-            <figure className="p-2 size-10/12 bg-sky-200 rounded-xl -translate-y-3 cursor-pointer">
-              <img
-                className="size-full rounded-xl"
-                src="/images/washing-machine.jpg"
-                alt="Washing Machine"
-              />
-              <figcaption className="text-center mt-3">زنانه</figcaption>
-            </figure>
-          </div>
-        </SwiperSlide>
-      </Swiper>
+  
+        
+        </ul>
+        </section>
+      </main>
     </div>
+    
   );
 }
