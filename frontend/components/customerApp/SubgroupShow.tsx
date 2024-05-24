@@ -1,6 +1,6 @@
 "use client";
 
-import SubgroupShowHeader from "./SubGroupShowHeader";
+import SubgroupShowHeader from "./headerComponent/SubGroupShowHeader";
 import InformationClothingBox from "./InformationClothing/InformationClothingBox";
 
 export default function SubgroupShow() {

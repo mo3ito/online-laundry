@@ -1,4 +1,4 @@
-import SubgroupShowHeader from "@/components/customerApp/SubGroupShowHeader";
+import SubgroupShowHeader from "@/components/customerApp/headerComponent/SubGroupShowHeader";
 import SubgroupShow from "@/components/customerApp/SubgroupShow";
 
 export default function page() {

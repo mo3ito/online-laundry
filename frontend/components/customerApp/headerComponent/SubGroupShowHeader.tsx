@@ -1,6 +1,6 @@
 "use client";
-import SwiperMenu from "./swiper/SwiperMenu";
-import HeaderComponent from "./headerComponent/HeaderComponent";
+import SwiperMenu from "../swiper/SwiperMenu";
+import HeaderComponent from "./HeaderComponent";
 
 export default function SubgroupShowHeader() {
   return (
