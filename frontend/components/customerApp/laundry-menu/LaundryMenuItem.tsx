@@ -1,11 +1,13 @@
+import Link from "next/link";
 type MenuItemProps = {
   srcImage: string;
   imageCaption: string;
+
 };
 
 export default function MenuItem({ srcImage, imageCaption }: MenuItemProps) {
   return (
-    <li className="size-48  bg-sky-300 p-2 mb-12 rounded-xl cursor-pointer">
+    <Link href={"/application/1"} className="size-48  bg-sky-300 p-2 mb-12 rounded-xl cursor-pointer">
       <figure className="size-full ">
         <img
           src={srcImage}
@@ -14,6 +16,6 @@ export default function MenuItem({ srcImage, imageCaption }: MenuItemProps) {
         />
         <figcaption className="text-center my-5">{imageCaption}</figcaption>
       </figure>
-    </li>
+    </Link>
   );
 }
