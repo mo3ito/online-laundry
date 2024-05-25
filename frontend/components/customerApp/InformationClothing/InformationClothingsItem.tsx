@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useRef, MouseEvent, useContext } from "react";
-import { OrderCard , OrderCardType , OrderCardContextType } from "@/context/order-card";
+import { OrderCardContext , OrderCardType , OrderCardContextType } from "@/context/order-card";
 
 export default function InformationClothingsItem() {
   const [isShowAddCloths, setIsShowAddCloths] = useState(false);
   const addClothsBoxRef = useRef<HTMLDivElement | null>(null);
-  const orderContext = useContext<OrderCardContextType | null>(OrderCard);
+  const orderContext = useContext<OrderCardContextType | null>(OrderCardContext);
   const { orders, setOrders } = orderContext as OrderCardContextType ;
 
   const showAddClothsHandler = (event: MouseEvent) => {

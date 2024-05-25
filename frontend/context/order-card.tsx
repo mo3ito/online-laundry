@@ -18,15 +18,15 @@ export type OrderCardContextType = {
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
 };
 
-export const OrderCard = createContext<OrderCardContextType | null>(null);
+export const OrderCardContext = createContext<OrderCardContextType | null>(null);
 
 const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<OrderCardType[]>([]);
 
   return (
-    <OrderCard.Provider value={{ orders, setOrders }}>
+    <OrderCardContext.Provider value={{ orders, setOrders }}>
       {children}
-    </OrderCard.Provider>
+    </OrderCardContext.Provider>
   );
 };
 
