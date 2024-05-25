@@ -1,0 +1,52 @@
+import { OrderCardType } from "@/types/context/orderCard";
+import { Dispatch, SetStateAction } from "react";
+
+const addClothingHandler = (
+  orders: OrderCardType[],
+  setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
+  setTotalNumber: Dispatch<SetStateAction<number>>,
+  id: string,
+  serviceType: string,
+  typeClothing: string,
+  count: number,
+  cost: number,
+  totalCost: number
+) => {
+    
+  const newOrder: OrderCardType = {
+    id,
+    serviceType,
+    typeClothing,
+    count,
+    cost,
+    totalCost,
+  };
+
+  const hasSimilarOrder = orders?.some(
+    (order) =>
+      order.typeClothing === typeClothing && order.serviceType === serviceType
+  );
+
+  if (!hasSimilarOrder) {
+    setOrders((prevOrders) => [...prevOrders, newOrder]);
+    setTotalNumber((prev) => prev + 1);
+  } else {
+    const updatedOrders = orders.map((order) => {
+      if (
+        order.typeClothing === typeClothing &&
+        order.serviceType === serviceType
+      ) {
+        return {
+          ...order,
+          count: order.count + count,
+          totalCost: order.totalCost + cost,
+        };
+      }
+      return order;
+    });
+    setOrders(updatedOrders);
+    setTotalNumber((prev) => prev + count);
+  }
+};
+
+export default addClothingHandler;

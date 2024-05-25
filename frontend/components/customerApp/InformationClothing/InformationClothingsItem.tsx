@@ -1,13 +1,21 @@
 'use client';
 
 import { useState, useRef, MouseEvent, useContext } from "react";
-import { OrderCardContext , OrderCardType , OrderCardContextType } from "@/context/order-card";
+import { OrderCardContextType } from "@/types/context/orderCard";
+import { TotalCountOrdersContext , TotalCountOrdersContextType } from "@/context/TotalCountOrders";
+import addClothingHandler from "@/app/utils/addClothingHandler";
+import minesClothingHandler from "@/app/utils/minesClothingHandler";
+import { OrderCardContext } from "@/context/order-card";
 
 export default function InformationClothingsItem() {
   const [isShowAddCloths, setIsShowAddCloths] = useState(false);
   const addClothsBoxRef = useRef<HTMLDivElement | null>(null);
   const orderContext = useContext<OrderCardContextType | null>(OrderCardContext);
   const { orders, setOrders } = orderContext as OrderCardContextType ;
+  const totalNumberContext = useContext<TotalCountOrdersContextType | number>(TotalCountOrdersContext)
+  const {totalNumber , setTotalNumber} = totalNumberContext as TotalCountOrdersContextType
+
+console.log(totalNumber);
 
   const showAddClothsHandler = (event: MouseEvent) => {
     if (
@@ -18,56 +26,7 @@ export default function InformationClothingsItem() {
     }
   };
 
-  const addClothingHandler = (id: string, serviceType: string, typeClothing: string ,count: number, cost: number , totalCost: number) => {
-    
-    const newOrder: OrderCardType = {
-      id,
-      serviceType,
-      typeClothing,
-      count,
-      cost,
-      totalCost
-    };
-    
-    const hasSimilarOrder = orders.some(order => order.typeClothing === typeClothing && order.serviceType === serviceType);
-    
-    if (!hasSimilarOrder) {
-      setOrders(prevOrders => [...prevOrders, newOrder]);
-    } else {
-      const updatedOrders = orders.map(order => {
-        if (order.typeClothing === typeClothing && order.serviceType === serviceType) {
-          return {
-            ...order,
-            count: order.count + count,
-            totalCost: order.totalCost + cost,
-          };
-        }
-        return order;
-      });
-      setOrders(updatedOrders);
-    }
 
-  };
-
-  const minesClothingHandler = (id: string, serviceType: string, typeClothing: string, count: number, cost: number, totalCost: number) => {
-    const isOrder = orders.find(order => order.id === id);
-  
-    if (isOrder) {
-      const updatedOrders = orders.map(order => {
-        if (order.id === isOrder.id) {
-          const updatedCount = order.count - count <= 0 ? 1 : order.count - count;
-          const updateTotalCost = order.totalCost - totalCost
-          return {
-            ...order,
-            count: updatedCount,
-            totalCost: updateTotalCost
-          };
-        }
-        return order;
-      });
-      setOrders(updatedOrders);
-    }
-  };
 
   console.log(orders);
   
@@ -109,10 +68,10 @@ export default function InformationClothingsItem() {
             <p className="w-5/12 ">شستشو و اتو بخار</p>
             <p className="w-4/12 ">200000 هزار تومان</p>
             <div className="w-3/12  text-left">
-              <button onClick={()=>addClothingHandler( "clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
+              <button onClick={()=>addClothingHandler( orders , setOrders , setTotalNumber ,"clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
                 +
               </button>
-              <button onClick={()=>minesClothingHandler( "clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
+              <button onClick={()=>minesClothingHandler( orders ,"clk vndkvnfvj" , setOrders , totalNumber , setTotalNumber , 2000 , 1)} className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
                 -
               </button>
             </div>
@@ -122,10 +81,10 @@ export default function InformationClothingsItem() {
             <p className="w-5/12 ">اتو بخار</p>
             <p className="w-4/12 ">1398 هزار تومان</p>
             <div className="w-3/12  text-left">
-              <button className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
+              <button onClick={()=>addClothingHandler( orders , setOrders , setTotalNumber ,"clk vndkvnf22" ,"  اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
                 +
               </button>
-              <button className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
+              <button onClick={()=>minesClothingHandler( orders ,"clk vndkvnf22" , setOrders , totalNumber , setTotalNumber , 2000 , 1)} className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
                 -
               </button>
             </div>

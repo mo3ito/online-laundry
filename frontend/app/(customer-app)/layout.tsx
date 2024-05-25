@@ -3,6 +3,7 @@ import "./../globals.css";
 import Header from "@/components/customerApp/Header";
 import BottomMenu from "@/components/customerApp/BottomMenu";
 import OrderCardProvider from "@/context/order-card";
+import TotalCountOrdersProvider from "@/context/TotalCountOrders";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html dir="rtl">
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <OrderCardProvider>
-        <Header />
-        <main className=" w-full h-screen">{children}</main>
-        <BottomMenu/>
+          <TotalCountOrdersProvider>
+            <Header />
+            <main className=" w-full h-screen">{children}</main>
+            <BottomMenu />
+          </TotalCountOrdersProvider>
         </OrderCardProvider>
       </body>
     </html>

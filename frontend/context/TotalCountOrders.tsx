@@ -1,3 +1,4 @@
+'use client'
 import React, {
   Dispatch,
   SetStateAction,
@@ -5,14 +6,12 @@ import React, {
   useState,
 } from "react";
 
-type totalNumbersType = {
+export type TotalCountOrdersContextType = {
   totalNumber: number;
   setTotalNumber: Dispatch<SetStateAction<number>>;
 };
 
-export const TotalCountOrdersContext = createContext<totalNumbersType | number>(
-  0
-);
+export const TotalCountOrdersContext = createContext<TotalCountOrdersContextType | number>(0);
 
 const TotalCountOrdersProvider = ({
   children,
