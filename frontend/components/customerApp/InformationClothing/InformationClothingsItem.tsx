@@ -18,7 +18,7 @@ export default function InformationClothingsItem() {
     }
   };
 
-  const addClothingHandler = async (id: string, serviceType: string, typeClothing: string ,count: number, cost: number , totalCost: number) => {
+  const addClothingHandler = (id: string, serviceType: string, typeClothing: string ,count: number, cost: number , totalCost: number) => {
     
     const newOrder: OrderCardType = {
       id,
@@ -47,6 +47,26 @@ export default function InformationClothingsItem() {
       setOrders(updatedOrders);
     }
 
+  };
+
+  const minesClothingHandler = (id: string, serviceType: string, typeClothing: string, count: number, cost: number, totalCost: number) => {
+    const isOrder = orders.find(order => order.id === id);
+  
+    if (isOrder) {
+      const updatedOrders = orders.map(order => {
+        if (order.id === isOrder.id) {
+          const updatedCount = order.count - count <= 0 ? 1 : order.count - count;
+          const updateTotalCost = order.totalCost - totalCost
+          return {
+            ...order,
+            count: updatedCount,
+            totalCost: updateTotalCost
+          };
+        }
+        return order;
+      });
+      setOrders(updatedOrders);
+    }
   };
 
   console.log(orders);
@@ -92,7 +112,7 @@ export default function InformationClothingsItem() {
               <button onClick={()=>addClothingHandler( "clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
                 +
               </button>
-              <button className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
+              <button onClick={()=>minesClothingHandler( "clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
                 -
               </button>
             </div>
