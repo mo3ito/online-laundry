@@ -1,19 +1,56 @@
-"use client";
-import { useState, useRef, MouseEvent } from "react";
+'use client';
+
+import { useState, useRef, MouseEvent, useContext } from "react";
+import { OrderCard , OrderCardType , OrderCardContextType } from "@/context/order-card";
 
 export default function InformationClothingsItem() {
   const [isShowAddCloths, setIsShowAddCloths] = useState(false);
   const addClothsBoxRef = useRef<HTMLDivElement | null>(null);
+  const orderContext = useContext<OrderCardContextType | null>(OrderCard);
+  const { orders, setOrders } = orderContext as OrderCardContextType ;
 
   const showAddClothsHandler = (event: MouseEvent) => {
     if (
-      addClothsBoxRef &&
       addClothsBoxRef.current &&
       !addClothsBoxRef.current.contains(event.target as Node)
     ) {
       setIsShowAddCloths((prev) => !prev);
     }
   };
+
+  const addClothingHandler = async (id: string, serviceType: string, typeClothing: string ,count: number, cost: number , totalCost: number) => {
+    
+    const newOrder: OrderCardType = {
+      id,
+      serviceType,
+      typeClothing,
+      count,
+      cost,
+      totalCost
+    };
+    
+    const hasSimilarOrder = orders.some(order => order.typeClothing === typeClothing && order.serviceType === serviceType);
+    
+    if (!hasSimilarOrder) {
+      setOrders(prevOrders => [...prevOrders, newOrder]);
+    } else {
+      const updatedOrders = orders.map(order => {
+        if (order.typeClothing === typeClothing && order.serviceType === serviceType) {
+          return {
+            ...order,
+            count: order.count + count,
+            totalCost: order.totalCost + cost,
+          };
+        }
+        return order;
+      });
+      setOrders(updatedOrders);
+    }
+
+  };
+
+  console.log(orders);
+  
 
   return (
     <li
@@ -52,7 +89,7 @@ export default function InformationClothingsItem() {
             <p className="w-5/12 ">شستشو و اتو بخار</p>
             <p className="w-4/12 ">200000 هزار تومان</p>
             <div className="w-3/12  text-left">
-              <button className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
+              <button onClick={()=>addClothingHandler( "clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
                 +
               </button>
               <button className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">

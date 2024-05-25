@@ -1,24 +1,30 @@
 "use client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
-type DefaultOrderCardType = {
+export type OrderCardType = {
   id: string;
+  typeClothing: string;
   serviceType: string;
   count: number;
+  cost:number;
+  totalCost:number,
+
 };
 
-type OrderCardContextType = {
-  order: DefaultOrderCardType[];
-  setOrder: Dispatch<SetStateAction<DefaultOrderCardType[]>>;
+
+
+export type OrderCardContextType = {
+  orders: OrderCardType[];
+  setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
 };
 
 export const OrderCard = createContext<OrderCardContextType | null>(null);
 
 const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
-  const [order, setOrder] = useState<DefaultOrderCardType[]>([]);
+  const [orders, setOrders] = useState<OrderCardType[]>([]);
 
   return (
-    <OrderCard.Provider value={{ order, setOrder }}>
+    <OrderCard.Provider value={{ orders, setOrders }}>
       {children}
     </OrderCard.Provider>
   );
