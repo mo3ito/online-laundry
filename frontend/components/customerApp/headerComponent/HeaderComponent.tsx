@@ -16,7 +16,7 @@ const HeaderComponent = ({
   };
 
   return (
-    <Component className={`${className} flex justify-between px-8 py-3`}>
+    <Component className={`${className} flex items-center justify-between px-8 py-3`}>
       <h1 className="font-bold">{title}</h1>
       <button
         onClick={backHandler}
