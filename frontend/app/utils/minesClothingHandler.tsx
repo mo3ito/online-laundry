@@ -5,8 +5,6 @@ const minesClothingHandler = (
   orders: OrderCardType[],
   id: string,
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
-  totalNumber: number,
-  setTotalNumber: Dispatch<SetStateAction<number>>,
   totalCost: number,
   count: number
 ) => {
@@ -26,11 +24,6 @@ const minesClothingHandler = (
       return order;
     });
     setOrders(updatedOrders);
-    if (totalNumber > 0) {
-      setTotalNumber((prev) => prev - count);
-    } else {
-      setTotalNumber(0);
-    }
   }
 };
 

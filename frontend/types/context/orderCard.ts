@@ -12,4 +12,5 @@ export type OrderCardType = {
 export type OrderCardContextType = {
   orders: OrderCardType[];
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
+  totalNumber: number
 };

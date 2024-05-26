@@ -4,7 +4,6 @@ import { Dispatch, SetStateAction } from "react";
 const addClothingHandler = (
   orders: OrderCardType[],
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
-  setTotalNumber: Dispatch<SetStateAction<number>>,
   id: string,
   serviceType: string,
   typeClothing: string,
@@ -29,7 +28,6 @@ const addClothingHandler = (
 
   if (!hasSimilarOrder) {
     setOrders((prevOrders) => [...prevOrders, newOrder]);
-    setTotalNumber((prev) => prev + 1);
   } else {
     const updatedOrders = orders.map((order) => {
       if (
@@ -45,7 +43,6 @@ const addClothingHandler = (
       return order;
     });
     setOrders(updatedOrders);
-    setTotalNumber((prev) => prev + count);
   }
 };
 
