@@ -4,6 +4,7 @@ import { useState, useRef, MouseEvent, useContext } from "react";
 import { OrderCardContextType } from "@/types/context/orderCard";
 import addClothingHandler from "@/app/utils/addClothingHandler";
 import minesClothingHandler from "@/app/utils/minesClothingHandler";
+import deleteClothingHandler from "@/app/utils/deleteClothingHandler";
 import { OrderCardContext } from "@/context/order-card";
 
 export default function InformationClothingsItem() {
@@ -23,6 +24,11 @@ export default function InformationClothingsItem() {
       setIsShowAddCloths((prev) => !prev);
     }
   };
+
+  // const deleteClothingHandler = (clothingId : string)=>{
+  //  const newOrderList = orders.filter(order=> order.id !== clothingId )
+  //  setOrders(newOrderList)
+  // }
 
 
 
@@ -51,7 +57,7 @@ export default function InformationClothingsItem() {
           <h1 className="font-bold">خدمات</h1>
           <button onClick={() => setIsShowAddCloths(false)} className="">
             <svg
-              className="size-5"
+              className="size-6"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
@@ -62,28 +68,34 @@ export default function InformationClothingsItem() {
         </header>
 
         <ul className="translate-y-2">
-          <li className="flex items-center justify-between  w-96  mb-3">
-            <p className="w-5/12 ">شستشو و اتو بخار</p>
+          <li className="flex items-center justify-between  w-[500px]  mb-3">
+            <p className="w-4/12 ">شستشو و اتو بخار</p>
             <p className="w-4/12 ">200000 هزار تومان</p>
-            <div className="w-3/12  text-left">
-              <button onClick={()=>addClothingHandler( orders , setOrders  ,"clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
+            <div className="w-4/12   flex items-center justify-between">
+              <button onClick={()=>addClothingHandler( orders , setOrders  ,"clk vndkvnfvj" ," شستشو و اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="h-7 w-9 rounded-lg bg-sky-200  text-lg">
                 +
               </button>
-              <button onClick={()=>minesClothingHandler( orders ,"clk vndkvnfvj" , setOrders , 2000 , 1)} className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
+              <button onClick={()=>minesClothingHandler( orders ,"clk vndkvnfvj" , setOrders , 2000 , 1)} className="h-7 w-9 rounded-lg bg-sky-200  text-lg">
                 -
+              </button>
+              <button onClick={()=>deleteClothingHandler(orders , setOrders , "clk vndkvnfvj")} className="h-7 w-9 rounded-lg bg-sky-200  text-lg flex items-center justify-center">
+              <svg className="size-5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"></path></svg>
               </button>
             </div>
           </li>
 
-          <li className="flex items-center justify-between  w-96  mb-3">
-            <p className="w-5/12 ">اتو بخار</p>
+          <li className="flex items-center justify-between  w-[500px]  mb-3">
+            <p className="w-4/12 ">اتو بخار</p>
             <p className="w-4/12 ">1398 هزار تومان</p>
-            <div className="w-3/12  text-left">
-              <button onClick={()=>addClothingHandler( orders , setOrders  ,"clk vndkvnf22" ,"  اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="px-3 rounded-lg bg-sky-200 ml-1 text-lg">
+            <div className="w-4/12   flex items-center justify-between">
+              <button onClick={()=>addClothingHandler( orders , setOrders  ,"clk vndkvnf22" ,"  اتو بخار ", "کت و شلوار" , 1 , 2000 , 2000)} className="h-7 w-9 rounded-lg bg-sky-200  text-lg">
                 +
               </button>
-              <button onClick={()=>minesClothingHandler( orders ,"clk vndkvnf22" , setOrders  , 2000 , 1)} className="px-3 rounded-lg bg-sky-200 mr-1 text-lg">
+              <button onClick={()=>minesClothingHandler( orders ,"clk vndkvnf22" , setOrders  , 2000 , 1)} className="h-7 w-9 rounded-lg bg-sky-200  text-lg">
                 -
+              </button>
+              <button onClick={()=>deleteClothingHandler(orders , setOrders , "clk vndkvnf22")} className="h-7 w-9 rounded-lg bg-sky-200  text-lg flex items-center justify-center">
+              <svg className="size-5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"></path></svg>
               </button>
             </div>
           </li>

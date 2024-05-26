@@ -16,6 +16,7 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
     setTotalNumber(total);
   }, [orders]);
 
+
   console.log(totalNumber);
   
 
