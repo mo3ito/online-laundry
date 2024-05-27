@@ -17,7 +17,7 @@ export default function Page() {
     return (
         <div
             style={{ height: `calc(100vh - 254px)` }}
-            className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl overflow-auto"
+            className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl overflow-auto "
         >
             <HeaderComponent title="کت و شلوار مردانه" as="div" />
 
@@ -28,7 +28,7 @@ export default function Page() {
                     alt="Washing Machine"
                 />
 
-                <section className="w-full px-8 h-full cursor-auto pt-3 ">
+                <section className="w-full max-[280px]:px-3 px-6  sm:px-8  h-full cursor-auto pt-3 ">
                     <table className="translate-y-2 w-full table-auto border-collapse border border-gray-300 text-sm sm:text-base">
                         <thead>
                             <tr>
