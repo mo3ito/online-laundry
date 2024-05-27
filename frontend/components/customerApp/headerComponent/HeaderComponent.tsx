@@ -16,7 +16,7 @@ const HeaderComponent = ({
   };
 
   return (
-    <Component className={`${className} flex items-center justify-between px-8 py-3`}>
+    <Component className={`${className} flex items-center justify-between max-[280px]:px-3 px-6  sm:px-8 py-3 text-sm sm:text-base`}>
       <h1 className="font-bold">{title}</h1>
       <button
         onClick={backHandler}
@@ -24,7 +24,7 @@ const HeaderComponent = ({
         aria-label="Go back"
       >
         <svg
-          className="w-6 h-6 fill-white"
+          className=" size-4 sm:size-6 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"

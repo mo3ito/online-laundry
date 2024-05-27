@@ -9,7 +9,7 @@ export default function InformationButton({onClick}:InformationButtonProps) {
   return (
     <button className='size-max' onClick={onClick}>
     <svg
-    className="feather feather-edit stroke-2 size-7"
+    className="feather feather-edit stroke-2 size-5 sm:size-7"
     fill="none"
     stroke="currentColor"
     stroke-linecap="round"

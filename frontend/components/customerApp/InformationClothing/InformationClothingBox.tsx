@@ -3,7 +3,7 @@ import InformationClothingsItem from './InformationClothingsItem'
 
 export default function InformationClothingBox() {
   return (
-    <main className="px-8">
+    <main className=" max-[280px]:px-3 px-6  sm:px-8">
     <section>
       <ul className="w-full  ">
         <InformationClothingsItem />

@@ -8,7 +8,7 @@ export default function LogoutButton({ onClick }: LogoutButtonProps) {
   return (
     <button onClick={onClick} className=" size-max">
       <svg
-        className="fill-white size-7"
+        className="fill-white size-6 sm:size-7"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

@@ -14,10 +14,10 @@ export default function BottomMenu() {
 
 
   return (
-    <div className=" pt-3 h-20 bg-sky-500 border-t sticky bottom-0 flex items-center justify-between px-8 z-50 mx-auto border border-sky-500  shadow-xl sm:w-5/6 md:w-5/6 lg:w-4/6 ">
+    <div className=" pt-3 h-20 bg-sky-500 border-t sticky bottom-0 flex items-center justify-between px-8 z-50 mx-auto border border-sky-500  shadow-xl sm:w-5/6 md:w-5/6 lg:w-4/6 max-[280px]:text-[10px] text-xs ">
       <Link href="/application" className="flex items-center flex-col justify-center">
         <svg
-          className="size-8 fill-white"
+          className=" size-8 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"

@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function InformationClothingsItem() {
   return (
-    <li className=" max-[280px]:text-xs text-sm sm:text-base px-1 sm:px-4 ">
+    <li className=" max-[280px]:text-xs text-sm sm:text-base ">
       <Link
         href="/application/group/men/coat"
-        className="w-full h-28 sm:h-32 bg-white flex items-center justify-between  mb-4 rounded-xl shadow-xl cursor-pointer px-3"
+        className="w-full h-28 sm:h-32 bg-white flex items-center justify-between  mb-4 rounded-xl shadow-xl cursor-pointer px-2 sm:px-3"
       >
         <section className="text-center">
           <h2>کت و شلوار مردانه</h2>
