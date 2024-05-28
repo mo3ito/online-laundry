@@ -3,7 +3,7 @@ const https = require("https");
 
 const sendSMS = (to, args) => {
   const data = JSON.stringify({
-    bodyId: 217651,
+    bodyId: Number(process.env.BODYID),
     to: to,
     args: args,
   });

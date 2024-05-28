@@ -3,6 +3,8 @@ import "./../globals.css";
 import Header from "@/components/customerApp/Header";
 import BottomMenu from "@/components/customerApp/BottomMenu";
 import OrderCardProvider from "@/context/order-card";
+import ToastifyContainer from "@/components/providers/TostifyContainer";
+import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین",
@@ -17,11 +19,14 @@ export default function RootLayout({
   return (
     <html dir="rtl">
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
-        <OrderCardProvider>
-          <Header />
-          <main className=" w-full h-screen">{children}</main>
-          <BottomMenu />
-        </OrderCardProvider>
+        <ReactQueryProvider>
+          <OrderCardProvider>
+            <Header />
+            <main className=" w-full h-screen">{children}</main>
+            <BottomMenu />
+          </OrderCardProvider>
+          <ToastifyContainer />
+        </ReactQueryProvider>
       </body>
     </html>
   );

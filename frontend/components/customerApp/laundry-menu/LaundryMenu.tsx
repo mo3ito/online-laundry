@@ -1,10 +1,15 @@
 import MenuItem from "./LaundryMenuItem";
+import getData from "@/services/getData";
+
 
 type LaundryMenuProps = {
   title: string,
 }
 
 export default function LaundryMenu({title }: LaundryMenuProps) {
+
+
+
   return (
     <div className="">
       <h1 className="w-full bg-sky-500 p-3 my-4 text-center text-white">
@@ -16,43 +21,8 @@ export default function LaundryMenu({title }: LaundryMenuProps) {
           imageCaption="مردانه"
           
         />
-                <MenuItem
-          srcImage="/images/washing-machine.jpg"
-          imageCaption="مردانه"
-          
-        />        <MenuItem
-        srcImage="/images/washing-machine.jpg"
-        imageCaption="مردانه"
-        
-      />        <MenuItem
-      srcImage="/images/washing-machine.jpg"
-      imageCaption="مردانه"
-      
-    />        <MenuItem
-    srcImage="/images/washing-machine.jpg"
-    imageCaption="مردانه"
-    
-  />        <MenuItem
-  srcImage="/images/washing-machine.jpg"
-  imageCaption="مردانه"
-  
-/>        <MenuItem
-          srcImage="/images/washing-machine.jpg"
-          imageCaption="مردانه"
-          
-        />        <MenuItem
-        srcImage="/images/washing-machine.jpg"
-        imageCaption="مردانه"
-        
-      />        <MenuItem
-      srcImage="/images/washing-machine.jpg"
-      imageCaption="مردانه"
-      
-    />        <MenuItem
-    srcImage="/images/washing-machine.jpg"
-    imageCaption="مردانه"
-    
-  />
+
+ 
 
       </ul>
     </div>
