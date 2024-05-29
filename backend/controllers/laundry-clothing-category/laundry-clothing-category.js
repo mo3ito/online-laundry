@@ -1,4 +1,5 @@
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
+const AdminModel = require("../../models/admin/AdminModel");
 
 const getClothingCategory = async (req, res) => {
   try {
@@ -14,9 +15,24 @@ const getClothingCategory = async (req, res) => {
 };
 
 const addClothingCategory = async (req, res) => {
+  const adminId = req.headers.authorization;
   const { name } = req.body;
 
   try {
+    if (!adminId) {
+      return res.status(400).json({
+        message: "شما ادمین آیدی را وارد نکرده‌اید",
+      });
+    }
+
+    const isAdmin = await AdminModel.findById(adminId);
+
+    if (!isAdmin) {
+      return res.status(400).json({
+        message: " ادمین آیدی صحیح نیست",
+      });
+    }
+
     if (!name) {
       return res.status(400)({
         message: "شما نام دسته بندی لباس را وارد نکردید",
