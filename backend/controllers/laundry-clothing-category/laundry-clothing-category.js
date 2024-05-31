@@ -1,6 +1,7 @@
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
 const AdminModel = require("../../models/admin/AdminModel");
 const storageMulter = require("../../utils/storageMulter");
+require("dotenv").config()
 const path = require("path")
 const fs = require("fs")
 
@@ -33,43 +34,24 @@ const uploadAndHandleClothingCategoryImage = async (req, res, next) => {
   }
 };
 
-// const getClothingCategory = async (req, res) => {
-//   try {
-//     const allCategory = await ClothingCategoryModel.find({});
-
-//     return await res.status(200).json(allCategory);
-//   } catch (error) {
-//     console.error("error:", error.message);
-//     return res.status(500).json({
-//       message: "خطایی رخ داد",
-//     });
-//   }
-// };
-
-
 const getClothingCategory = async (req, res) => {
   try {
-    const imageDirectory = path.join(__dirname, '../../public/images/clothing-category');
+    const imageDirectory = path.join(__dirname, "../../public/images/clothing-category");
     const imageFiles = fs.readdirSync(imageDirectory);
-    
-    const allCategory = [];
+    const imageFileNames = imageFiles.map(item => path.parse(item).name);
 
-    for (const imageFile of imageFiles) {
-      const name = imageFile.split('.')[0]; // گرفتن نام فایل بدون پسوند
-      const imageUrl = `http://example.com/images/clothing-category/${imageFile}`; // تولید آدرس تصویر
-
-      let category = { name };
-      
-      // بررسی وجود تصویر متناظر با نام دسته‌بندی
-      if (fs.existsSync(path.join(imageDirectory, imageFile))) {
-        category.image_url = imageUrl;
+    console.log(imageFileNames);
+    const allCategory = await ClothingCategoryModel.find({});
+    const updatedCategories = allCategory.map(item => {
+      if (imageFileNames.includes(item.name)) {
+        const matchingImage = imageFiles.find(image => path.parse(image).name === item.name);
+        return { ...item.toObject(), image_url: `${process.env.HOST}:${process.env.PORT}/images/clothing-category/${matchingImage}` };
+      } else {
+        return item.toObject();
       }
+    });
 
-      // اضافه کردن دسته‌بندی به آرایه نهایی
-      allCategory.push(category);
-    }
-
-    return res.status(200).json(allCategory);
+    return res.status(200).json(updatedCategories);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -77,6 +59,7 @@ const getClothingCategory = async (req, res) => {
     });
   }
 };
+
 
 
 const addClothingCategory = async (req, res) => {
