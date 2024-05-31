@@ -1,6 +1,8 @@
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
 const AdminModel = require("../../models/admin/AdminModel");
 const storageMulter = require("../../utils/storageMulter");
+const path = require("path")
+const fs = require("fs")
 
 const uploadAndHandleClothingCategoryImage = async (req, res, next) => {
   try {
@@ -31,11 +33,43 @@ const uploadAndHandleClothingCategoryImage = async (req, res, next) => {
   }
 };
 
+// const getClothingCategory = async (req, res) => {
+//   try {
+//     const allCategory = await ClothingCategoryModel.find({});
+
+//     return await res.status(200).json(allCategory);
+//   } catch (error) {
+//     console.error("error:", error.message);
+//     return res.status(500).json({
+//       message: "خطایی رخ داد",
+//     });
+//   }
+// };
+
+
 const getClothingCategory = async (req, res) => {
   try {
-    const allCategory = await ClothingCategoryModel.find({});
+    const imageDirectory = path.join(__dirname, '../../public/images/clothing-category');
+    const imageFiles = fs.readdirSync(imageDirectory);
+    
+    const allCategory = [];
 
-    return await res.status(200).json(allCategory);
+    for (const imageFile of imageFiles) {
+      const name = imageFile.split('.')[0]; // گرفتن نام فایل بدون پسوند
+      const imageUrl = `http://example.com/images/clothing-category/${imageFile}`; // تولید آدرس تصویر
+
+      let category = { name };
+      
+      // بررسی وجود تصویر متناظر با نام دسته‌بندی
+      if (fs.existsSync(path.join(imageDirectory, imageFile))) {
+        category.image_url = imageUrl;
+      }
+
+      // اضافه کردن دسته‌بندی به آرایه نهایی
+      allCategory.push(category);
+    }
+
+    return res.status(200).json(allCategory);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -43,6 +77,7 @@ const getClothingCategory = async (req, res) => {
     });
   }
 };
+
 
 const addClothingCategory = async (req, res) => {
   const adminId = req.headers.authorization;

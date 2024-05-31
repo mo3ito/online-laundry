@@ -42,7 +42,7 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
         { allClothingCategory?.data.map((item : allClothingCategoryType)=>
        <MenuItem
        key={item.id}
-       srcImage="/images/washing-machine.jpg"
+       srcImage={item.image_url}
        imageCaption={item.name}
      />
        ) }
