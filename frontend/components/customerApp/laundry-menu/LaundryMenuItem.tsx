@@ -19,9 +19,9 @@ export default function MenuItem({
       <Link href={"/application/group/3"} className="size-full">
         <figure className="size-full ">
           <img
-            src={srcImage}
+            src={srcImage ? srcImage : "/images/no-image.jpg"}
             className="size-full rounded-xl"
-            alt="machine wash"
+            alt={`عکس لباس ${imageCaption}`}
           />
           <figcaption className="text-center my-5">{imageCaption}</figcaption>
         </figure>

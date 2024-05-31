@@ -16,7 +16,7 @@ type LaundryMenuProps = {
 
 type allClothingCategoryType = {
   id: string ;
-  srcImage: string ;
+  image_url: string  ;
   name: string ;
 
 }
