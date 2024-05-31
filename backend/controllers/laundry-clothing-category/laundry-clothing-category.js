@@ -1,5 +1,35 @@
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
 const AdminModel = require("../../models/admin/AdminModel");
+const storageMulter = require("../../utils/storageMulter");
+
+const uploadAndHandleClothingCategoryImage = async (req, res, next) => {
+  try {
+    const upload = await storageMulter(
+      "public/images/clothing-category",
+      AdminModel,
+      "clothing-category-image"
+    );
+
+    upload.single("clothing-category-image")(req, res, (err) => {
+      if (err) {
+        return next(err);
+      }
+
+      if (req.fileValidationError) {
+        return res.status(400).send(req.fileValidationError);
+      }
+
+      const filename = req.file.filename;
+      res.json({
+        message: "عکس با موفقیت آپلود شد",
+        filename: filename,
+      });
+    });
+  } catch (error) {
+    console.error("خطا:", error);
+    next(error);
+  }
+};
 
 const getClothingCategory = async (req, res) => {
   try {
@@ -64,4 +94,8 @@ const addClothingCategory = async (req, res) => {
 
 const deleteClothingCategory = (req, res) => {};
 
-module.exports = { getClothingCategory, addClothingCategory };
+module.exports = {
+  getClothingCategory,
+  addClothingCategory,
+  uploadAndHandleClothingCategoryImage,
+};
