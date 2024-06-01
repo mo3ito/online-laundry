@@ -1,4 +1,3 @@
-import LoadingPage from "@/components/Loading";
 import SubgroupShow from "@/components/customerApp/SubgroupShow";
 
 export default function page() {
