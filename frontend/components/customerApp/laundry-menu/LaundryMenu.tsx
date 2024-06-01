@@ -3,6 +3,7 @@ import MenuItem from "./LaundryMenuItem";
 import getData from "@/services/getData";
 import { useQuery } from "@tanstack/react-query";
 import { GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
+import Loading from "@/components/Loading/Loading";
 
 type LaundryMenuProps = {
   title: string;
@@ -25,19 +26,25 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
   console.log(allClothingCategory);
 
   return (
-    <div className="">
-      <h1 className="w-full bg-sky-500 p-3 my-4 text-center text-white">
-        {title}
-      </h1>
-      <ul className="w-full mt-8 px-8 flex items-center justify-center sm:justify-around flex-wrap">
-        {allClothingCategory?.data.map((item: allClothingCategoryType) => (
-          <MenuItem
-            key={item.id}
-            srcImage={item.image_url}
-            imageCaption={item.name}
-          />
-        ))}
-      </ul>
-    </div>
+    <>
+      {!isLoading ? (
+        <div className="">
+          <h1 className="w-full bg-sky-500 p-3 my-4 text-center text-white">
+            {title}
+          </h1>
+          <ul className="w-full mt-8 px-8 flex items-center justify-center sm:justify-around flex-wrap">
+            {allClothingCategory?.data.map((item: allClothingCategoryType) => (
+              <MenuItem
+                key={item.id}
+                srcImage={item.image_url}
+                imageCaption={item.name}
+              />
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 }
