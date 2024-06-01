@@ -64,7 +64,7 @@ const getClothingCategory = async (req, res) => {
 
 const addClothingCategory = async (req, res) => {
   const adminId = req.headers.authorization;
-  const { name } = req.body;
+  const { name , english_name} = req.body;
 
   try {
     if (!adminId) {
@@ -82,12 +82,18 @@ const addClothingCategory = async (req, res) => {
     }
 
     if (!name) {
-      return res.status(400)({
+      return res.status(400).json({
         message: "شما نام دسته بندی لباس را وارد نکردید",
       });
     }
 
-    const isExistName = await ClothingCategoryModel.findOne({ name });
+    if (!english_name) {
+      return res.status(400).json({
+        message: "شما نام دسته بندی لباس را به انگلیسی وارد نکردید",
+      });
+    }
+
+    const isExistName = await ClothingCategoryModel.findOne({ name , english_name });
 
     if (isExistName) {
       return res.status(400).json({
@@ -95,12 +101,15 @@ const addClothingCategory = async (req, res) => {
       });
     }
 
-    const newClothingCategory = await new ClothingCategoryModel({ name });
+    const newClothingCategory = await new ClothingCategoryModel({ name , english_name });
     await newClothingCategory.save();
 
     return res.status(200).json({
       message: "نام دسته بندی با موفقیت اضافه شد",
-      name,
+      data:{
+        name,
+        english_name
+      }
     });
   } catch (error) {
     console.error("error:", error.message);

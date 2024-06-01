@@ -16,7 +16,7 @@ export default function MenuItem({
       key={key}
       className=" size-36 sm:size-48  bg-sky-300 p-2 mb-12 rounded-xl cursor-pointer mx-2"
     >
-      <Link href={"/application/group/3"} className="size-full">
+      <Link href={`/application/group/${imageCaption}`} className="size-full">
         <figure className="size-full ">
           <img
             src={srcImage ? srcImage : "/images/no-image.jpg"}

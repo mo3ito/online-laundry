@@ -4,7 +4,10 @@ const { Schema } = mongoose;
 const ClothingCategoriesSchema = new Schema({
   name: {
     type: String,
-  }
+  },
+  english_name: {
+    type: String,
+  },
 });
 
 const ClothingCategory = mongoose.model(
