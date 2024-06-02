@@ -13,6 +13,7 @@ type allClothingCategoryType = {
   id: string;
   image_url: string;
   name: string;
+  english_name:string
 };
 
 export default function LaundryMenu({ title }: LaundryMenuProps) {
@@ -38,6 +39,7 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
                 key={item.id}
                 srcImage={item.image_url}
                 imageCaption={item.name}
+                englishNameCategory={item.english_name}
               />
             ))}
           </ul>

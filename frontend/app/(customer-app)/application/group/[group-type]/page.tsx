@@ -1,10 +1,13 @@
 'use client'
 import { useParams } from "next/navigation";
 import SubgroupShow from "@/components/customerApp/SubgroupShow";
+import { useEffect } from "react";
 
 export default function page() {
   const params = useParams()
   console.log(params);
+
+  
   
   return (
     <div

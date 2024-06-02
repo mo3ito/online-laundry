@@ -3,12 +3,14 @@ import Link from "next/link";
 export type MenuItemProps = {
   srcImage: string;
   imageCaption: string;
+  englishNameCategory:string;
   key: string | undefined;
 };
 
 export default function MenuItem({
   srcImage,
   imageCaption,
+  englishNameCategory,
   key,
 }: MenuItemProps) {
   return (
@@ -16,7 +18,7 @@ export default function MenuItem({
       key={key}
       className=" size-36 sm:size-48  bg-sky-300 p-2 mb-12 rounded-xl cursor-pointer mx-2"
     >
-      <Link href={`/application/group/${imageCaption}`} className="size-full">
+      <Link href={`/application/group/${englishNameCategory}`} className="size-full">
         <figure className="size-full ">
           <img
             src={srcImage ? srcImage : "/images/no-image.jpg"}
