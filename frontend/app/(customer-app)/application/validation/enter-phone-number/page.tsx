@@ -1,9 +1,17 @@
 "use client";
 import { useState, useRef, useEffect, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { VALIDATION_PHONE_NUMBER } from "@/routeApi/endpoints";
+import sendData from "@/services/sendData";
+import DefaultButton from "@/components/share/defaultButton";
+import { toast } from "react-toastify";
+
 
 export default function Page() {
   const [phoneNumberInput, setPhoneNumberInput] = useState<string>("09");
+  const [isLoading , setIsLoading] = useState<boolean>(false)
+  const router = useRouter()
+  
   const inputRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     if (inputRef.current) {
@@ -26,11 +34,23 @@ export default function Page() {
     }
   };
 
-  const phoneNumberSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
+  const phoneNumberSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true)
+    const response = await sendData(VALIDATION_PHONE_NUMBER , {phone_number : phoneNumberInput } )
 
-    console.log(phoneNumberInput);
+    if(response.status === 200){
+        console.log(response);
+        setIsLoading(false)
+        router.push("/application/validation/verify-code")
+    }else{
+        setIsLoading(false)
+        toast.error("خطایی رخ داد لطفا دوباره تلاش کنید")
+    }
+  
+  
   };
+  
 
   return (
     <div className="w-full h-screen inset-0 bg-slate-100 fixed z-50 flex items-center justify-center">
@@ -59,9 +79,7 @@ export default function Page() {
               value={phoneNumberInput}
               onChange={handleChangePhoneNumber}
             />
-            <button className="w-full h-10 bg-sky-200 mt-2 rounded-lg">
-              ارسال کد تایید
-            </button>
+            <DefaultButton className="w-full mt-2 h-10 rounded-lg text-sm sm:text-base" content="ارسال کد تایید" isLoading={isLoading} />
           </form>
         </section>
       </div>
