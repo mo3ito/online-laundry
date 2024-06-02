@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, FormEvent } from "react";
+import { VALIDATION_PHONE_NUMBER } from "@/routeApi/endpoints";
 
 export default function Page() {
   const [phoneNumberInput, setPhoneNumberInput] = useState<string>("09");
