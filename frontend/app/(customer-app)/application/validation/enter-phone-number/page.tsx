@@ -37,21 +37,35 @@ export default function Page() {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    if (phoneNumberInput.length !== 11) {
-      return toast.error("تعداد کاراکترهای شماره موبایل اشتباه است");
-    }
-    setIsLoading(true);
-    const response = await sendData(VALIDATION_PHONE_NUMBER, {
-      phone_number: phoneNumberInput,
-    });
 
-    if (response.status === 200) {
-      console.log(response);
+    try {
+      if (phoneNumberInput.length !== 11) {
+        return toast.error("تعداد کاراکترهای شماره موبایل اشتباه است");
+      }
+      setIsLoading(true);
+      const response = await sendData(VALIDATION_PHONE_NUMBER, {
+        phone_number: phoneNumberInput,
+      });
+
+      if (response.status === 200) {
+        console.log(response);
+        setIsLoading(false);
+        router.replace("/application/validation/verify-code");
+      } else {
+        setIsLoading(false);
+        toast.error("خطایی رخ داد لطفا دوباره تلاش کنید");
+      }
+    } catch (error: any) {
+      console.error("خطا در ارتباط با سرور:", error);
       setIsLoading(false);
-      router.push("/application/validation/verify-code");
-    } else {
-      setIsLoading(false);
-      toast.error("خطایی رخ داد لطفا دوباره تلاش کنید");
+      if (error.response && error.response.status === 400) {
+        const errorMessage: string =
+          error.response.data?.message || "خطایی رخ داده است.";
+        toast.error(errorMessage);
+      } else {
+        console.log("خطا:", error);
+        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
+      }
     }
   };
 

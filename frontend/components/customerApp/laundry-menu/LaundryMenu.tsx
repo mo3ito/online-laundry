@@ -10,7 +10,7 @@ type LaundryMenuProps = {
 };
 
 type allClothingCategoryType = {
-  id: string;
+  _id: string;
   image_url: string;
   name: string;
   english_name:string
@@ -36,7 +36,7 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
           <ul className="w-full mt-8 px-8 flex items-center justify-center sm:justify-around flex-wrap">
             {allClothingCategory?.data.map((item: allClothingCategoryType) => (
               <MenuItem
-                key={item.id}
+                id={item._id && item._id}
                 srcImage={item.image_url}
                 imageCaption={item.name}
                 englishNameCategory={item.english_name}

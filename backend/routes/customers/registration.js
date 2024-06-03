@@ -3,7 +3,7 @@ const router = express.Router();
 const {customerRegistration , validationCustomers , checkRegister} = require("../../controllers/customers/registration")
 
 router.post("/customers/validation" , validationCustomers )
-router.get("/customers/check-register",checkRegister)
+router.post("/customers/check-register",checkRegister)
 router.post("/customers/register" , customerRegistration )
 
 

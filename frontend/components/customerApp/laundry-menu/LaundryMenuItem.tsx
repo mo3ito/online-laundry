@@ -4,18 +4,18 @@ export type MenuItemProps = {
   srcImage: string;
   imageCaption: string;
   englishNameCategory:string;
-  key: string | undefined;
+  id: string;
 };
 
 export default function MenuItem({
   srcImage,
   imageCaption,
   englishNameCategory,
-  key,
+  id,
 }: MenuItemProps) {
   return (
     <li
-      key={key}
+      key={id && id}
       className=" size-36 sm:size-48  bg-sky-300 p-2 mb-12 rounded-xl cursor-pointer mx-2"
     >
       <Link href={`/application/group/${englishNameCategory}`} className="size-full">

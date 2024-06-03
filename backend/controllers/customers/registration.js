@@ -9,6 +9,11 @@ const validationCustomers = async (req, res) => {
   const { phone_number } = req.body;
 
   try {
+    if (phone_number.length !== 11) {
+      return res.status(400).json({
+        message: "تعداد کاراکترهای شماره موبایل صحیح نمی‌باشد",
+      });
+    }
     const randomCode = await generateRandomCode();
     console.log(randomCode);
 
@@ -49,7 +54,7 @@ const validationCustomers = async (req, res) => {
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
-      message: "خطایی رخ داد",
+      message: error,
     });
   }
 };
@@ -62,28 +67,32 @@ const checkRegister = async (req, res) => {
 
     if (customer) {
       const { code_number, ...customerWithoutCodeNumber } = customer.toObject();
-      await CustomersAwaitingValidation.updateOne({ _id: customer._id }, { $unset: { code_number: "" } });
+      await CustomersAwaitingValidation.updateOne(
+        { _id: customer._id },
+        { $unset: { code_number: "" } }
+      );
       return res.status(200).json(customerWithoutCodeNumber);
     } else {
-      return res.status(200).json({
-        compare_code: false,
+      return res.status(400).json({
+        message: "کد وارد شده صحیح نمی‌باشد",
       });
     }
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
-      message: "خطایی رخ داد",
+      message: error,
     });
   }
 };
-
 
 const customerRegistration = async (req, res) => {
   const { phone_number, name, last_name } = req.body;
 
   try {
     let customer = await CustomersAwaitingValidation.findOne({ phone_number });
-    let isCustomerRegisterBefore = await CustomersModel.findOne({ phone_number })
+    let isCustomerRegisterBefore = await CustomersModel.findOne({
+      phone_number,
+    });
 
     if (!customer) {
       return res.status(400).json({

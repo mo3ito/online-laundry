@@ -10,6 +10,7 @@ type DefaultButtonProps = {
   isLinkTag?: boolean;
   onClick?: () => void;
   isLoading?: boolean;
+  disabled?:boolean
 };
 
 export default function DefaultButton({
@@ -20,6 +21,7 @@ export default function DefaultButton({
   isLinkTag = false,
   onClick,
   isLoading = false,
+  disabled = false
 }: DefaultButtonProps) {
   return (
     <>
@@ -32,6 +34,7 @@ export default function DefaultButton({
         </Link>
       ) : (
         <button
+        disabled={disabled}
           onClick={onClick}
           className={`${className} group overflow-hidden flex items-center justify-center text-center font-semibold  bg-sky-200   relative`}
         >
