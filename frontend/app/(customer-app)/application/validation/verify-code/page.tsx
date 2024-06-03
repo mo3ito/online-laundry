@@ -101,7 +101,7 @@ export default function Page() {
             <p className="text-sm">خشکشویی آنلاین</p>
           </div>
         </header>
-      <h1 className="my-4 max-[350px]:text-base  text-lg lg:text-2xl">کد پیامک شده را وارد کنید</h1>
+      <h1 className="my-4 max-[350px]:text-base text-xl sm:text-2xl">کد پیامک شده را وارد کنید</h1>
       <div dir="ltr" className="w-full  flex items-center justify-center gap-x-3">
         {Array.from({ length: 5 }).map((_, index) => (
           <input
@@ -110,7 +110,7 @@ export default function Page() {
             ref={(element) => {
               inputRefs.current[index] = element;
             }}
-            className="w-1/5 max-[350px]:h-12 h-16 sm:h-20 border border-sky-300  text-2xl outline-sky-500 rounded-lg text-center"
+            className="w-1/5 max-[350px]:h-12 h-16 sm:h-20 border border-sky-300 max-[350px]:text-lg text-3xl xl:text-3xl outline-sky-500 rounded-lg text-center"
             type="tel"
             onChange={(event) => onChangeHandler(event, index)}
             onKeyDown={(event) => onKeyDownHandler(event, index)}
