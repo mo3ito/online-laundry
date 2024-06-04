@@ -8,3 +8,6 @@ export const GET_CLOTHING_CATEGORY = `${BASE_URL_CLOTHING_CATEGORY}/get-category
 
 //-- customers
 export const VALIDATION_PHONE_NUMBER = `${BASE_URL_CUSTOMERS}/validation`;
+export const VERIFY_CODE = `${BASE_URL_CUSTOMERS}/vrify-code`
+
+

@@ -59,7 +59,7 @@ const validationCustomers = async (req, res) => {
   }
 };
 
-const checkRegister = async (req, res) => {
+const verifyCode = async (req, res) => {
   const { code_number } = req.body;
 
   try {
@@ -129,4 +129,4 @@ const customerRegistration = async (req, res) => {
   }
 };
 
-module.exports = { customerRegistration, validationCustomers, checkRegister };
+module.exports = { customerRegistration, validationCustomers, verifyCode };

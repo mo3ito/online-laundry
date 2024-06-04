@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import DefaultButton from "@/components/share/defaultButton";
 import sendData from "@/services/sendData";
 import Logo from "@/components/logo/Logo";
+import { VERIFY_CODE } from "@/routeApi/endpoints";
 
 export default function Page() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -69,7 +70,7 @@ export default function Page() {
   const sendCodeHandler = async ()=>{
 
     try {
-      const response = await sendData("http://localhost:4000/customers/check-register" , {code_number : allInputValues})
+      const response = await sendData(VERIFY_CODE , {code_number : allInputValues})
 
       if(response.status === 200  ){
         console.log(response);
