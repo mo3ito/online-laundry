@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import DefaultButton from "@/components/share/defaultButton";
 import sendData from "@/services/sendData";
+import Logo from "@/components/logo/Logo";
 
 export default function Page() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -90,17 +91,7 @@ export default function Page() {
   return (
     <div className="w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center flex-col">
       <div className="-translate-y-44 text-center  max-[350px]:w-full max-[350px]:px-6 w-8/12 sm:w-96">
-      <header className="flex items-center justify-center gap-x-2 bg-sky-200 w-full rounded-t-lg py-2">
-          <img
-            src="/images/tshirt_2887535.png"
-            className="w-12 h-12"
-            alt="T-shirt icon"
-          />
-          <div>
-            <h1 className="font-bold text-xl text-sky-600">مسیتو پاک</h1>
-            <p className="text-sm">خشکشویی آنلاین</p>
-          </div>
-        </header>
+      <Logo as="header"/>
       <h1 className="my-4 max-[350px]:text-base text-xl sm:text-2xl">کد پیامک شده را وارد کنید</h1>
       <div dir="ltr" className="w-full  flex items-center justify-center gap-x-3">
         {Array.from({ length: 5 }).map((_, index) => (
@@ -126,7 +117,7 @@ export default function Page() {
           isActiveSendButton ? "bg-sky-200 border-sky-600 " : "bg-zinc-300 border-red-300"
         } w-full h-12 rounded-lg mt-4 border`}
         classNameContent={`${
-          isActiveSendButton ? "text-black" : "text-red-500 "
+          isActiveSendButton ? "text-black" : "text-zinc-500 "
         }`}
       />
       </div>
