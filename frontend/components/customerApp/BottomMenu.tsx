@@ -2,7 +2,7 @@
 import {useContext} from "react";
 import Link from "next/link";
 import { OrderCardContext } from "@/context/order-card";
-import { OrderCardContextType } from "@/types/context/orderCard";
+import { OrderCardContextType } from "@/types/context/OrderCard";
 
 
 export default function BottomMenu() {

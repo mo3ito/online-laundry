@@ -4,7 +4,7 @@ import addClothingHandler from '@/app/utils/addClothingHandler'
 import deleteClothingHandler from '@/app/utils/deleteClothingHandler'
 import minesClothingHandler from '@/app/utils/minesClothingHandler'
 import HeaderComponent from '@/components/customerApp/headerComponent/HeaderComponent'
-import { OrderCardContextType } from '@/types/context/orderCard'
+import { OrderCardContextType } from '@/types/context/OrderCard'
 import { OrderCardContext } from '@/context/order-card'
 
 export default function Page() {

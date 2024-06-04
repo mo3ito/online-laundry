@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useState , useEffect } from "react";
-import { OrderCardType, OrderCardContextType } from "@/types/context/orderCard";
+import { OrderCardType, OrderCardContextType } from "@/types/context/OrderCard";
 
 export const OrderCardContext = createContext<OrderCardContextType | null>(
   null

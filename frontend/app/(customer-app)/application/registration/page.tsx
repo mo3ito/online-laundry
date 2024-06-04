@@ -1,12 +1,16 @@
 'use client'
-import { LegacyRef, MutableRefObject, RefObject } from "react";
+import { RefObject , useContext } from "react";
 import Logo from "@/components/logo/Logo";
 import DefaultButton from "@/components/share/defaultButton";
 import React, { useRef } from "react";
 import useFocusInput from "@/hooks/useFocusInput";
+import { AuthContext } from "@/context/authContext";
 
 export default function page() {
     const nameInputRef : RefObject<HTMLInputElement>  = useRef<HTMLInputElement | null>(null);
+    // const {infos} = useContext(AuthContext)
+    // console.log(infos);
+    
     useFocusInput(nameInputRef)
   return (
     <div className="w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center flex-col justify-center">
