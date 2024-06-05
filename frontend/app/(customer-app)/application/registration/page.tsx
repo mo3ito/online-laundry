@@ -9,13 +9,14 @@ import sendData from "@/services/sendData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import useAuthContext from "@/hooks/useAuthContext";
 
 export default function page() {
   const [name, setName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { infos, login, setInfos } = useContext(AuthContext);
+  const { infos, login } = useAuthContext()
   const nameInputRef: RefObject<HTMLInputElement> =
     useRef<HTMLInputElement | null>(null);
     const router = useRouter()
