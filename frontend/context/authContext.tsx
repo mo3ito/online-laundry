@@ -3,6 +3,7 @@ import { createContext, useState, useCallback, useEffect } from "react";
 import {
   InitialInfosType,
   AuthContextValue,
+  DecodedTokenType,
 } from "@/types/context/AuthContextType";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -38,8 +39,9 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       const getInfosFromToken = async () => {
         const token = await Cookies.get("mo3itoPak");
         if (token?.length) {
-          const decodedToken: object = await jwtDecode(token);
-          setInfos(decodedToken as InitialInfosType);
+          const decodedToken: DecodedTokenType =
+            await jwtDecode<DecodedTokenType>(token);
+          setInfos(decodedToken.infos);
         } else {
           setInfos(null);
         }

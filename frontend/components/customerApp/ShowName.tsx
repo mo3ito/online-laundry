@@ -1,10 +1,20 @@
-import NoPersonSvg from './svgs/NoPersonSvg'
+import NoPersonSvg from "./svgs/NoPersonSvg";
 
-export default function ShowName() {
+type ShowNameProps = {
+  customerName: string | undefined;
+  customerLastName: string | undefined;
+};
+
+export default function ShowName({
+  customerName,
+  customerLastName,
+}: ShowNameProps) {
   return (
-    <div className='-translate-y-3'>
-    <NoPersonSvg />
-    <p className=" text-center text-sm sm:text-lg translate-y-1">مصطفی</p>
-  </div>
-  )
+    <div className="-translate-y-3 flex items-center justify-center flex-col">
+      <NoPersonSvg />
+      <p className=" text-center text-sm sm:text-lg translate-y-1">
+        {`${customerName} ${customerLastName}`}
+      </p>
+    </div>
+  );
 }

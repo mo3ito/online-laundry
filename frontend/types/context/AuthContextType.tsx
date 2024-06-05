@@ -13,3 +13,7 @@ export type AuthContextValue = {
   logout: () => void;
   token: string | null;
 };
+
+export type DecodedTokenType = {
+  infos: InitialInfosType;
+};
