@@ -1,10 +1,11 @@
 "use client";
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useEffect } from "react";
 import {
   InitialInfosType,
   AuthContextValue,
 } from "@/types/context/AuthContextType";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -31,6 +32,21 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     await setInfos(null);
     await Cookies.remove("mo3itoPak");
   }, []);
+
+  useEffect(() => {
+    if (!!login) {
+      const getInfosFromToken = async () => {
+        const token = await Cookies.get("mo3itoPak");
+        if (token?.length) {
+          const decodedToken: object = await jwtDecode(token);
+          setInfos(decodedToken as InitialInfosType);
+        } else {
+          setInfos(null);
+        }
+      };
+      getInfosFromToken();
+    }
+  }, [login]);
 
   return (
     <AuthContext.Provider value={{ infos, setInfos, login, logout, token }}>

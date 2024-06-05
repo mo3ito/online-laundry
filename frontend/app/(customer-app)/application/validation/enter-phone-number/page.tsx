@@ -52,10 +52,7 @@ export default function Page() {
         console.log(response);
         setIsLoading(false);
         router.replace("/application/validation/verify-code");
-      } else {
-        setIsLoading(false);
-        toast.error("خطایی رخ داد لطفا دوباره تلاش کنید");
-      }
+      } 
     } catch (error: any) {
       console.error("خطا در ارتباط با سرور:", error);
       setIsLoading(false);
