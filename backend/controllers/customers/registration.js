@@ -112,15 +112,14 @@ const customerRegistration = async (req, res) => {
       phone_number,
     };
 
-    const token = await createToken(customerInfos);
-
     const newCustomer = new CustomersModel(customerInfos);
     await newCustomer.save();
 
+    const token = await createToken({newCustomer});
     customer.is_register = true;
     await customer.save();
 
-    res.status(200).json({ customerInfos, token });
+    res.status(200).json({ newCustomer, token });
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
