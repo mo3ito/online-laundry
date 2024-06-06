@@ -143,96 +143,13 @@ const customerRegistration = async (req, res) => {
   }
 };
 
-const validationForLogin = async (req, res) => {
-  const { phone_number } = req.body;
 
-  try {
-    const customer = await CustomersModel.findOne({ phone_number });
 
-    if (!customer) {
-      return res.status(400).json({
-        message: "شما ثبت‌نام انجام نداده‌اید لطفا ثبت‌نام کنید",
-      });
-    }
 
-    const randomCode = await generateRandomCode();
 
-    await CustomersAwaitingValidation.findOneAndUpdate(
-      { phone_number },
-      { code_number: randomCode },
-      { upsert: true, new: true }
-    );
-
-    const smsResponse = await sendSMS(phone_number, [randomCode]);
-    const smsResponseParsed = await JSON.parse(smsResponse);
-    console.log("SMS sent successfully:", smsResponse);
-
-    if (
-      (smsResponseParsed.status = "ارسال موفق بود" && smsResponseParsed.recId)
-    ) {
-      return res.status(200).json({
-        message: "کد تایید برای شما ارسال شد",
-      });
-    } else {
-      return res.status(400).json({
-        message: "خطایی رخ داد دوباره تلاش کنید",
-      });
-    }
-  } catch (error) {
-    console.error("error:", error.message);
-    return res.status(500).json({
-      message: error,
-    });
-  }
-};
-
-const customerLogin = async (req, res) => {
-  const { code_number } = req.body;
-
-  try {
-    const customerAwaiting = await CustomersAwaitingValidation.findOne({
-      code_number,
-    });
-
-    if (!customerAwaiting) {
-      return res.status(400).json({
-        message: "کد وارد شده صحیح نمی‌باشد",
-      });
-    }
-
-    const customer = await CustomersModel.findOne({
-      phone_number: customerAwaiting.phone_number,
-    });
-
-    if (!customer) {
-      return res.status(400).json({
-        message: "مشتری با شماره تلفن مورد نظر در لیست مشتریان وجود ندارد.",
-      });
-    }
-
-    await CustomersAwaitingValidation.updateOne(
-      { phone_number: customer.phone_number },
-      { $unset: { code_number: "" } }
-    );
-
-    const token = await createToken({ infos: customer });
-
-    return res.status(200).json({
-      infos: customer,
-      token,
-    });
-  } catch (error) {
-    console.error("error:", error.message);
-    return res.status(500).json({
-      message: error,
-    });
-  }
-};
 
 module.exports = {
   customerRegistration,
   validationCustomers,
   verifyCode,
-  validationForLogin,
-  customerLogin,
 };

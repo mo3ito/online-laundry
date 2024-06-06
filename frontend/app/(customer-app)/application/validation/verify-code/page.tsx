@@ -6,12 +6,14 @@ import DefaultButton from "@/components/share/defaultButton";
 import sendData from "@/services/sendData";
 import Logo from "@/components/logo/Logo";
 import { VERIFY_CODE } from "@/routeApi/endpoints";
+import useAuthContext from "@/hooks/useAuthContext";
 
 export default function Page() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [isActiveSendButton, setIsActiveSendButton] = useState<boolean>(false);
   const [allInputValues, setAllInputValues] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {login} = useAuthContext()
   const router = useRouter();
 
   useEffect(() => {
@@ -67,30 +69,69 @@ export default function Page() {
     checkAllInputsFilled();
   };
 
+  // const sendCodeHandler = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await sendData(VERIFY_CODE, {
+  //       code_number: allInputValues,
+  //     });
+
+  //     if (response.status === 200 && response.data) {
+  //       if(response.data.token){
+  //        await login(response?.data.infos , response?.data.token)
+  //        router.replace("/application");
+  //        setIsLoading(false);
+  //       } else{
+  //         console.log(response);
+  //         setIsLoading(false);
+  //         router.replace("/application/registration");
+  //       }
+
+  //     }
+  //   } catch (error: any) {
+  //     console.error("خطا در ارتباط با سرور:", error);
+  //     setIsLoading(false);
+  //     if (error.response && error.response.status === 400) {
+  //       const errorMessage: string =
+  //         error.response.data?.message || "خطایی رخ داده است.";
+  //       toast.error(errorMessage);
+  //     } else {
+  //       toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
+  //     }
+  //   }
+  // };
+
   const sendCodeHandler = async () => {
     try {
       setIsLoading(true);
-      const response = await sendData(VERIFY_CODE, {
-        code_number: allInputValues,
-      });
-
-      if (response.status === 200) {
+      const response = await sendData(VERIFY_CODE, { code_number: allInputValues });
+  
+      if (response.status === 200 && response.data) {
+        const { token, infos } = response.data;
+  
+        if (token) {
+          await login(infos, token);
+          router.replace("/application");
+        } else {
+          router.replace("/application/registration");
+        }
+      } else {
         console.log(response);
-        setIsLoading(false);
         router.replace("/application/registration");
       }
     } catch (error: any) {
       console.error("خطا در ارتباط با سرور:", error);
-      setIsLoading(false);
-      if (error.response && error.response.status === 400) {
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
+      if (error.response?.status === 400) {
+        const errorMessage: string = error.response.data?.message || "خطایی رخ داده است.";
         toast.error(errorMessage);
       } else {
         toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center flex-col">
