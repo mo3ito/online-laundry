@@ -1,12 +1,14 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/about')) {
-    return NextResponse.rewrite(new URL('/about-2', request.url))
-  }
- 
-  if (request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.rewrite(new URL('/dashboard/user', request.url))
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { mo3itoPakToken } from "./help/tokenName";
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const token = request.cookies.get(mo3itoPakToken)?.value;
+
+  if (pathname === "/application" && !token) {
+    return NextResponse.redirect(
+      new URL("/application/validation/enter-phone-number", request.url)
+    );
   }
 }
