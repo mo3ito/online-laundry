@@ -71,7 +71,22 @@ const verifyCode = async (req, res) => {
         { _id: customer._id },
         { $unset: { code_number: "" } }
       );
-      return res.status(200).json(customerWithoutCodeNumber);
+
+      if (customerWithoutCodeNumber) {
+        const customerRegistered = await CustomersModel.findOne({
+          phone_number: customerWithoutCodeNumber.phone_number,
+        });
+
+        if (!customerRegistered) {
+          return res.status(200).json(customerWithoutCodeNumber);
+        } else {
+          const token = await createToken({ infos: customerRegistered });
+          res.status(200).json({
+            infos: customerRegistered,
+            token,
+          });
+        }
+      }
     } else {
       return res.status(400).json({
         message: "کد وارد شده صحیح نمی‌باشد",
@@ -96,7 +111,7 @@ const customerRegistration = async (req, res) => {
 
     if (!customer) {
       return res.status(400).json({
-        message: "مشتری با این مشخصات یافت نشد",
+        message: "شماره موبایل وارد شده صحیح نمی‌باشد",
       });
     }
 
