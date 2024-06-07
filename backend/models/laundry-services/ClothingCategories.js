@@ -8,6 +8,9 @@ const ClothingCategoriesSchema = new Schema({
   english_name: {
     type: String,
   },
+  image_url:{
+    type: String
+  }
 });
 
 const ClothingCategory = mongoose.model(

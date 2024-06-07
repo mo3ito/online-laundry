@@ -6,7 +6,12 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get(mo3itoPakToken)?.value;
 
-  if (pathname === "/application" && !token) {
+  if (
+    pathname.startsWith("/application") &&
+    !pathname.startsWith("/application/validation/enter-phone-number") &&
+    !pathname.startsWith("/application/validation/verify-code") &&
+    !token
+  ) {
     return NextResponse.redirect(
       new URL("/application/validation/enter-phone-number", request.url)
     );
