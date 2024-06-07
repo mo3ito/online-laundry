@@ -19,7 +19,7 @@ export default function Header() {
           </div>
           <div className="text-white">
             <Link
-              href="/application"
+              href="/application/validation/enter-phone-number"
               className="bg-sky-500 px-2 py-2 rounded-md ml-2"
             >
               ثبت سفارش / ثبت‌نام
