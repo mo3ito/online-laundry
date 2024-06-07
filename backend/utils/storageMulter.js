@@ -1,9 +1,17 @@
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
-const imageFormater = require("../middlewares/imageFormater"); 
+const fs = require("fs").promises;
+const imageFormater = require("../middlewares/imageFormater");
 
-const storageMulter = async (pathDir, model, additionalFolderName) => {
+const checkAndCreateDir = async (fullPath) => {
+  try {
+    await fs.access(fullPath);
+  } catch (err) {
+    await fs.mkdir(fullPath, { recursive: true });
+  }
+};
+
+const storageMulter = (pathDir, model, additionalFolderName) => {
   return multer({
     storage: multer.diskStorage({
       destination: async (req, file, cb) => {
@@ -12,11 +20,9 @@ const storageMulter = async (pathDir, model, additionalFolderName) => {
           if (!isAdmin) {
             return cb(new Error("ادمینی با این آیدی وجود ندارد"), null);
           }
-          const fullPath = path.join(__dirname, pathDir);
+          const fullPath = path.resolve(pathDir);
 
-          if (!fs.existsSync(fullPath)) {
-            fs.mkdirSync(fullPath, { recursive: true });
-          }
+          await checkAndCreateDir(fullPath);
 
           cb(null, fullPath);
         } catch (error) {
