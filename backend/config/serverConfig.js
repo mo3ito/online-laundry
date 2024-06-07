@@ -7,7 +7,8 @@ const connectToDatabase = require("./database");
 const adminRegistration = require("../routes/admin/registration");
 const customerRegistration = require("../routes/customers/registration");
 const startServer = require("../routes/index");
-const ClothingCategory = require("../routes/laundry-clothing-category/laundry-clothing-category");
+const ClothingCategory = require("../routes/laundry-clothing/laundry-clothing-category");
+const ClothingTypes = require("../routes/laundry-clothing/clothing-type");
 
 const configureServer = (app) => {
   app.use(express.json());
@@ -18,6 +19,7 @@ const configureServer = (app) => {
   app.use("/", adminRegistration);
   app.use("/", customerRegistration);
   app.use("/", ClothingCategory);
+  app.use("/", ClothingTypes);
   connectToDatabase();
 };
 

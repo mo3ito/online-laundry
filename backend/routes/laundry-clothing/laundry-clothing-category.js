@@ -4,7 +4,7 @@ const {
   getClothingCategory,
   addClothingCategory,
   uploadAndHandleClothingCategoryImage
-} = require("../../controllers/laundry-clothing-category/laundry-clothing-category");
+} = require("../../controllers/laundry-clothing/laundry-clothing-category");
 
 router.get("/clothing-category/get-category", getClothingCategory);
 router.post("/clothing-category/add-category", addClothingCategory);

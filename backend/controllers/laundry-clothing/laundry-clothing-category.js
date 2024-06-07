@@ -1,6 +1,5 @@
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
 const AdminModel = require("../../models/admin/AdminModel");
-const storageMulter = require("../../utils/storageMulter");
 const uploadImage = require("../../utils/uploadImage");
 require("dotenv").config();
 const path = require("path");

@@ -1,11 +1,11 @@
 const storageMulter = require("./storageMulter");
 
-const uploadImage = (path, model, folderName) => {
+const uploadImage = (path, model,imageKey) => {
   return async (req, res, next) => {
     try {
-      const upload = storageMulter(path, model, folderName);
+      const upload = storageMulter(path, model, imageKey);
 
-      upload.single(folderName)(req, res, (err) => {
+      upload.single(imageKey)(req, res, (err) => {
         if (err) {
           return next(err);
         }
