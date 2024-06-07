@@ -1,6 +1,7 @@
 const AdminModel = require("../../models/admin/AdminModel");
 const ClothingTypesModel = require("../../models/laundry-services/ClothingType");
 const uploadImage = require("../../utils/uploadImage");
+const path = require("path");
 
 const addImageClothingType = uploadImage(
   "public/images/clothing-types",
@@ -9,17 +10,26 @@ const addImageClothingType = uploadImage(
 );
 
 const addClothingTypes = async (req, res) => {
+  const adminId = req.headers.authorization;
   const {
     clothing_category,
     clothing_category_English,
     type,
     first_price,
     last_price,
-    image_url,
     unit,
   } = req.body;
 
+  console.log("Admin ID:", adminId);
   try {
+    const isAdmin = await AdminModel.findById(adminId);
+
+    if (!isAdmin) {
+      return res.status(400).json({
+        message: "ادمین آیدی وارد شده صحیح نمی‌باشد",
+      });
+    }
+
     if (
       !clothing_category &&
       !clothing_category_English &&
@@ -39,7 +49,6 @@ const addClothingTypes = async (req, res) => {
       type,
       first_price,
       last_price,
-      image_url,
       unit,
     });
 
