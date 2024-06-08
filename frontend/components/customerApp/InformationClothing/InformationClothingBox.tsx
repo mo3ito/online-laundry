@@ -1,11 +1,11 @@
 "use client";
-import { useEffect } from "react";
 import InformationClothingsItem from "./InformationClothingsItem";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import getData from "@/services/getData";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { InformationClothingsItemProps } from "@/types/category";
+import { GET_ALL_TYPE } from "@/routeApi/endpoints";
 
 export default function InformationClothingBox() {
   const params = useParams();
@@ -14,9 +14,7 @@ export default function InformationClothingBox() {
   const { data: allGroupTypeData, isLoading } = useQuery({
     queryKey: groupType ? ["all group type data"] : [],
     queryFn: () =>
-      getData(
-        `http://localhost:4000/clothing-type/get-all-type/?clothing_category_English=${groupType}`
-      ),
+      getData(`${GET_ALL_TYPE}/?clothing_category_English=${groupType}`),
   });
 
   console.log(params);
