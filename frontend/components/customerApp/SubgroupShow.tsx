@@ -8,7 +8,6 @@ export default function SubgroupShow() {
     <div>
       <SubgroupShowHeader />
       <InformationClothingBox />
-      jjj
     </div>
   );
 }

@@ -7,23 +7,22 @@ import { useParams } from "next/navigation";
 import getData from "@/services/getData";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { allCategoryType } from "@/types/category";
+import { GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
 
 export default function SubgroupShowHeader() {
   const [allCategoryWithoutCurrent, setAllCategoryWithoutCurrent] = useState<
     allCategoryType[] | null
   >(null);
-  const [currentCategory, setCurrentCategory] =
-    useState<allCategoryType | null>(null);
+  const [currentCategory, setCurrentCategory] = useState<allCategoryType | null>(null);
 
   const params = useParams();
   console.log(params);
 
   const queryKey = ["all category"];
 
-  const { data: allCategory, isLoading } = useQuery({
+  const { data: allCategory } = useQuery({
     queryKey: queryKey,
-    queryFn: () =>
-      getData("http://localhost:4000/clothing-category/get-category"),
+    queryFn: () => getData(GET_CLOTHING_CATEGORY),
   });
 
   useEffect(() => {
