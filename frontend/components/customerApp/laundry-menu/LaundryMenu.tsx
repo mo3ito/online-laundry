@@ -3,7 +3,7 @@ import MenuItem from "./LaundryMenuItem";
 import getData from "@/services/getData";
 import { useQuery } from "@tanstack/react-query";
 import { GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
-import Loading from "@/components/Loading/Loading";
+import LoadingPage from "@/components/Loading/LoadingPage";
 
 type LaundryMenuProps = {
   title: string;
@@ -45,7 +45,7 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
           </ul>
         </div>
       ) : (
-        <Loading />
+        <LoadingPage />
       )}
     </>
   );

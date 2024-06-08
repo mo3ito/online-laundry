@@ -13,7 +13,7 @@ export default function ShowName({
     <div className="-translate-y-3 flex items-center justify-center flex-col">
       <NoPersonSvg />
       <p className=" text-center text-sm sm:text-lg translate-y-1">
-        {`${customerName} ${customerLastName}`}
+        {`${customerName ? customerName : ""} ${customerLastName ? customerLastName : ""}`}
       </p>
     </div>
   );
