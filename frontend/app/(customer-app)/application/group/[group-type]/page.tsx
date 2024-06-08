@@ -15,7 +15,6 @@ export default function page() {
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
     >
       <SubgroupShow />
-      lllglglglglg
     </div>
   );
 }

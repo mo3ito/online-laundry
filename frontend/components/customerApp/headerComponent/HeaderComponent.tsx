@@ -6,17 +6,20 @@ type HeaderComponentProps = {
   as?: React.ElementType;
 };
 
-const HeaderComponent = ({
+export default function HeaderComponent({
   title,
   as: Component = "div",
   className,
-}: HeaderComponentProps) => {
+}: HeaderComponentProps) {
+
   const backHandler = () => {
     window.history.back();
   };
 
   return (
-    <Component className={`${className} flex items-center justify-between max-[280px]:px-3 px-6  sm:px-8 py-3 text-sm sm:text-base`}>
+    <Component
+      className={`${className} flex items-center justify-between max-[280px]:px-3 px-6  sm:px-8 py-3 text-sm sm:text-base`}
+    >
       <h1 className="font-bold">{title}</h1>
       <button
         onClick={backHandler}
@@ -34,6 +37,4 @@ const HeaderComponent = ({
       </button>
     </Component>
   );
-};
-
-export default HeaderComponent;
+}
