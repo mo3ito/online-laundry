@@ -17,6 +17,7 @@ const addClothingTypes = async (req, res) => {
     clothing_category,
     clothing_category_English,
     type,
+    english_type,
     first_price,
     last_price,
     unit,
@@ -36,6 +37,7 @@ const addClothingTypes = async (req, res) => {
       !clothing_category &&
       !clothing_category_English &&
       !type &&
+      !english_type &&
       !first_price &&
       !last_price &&
       !unit
@@ -45,10 +47,21 @@ const addClothingTypes = async (req, res) => {
       });
     }
 
+    const isClothingTypeBefore = await ClothingTypesModel.findOne({
+      $or: [{ type }, { english_type }],
+    });
+
+    if (isClothingTypeBefore) {
+      return res.status(400).json({
+        message: "این تایپ لباس از قبل وجود دارد",
+      });
+    }
+
     const newClothingTypesModel = new ClothingTypesModel({
       clothing_category,
       clothing_category_English,
       type,
+      english_type,
       first_price,
       last_price,
       unit,

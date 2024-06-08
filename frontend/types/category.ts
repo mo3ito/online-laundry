@@ -17,5 +17,6 @@ export type InformationClothingsItemProps = {
     image_url:string;
     last_price:string;
     type:string;
+    english_type:string;
     unit:string
   }

@@ -9,7 +9,7 @@ export default function InformationClothingsItem(
   return (
     <li key={props._id} className=" max-[280px]:text-xs text-sm sm:text-base ">
       <Link
-        href="/application/group/men/coat"
+        href={`/application/group/${props.clothing_category_English}/${props.english_type}`}
         className="w-full h-28 sm:h-32 bg-white flex items-center justify-between  mb-4 rounded-xl shadow-xl cursor-pointer px-2 sm:px-3"
       >
         <section className="text-center">

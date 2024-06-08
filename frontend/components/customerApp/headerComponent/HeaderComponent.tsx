@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 type HeaderComponentProps = {
   title: string;
@@ -11,9 +13,12 @@ export default function HeaderComponent({
   as: Component = "div",
   className,
 }: HeaderComponentProps) {
+  const router = useRouter();
 
   const backHandler = () => {
-    window.history.back();
+    if (router) {
+      router.back();
+    }
   };
 
   return (

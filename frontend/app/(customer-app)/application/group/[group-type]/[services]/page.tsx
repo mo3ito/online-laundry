@@ -16,17 +16,17 @@ export default function Page() {
 
     return (
         <div
-            style={{ height: `calc(100vh - 254px)` }}
+            style={{ height: `calc(100vh - 248px)` }}
             className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl overflow-auto "
         >
             <HeaderComponent title="کت و شلوار مردانه" as="div" />
 
             <div className='mx-auto flex flex-col items-center justify-center h-full '>
-                <img
+                {/* <img
                     className="size-96 rounded-xl p-2"
                     src="/images/washing-machine.jpg"
                     alt="Washing Machine"
-                />
+                /> */}
 
                 <section className="w-full max-[280px]:px-3 px-6  sm:px-8  h-full cursor-auto pt-3 ">
                     <table className="translate-y-2 w-full table-auto border-collapse border border-gray-300 text-sm sm:text-base">

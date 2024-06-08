@@ -5,7 +5,7 @@ import HeaderComponent from '@/components/customerApp/headerComponent/HeaderComp
 export default function page() {
   return (
     <div
-    style={{ height: `calc(100vh - 254px)` }}
+    style={{ height: `calc(100vh - 248px)` }}
     className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto"
   >
     <HeaderComponent title="سفارشات شما" as="header" className='sticky top-0 bg-slate-100' />

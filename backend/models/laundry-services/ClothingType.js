@@ -14,6 +14,10 @@ const ClothingTypesSchema = new Schema({
     type: String,
     required: true,
   },
+  english_type: {
+    type: String,
+    required: true,
+  },
   first_price: {
     type: String,
     required: true,
