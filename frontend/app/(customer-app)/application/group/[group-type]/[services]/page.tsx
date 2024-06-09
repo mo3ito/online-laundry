@@ -6,25 +6,29 @@ import minesClothingHandler from '@/app/utils/minesClothingHandler'
 import HeaderComponent from '@/components/customerApp/headerComponent/HeaderComponent'
 import useOrderCardContext from '@/hooks/useOrderCardContext'
 import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 import getData from '@/services/getData'
+import LoadingPage from '@/components/Loading/LoadingPage'
 
 export default function Page() {
-    
+    const params = useParams()
     const { orders, setOrders } = useOrderCardContext()
-    const {data , isLoading} = useQuery({
+    const {data : information } = useQuery({
         queryKey: ['order'],
-        queryFn:()=> getData("/clothing-type/get-all-type")
+        queryFn:()=> getData(`http://localhost:4000/clothing-type/get-one-type/?english_type=${params["services"]}&clothing_category_English=${params["group-type"]}`)
     })
 
     console.log(orders);
+    console.log(params);
     
 
     return (
-        <div
+        <>
+        { information ? <div
             style={{ height: `calc(100vh - 248px)` }}
             className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl overflow-auto "
         >
-            <HeaderComponent title="کت و شلوار مردانه" as="div" />
+            <HeaderComponent title={information.data.type} as="div" />
 
             <div className='mx-auto flex flex-col items-center justify-center h-full '>
                 {/* <img
@@ -32,6 +36,15 @@ export default function Page() {
                     src="/images/washing-machine.jpg"
                     alt="Washing Machine"
                 /> */}
+
+{/* orders: OrderCardType[],
+  setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
+  id: string,
+  serviceType: string,
+  typeClothing: string,
+  count: number,
+  cost: number,
+  totalCost: number */}
 
                 <section className="w-full max-[280px]:px-3 px-6  sm:px-8  h-full cursor-auto pt-3 ">
                     <table className="translate-y-2 w-full table-auto border-collapse border border-gray-300 text-sm sm:text-base">
@@ -45,13 +58,13 @@ export default function Page() {
                         <tbody>
                             <tr className="mb-3">
                                 <td className="border border-gray-300 p-2 text-center">شستشو و اتو بخار</td>
-                                <td className="border border-gray-300 p-2 text-center">200000</td>
+                                <td className="border border-gray-300 p-2 text-center">{information.data.last_price}</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                 <div className="flex flex-col gap-y-2 sm:flex-row items-center justify-center sm:gap-x-2">
-                                        <button onClick={() => addClothingHandler(orders, setOrders, "clk vndkvnfvj", "شستشو و اتو بخار", "کت و شلوار", 1, 2000, 2000)} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
+                                        <button onClick={() => addClothingHandler(orders, setOrders, information.data._id , "شستشو و اتو بخار", information.data.type , 1, +information.data.last_price , +information.data.last_price )} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
                                             +
                                         </button>
-                                        <button onClick={() => minesClothingHandler(orders, "clk vndkvnfvj", setOrders, 2000, 1)} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
+                                        <button onClick={() => minesClothingHandler(orders, information.data._id , setOrders, "شستشو و اتو بخار" ,+information.data.last_price, 1)} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
                                             -
                                         </button>
                                         <button onClick={() => deleteClothingHandler(orders, setOrders, "clk vndkvnfvj")} className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center">
@@ -64,13 +77,13 @@ export default function Page() {
                             </tr>
                             <tr className="mb-3">
                                 <td className="border border-gray-300 p-2 text-center">اتو بخار</td>
-                                <td className="border border-gray-300 p-2 text-center">1398</td>
+                                <td className="border border-gray-300 p-2 text-center">{information.data.first_price}</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                 <div className="flex flex-col gap-y-2 sm:flex-row items-center justify-center sm:gap-x-2">
-                                        <button onClick={() => addClothingHandler(orders, setOrders, "clk vndkvnf22", "اتو بخار", "کت و شلوار", 1, 2000, 2000)} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
+                                        <button onClick={() => addClothingHandler(orders, setOrders, information.data._id , "اتو بخار", information.data.type , 1, +information.data.first_price , +information.data.first_price )} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
                                             +
                                         </button>
-                                        <button onClick={() => minesClothingHandler(orders, "clk vndkvnf22", setOrders, 2000, 1)} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
+                                        <button onClick={() => minesClothingHandler(orders, information.data._id , setOrders, "اتو بخار" ,+information.data.first_price, 1)} className="h-7 w-9 rounded-lg bg-sky-200 text-lg">
                                             -
                                         </button>
                                         <button onClick={() => deleteClothingHandler(orders, setOrders, "clk vndkvnf22")} className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center">
@@ -85,6 +98,7 @@ export default function Page() {
                     </table>
                 </section>
             </div>
-        </div>
+        </div> : <LoadingPage/>}
+        </>
     );
 }

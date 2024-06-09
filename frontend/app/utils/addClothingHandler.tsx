@@ -1,4 +1,4 @@
-import { OrderCardType } from "@/types/context/orderCard";
+import { OrderCardType } from "@/types/context/OrderCard";
 import { Dispatch, SetStateAction } from "react";
 
 const addClothingHandler = (
