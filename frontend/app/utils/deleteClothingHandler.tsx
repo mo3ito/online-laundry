@@ -1,12 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
-import { OrderCardType } from "@/types/context/orderCard";
+import { OrderCardType } from "@/types/context/OrderCard";
 
 const deleteClothingHandler = (
   orders: OrderCardType[],
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
-  clothingId: string
+  clothingId: string,
+  clothingType: string
 ) => {
-  const newOrderList = orders.filter((order) => order.id !== clothingId);
+  const newOrderList = orders.filter(
+    (order) => order.id === clothingId && order.serviceType !== clothingType
+  );
   setOrders(newOrderList);
 };
 
