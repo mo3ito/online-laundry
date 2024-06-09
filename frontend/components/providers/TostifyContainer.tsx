@@ -10,7 +10,7 @@ export default function ToastifyContainer() {
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
-      rtl={false}
+      rtl={true}
       pauseOnFocusLoss
       draggable
       pauseOnHover
