@@ -1,15 +1,20 @@
 'use client'
-import { useState, useContext } from 'react'
+import { useEffect } from 'react'
 import addClothingHandler from '@/app/utils/addClothingHandler'
 import deleteClothingHandler from '@/app/utils/deleteClothingHandler'
 import minesClothingHandler from '@/app/utils/minesClothingHandler'
 import HeaderComponent from '@/components/customerApp/headerComponent/HeaderComponent'
-import { OrderCardContextType } from '@/types/context/OrderCard'
-import { OrderCardContext } from '@/context/order-card'
+import useOrderCardContext from '@/hooks/useOrderCardContext'
+import { useQuery } from '@tanstack/react-query'
+import getData from '@/services/getData'
 
 export default function Page() {
-    const orderContext = useContext<OrderCardContextType | null>(OrderCardContext);
-    const { orders, setOrders } = orderContext as OrderCardContextType;
+    
+    const { orders, setOrders } = useOrderCardContext()
+    const {data , isLoading} = useQuery({
+        queryKey: ['order'],
+        queryFn:()=> getData("/clothing-type/get-all-type")
+    })
 
     console.log(orders);
     

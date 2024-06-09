@@ -124,8 +124,35 @@ const getAllTypeByClothingCategory = async (req, res) => {
   }
 };
 
+const getOneType = async (req, res) => {
+  const englishTypeQuery = req.query.english_type;
+  const clothingCategoryEnglishQuery = req.query.clothing_category_English;
+
+  try {
+    const targetType = await ClothingTypesModel.findOne({
+      english_type: englishTypeQuery,
+      clothing_category_English: clothingCategoryEnglishQuery,
+    });
+
+    if (!targetType) {
+      return res.status(400).json({
+        message: "لباسی با این مشخصات یافت نشد",
+      });
+    }
+
+    return res.status(200).json(targetType);
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
+
+
 module.exports = {
   addClothingTypes,
   addImageClothingType,
   getAllTypeByClothingCategory,
+  getOneType,
 };
