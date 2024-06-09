@@ -1,5 +1,6 @@
 import { OrderCardType } from "@/types/context/OrderCard";
 import { Dispatch, SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 const addClothingHandler = (
   orders: OrderCardType[],
@@ -11,7 +12,8 @@ const addClothingHandler = (
   cost: number,
   totalCost: number
 ) => {
-    
+  toast.success("سفارش شما با موفقیت اضافه شد");
+
   const newOrder: OrderCardType = {
     id,
     serviceType,

@@ -1,5 +1,6 @@
 import { OrderCardType } from "@/types/context/OrderCard";
 import { Dispatch, SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 const minesClothingHandler = (
   orders: OrderCardType[],
@@ -15,13 +16,18 @@ const minesClothingHandler = (
     const updatedOrders = orders.map((order) => {
       if (order.id === isOrder.id && order.serviceType === typeClothing) {
         const updatedCount = order.count - count <= 0 ? 1 : order.count - count;
-        const updateTotalCost = order.count - count <= 0 ? totalCost : order.totalCost - totalCost;
+        const updateTotalCost =
+          order.count - count <= 0 ? totalCost : order.totalCost - totalCost;
+        if (order.count > 1) {
+          toast.success("سفارش شما با موفقیت کاسته شد");
+        }
         return {
           ...order,
           count: updatedCount,
           totalCost: updateTotalCost,
         };
       }
+
       return order;
     });
     setOrders(updatedOrders);
