@@ -32,8 +32,8 @@ export default function Page() {
 
 
     useEffect(()=>{
-        if(informationForDelete && informationForDelete.orders && informationForDelete.clothingType){
-            const isTheSameService =  informationForDelete?.orders.some(order=> order.serviceType === informationForDelete.clothingType && order.typeClothing === informationForDelete.type)
+        if(informationForDelete && informationForDelete.orders && informationForDelete.serviceType){
+            const isTheSameService =  informationForDelete?.orders.some(order=> order.serviceType === informationForDelete.serviceType && order.typeClothing === informationForDelete.type)
             setIstheSameServiceAndType(isTheSameService)
             
         }
@@ -43,14 +43,14 @@ export default function Page() {
     orders: OrderCardType[],
     setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
     clothingId: string,
-    clothingType: string,
+    serviceType: string,
     type: string
   ) => {
    await setInformationForDelete({
       orders,
       setOrders,
       clothingId,
-      clothingType,
+      serviceType,
       type,
     });
     setIsShowModal(true);
@@ -62,7 +62,7 @@ export default function Page() {
         informationForDelete.orders,
         informationForDelete.setOrders,
         informationForDelete.clothingId,
-        informationForDelete.clothingType,
+        informationForDelete.serviceType,
         informationForDelete.type
       );
       setInformationForDelete(null)

@@ -19,6 +19,6 @@ export type InformationForDelete = {
   orders: OrderCardType[];
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
   clothingId: string;
-  clothingType: string;
+  serviceType: string;
   type: string;
 } | null;
