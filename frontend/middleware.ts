@@ -10,6 +10,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/application") &&
     !pathname.startsWith("/application/validation/enter-phone-number") &&
     !pathname.startsWith("/application/validation/verify-code") &&
+    !pathname.startsWith("/application/registration") &&
     !token
   ) {
     return NextResponse.redirect(
