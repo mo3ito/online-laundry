@@ -17,6 +17,7 @@ import { GET_ONE_TYPE } from "@/routeApi/endpoints";
 export default function Page() {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [informationForDelete, setInformationForDelete] = useState<InformationForDelete>(null)
+  const [isTheSameServiceAndType , setIstheSameServiceAndType]=useState<boolean>(false)
 
   const params = useParams();
   const { orders, setOrders } = useOrderCardContext();
@@ -27,6 +28,16 @@ export default function Page() {
         `${GET_ONE_TYPE}/?english_type=${params["services"]}&clothing_category_English=${params["group-type"]}`
       ),
 });
+
+
+
+    useEffect(()=>{
+        if(informationForDelete && informationForDelete.orders && informationForDelete.clothingType){
+            const isTheSameService =  informationForDelete?.orders.some(order=> order.serviceType === informationForDelete.clothingType && order.typeClothing === informationForDelete.type)
+            setIstheSameServiceAndType(isTheSameService)
+            
+        }
+    },[informationForDelete])
 
   const delteHandler = async (
     orders: OrderCardType[],
@@ -61,6 +72,8 @@ export default function Page() {
   };
 
   console.log(orders);
+  console.log(informationForDelete);
+  
 
   return (
     <>
@@ -235,9 +248,9 @@ export default function Page() {
       <Modal
         messageContent="آیا از حذف اطمینان دارید؟"
         setIsShowModal={setIsShowModal}
-        isShowModal={isShowModal}
+        isShowModal={ isTheSameServiceAndType && isShowModal}
         confirmOnClick={confirmDeleteHandler}
-      />{" "}
+      />
     </>
   );
 }
