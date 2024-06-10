@@ -16,7 +16,7 @@ export default function InformationClothingsItem(
           <h2>{props.type}</h2>
           <p>{`(${props.unit})`}</p>
           <p>
-            {props.first_price} - {props.last_price}
+            {props.last_price} - {props.first_price}
           </p>
         </section>
 
