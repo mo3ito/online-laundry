@@ -12,5 +12,13 @@ export type OrderCardType = {
 export type OrderCardContextType = {
   orders: OrderCardType[];
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
-  totalNumber: number
+  totalNumber: number;
 };
+
+export type InformationForDelete = {
+  orders: OrderCardType[];
+  setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
+  clothingId: string;
+  clothingType: string;
+  type: string;
+} | null;

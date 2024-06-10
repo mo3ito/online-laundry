@@ -1,31 +1,43 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import useDropDown from "@/hooks/useDropDown";
 
 type ModalProps = {
   messageContent: string;
   confirmOnClick: () => void;
   isShowModal: boolean;
-  setIsShowModal: Dispatch<SetStateAction<boolean>>
+  setIsShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function Modal({
   messageContent,
   confirmOnClick,
   isShowModal = false,
-  setIsShowModal
+  setIsShowModal,
 }: ModalProps) {
+
+  const ModalBoxRef = useRef<HTMLDivElement | null>(null);
+  useDropDown(ModalBoxRef , isShowModal , setIsShowModal )
+
+
+
   return (
     <div
       className={`${
         isShowModal ? "flex" : "hidden"
-      } w-full h-screen overflow-hidden fixed top-0 left-0 bg-black/65 z-50 flex items-center justify-center`}
+      } w-full h-screen overflow-hidden fixed top-0 left-0 bg-black/65 z-50 flex items-center justify-center  backdrop-blur`}
     >
       <div
+        ref={ModalBoxRef}
         role="dialog"
         aria-labelledby="dialogTitle"
         aria-describedby="dialogDescription"
         className="bg-sky-100 w-96 h-64 rounded-lg border border-sky-500 -translate-y-44 flex flex-col gap-y-10 items-center justify-center p-4 relative"
       >
-        <button onClick={()=>setIsShowModal(false)} className="absolute right-3 top-3 ">
+        <button
+          onClick={() => setIsShowModal(false)}
+          className="absolute right-3 top-2 "
+          aria-label="بستن"
+        >
           <svg
             className="size-6 fill-red-400"
             xmlns="http://www.w3.org/2000/svg"

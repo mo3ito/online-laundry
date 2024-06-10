@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState , Dispatch , SetStateAction} from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import addClothingHandler from "@/app/utils/addClothingHandler";
 import deleteClothingHandler from "@/app/utils/deleteClothingHandler";
 import minesClothingHandler from "@/app/utils/minesClothingHandler";
@@ -10,63 +10,57 @@ import { useParams } from "next/navigation";
 import getData from "@/services/getData";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import Modal from "@/components/Modal";
-import { OrderCardType } from "@/types/context/OrderCard";
-
+import { OrderCardType , InformationForDelete } from "@/types/context/OrderCard";
+import { GET_ONE_TYPE } from "@/routeApi/endpoints";
 
 
 export default function Page() {
-    const [isShowModal, setIsShowModal] = useState<boolean>(false);
-    const [informationForDelete, setInformationForDelete] = useState<{
-      orders: OrderCardType[];
-      setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
-      clothingId: string;
-      clothingType: string;
-      type: string;
-    } | null>(null);
-    
-    const params = useParams();
-    const { orders, setOrders } = useOrderCardContext();
-    const { data: information } = useQuery({
-      queryKey: ["order"],
-      queryFn: () =>
-        getData(
-          `http://localhost:4000/clothing-type/get-one-type/?english_type=${params["services"]}&clothing_category_English=${params["group-type"]}`
-        ),
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [informationForDelete, setInformationForDelete] = useState<InformationForDelete>(null)
+
+  const params = useParams();
+  const { orders, setOrders } = useOrderCardContext();
+  const { data: information } = useQuery({
+    queryKey: ["order"],
+    queryFn: () =>
+      getData(
+        `${GET_ONE_TYPE}/?english_type=${params["services"]}&clothing_category_English=${params["group-type"]}`
+      ),
+});
+
+  const delteHandler = async (
+    orders: OrderCardType[],
+    setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
+    clothingId: string,
+    clothingType: string,
+    type: string
+  ) => {
+   await setInformationForDelete({
+      orders,
+      setOrders,
+      clothingId,
+      clothingType,
+      type,
     });
-  
-    const delteHandler = async (
-      orders: OrderCardType[],
-      setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
-      clothingId: string,
-      clothingType: string,
-      type: string
-    ) => {
-      setInformationForDelete({
-        orders,
-        setOrders,
-        clothingId,
-        clothingType,
-        type,
-      });
-      setIsShowModal(true);
-    };
-  
-    const confirmDeleteHandler = () =>{
-        if(informationForDelete){
-            deleteClothingHandler(
-                informationForDelete.orders,
-                informationForDelete.setOrders,
-                informationForDelete.clothingId,
-                informationForDelete.clothingType,
-                informationForDelete.type
-              )
-              setIsShowModal(false)
-        }
+    setIsShowModal(true);
+  };
 
+  const confirmDeleteHandler = () => {
+    if (informationForDelete) {
+      deleteClothingHandler(
+        informationForDelete.orders,
+        informationForDelete.setOrders,
+        informationForDelete.clothingId,
+        informationForDelete.clothingType,
+        informationForDelete.type
+      );
+      setInformationForDelete(null)
+      setIsShowModal(false);
+      
     }
+  };
 
-    console.log(orders);
-    
+  console.log(orders);
 
   return (
     <>
@@ -140,13 +134,15 @@ export default function Page() {
                           -
                         </button>
                         <button
-
-                          onClick={()=>delteHandler( 
-                                  orders,
-                                  setOrders,
-                                information.data._id,
-                                "شستشو و اتو بخار",
-                                  information.data.type)}
+                          onClick={() =>
+                            delteHandler(
+                              orders,
+                              setOrders,
+                              information.data._id,
+                              "شستشو و اتو بخار",
+                              information.data.type
+                            )
+                          }
                           className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
                         >
                           <svg
@@ -205,12 +201,15 @@ export default function Page() {
                           -
                         </button>
                         <button
-                           onClick={()=>delteHandler( 
-                            orders,
-                            setOrders,
-                          information.data._id,
-                          "اتو بخار",
-                            information.data.type)}
+                          onClick={() =>
+                            delteHandler(
+                              orders,
+                              setOrders,
+                              information.data._id,
+                              "اتو بخار",
+                              information.data.type
+                            )
+                          }
                           className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
                         >
                           <svg
@@ -233,11 +232,12 @@ export default function Page() {
       ) : (
         <LoadingPage />
       )}
-     <Modal
-          messageContent="آیا از حذف اطمینان دارید؟"
-          setIsShowModal={setIsShowModal}
-          isShowModal={isShowModal}
-          confirmOnClick={confirmDeleteHandler}
-        />    </>
+      <Modal
+        messageContent="آیا از حذف اطمینان دارید؟"
+        setIsShowModal={setIsShowModal}
+        isShowModal={isShowModal}
+        confirmOnClick={confirmDeleteHandler}
+      />{" "}
+    </>
   );
 }
