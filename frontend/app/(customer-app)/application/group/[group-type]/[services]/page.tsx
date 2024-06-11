@@ -10,14 +10,15 @@ import { useParams } from "next/navigation";
 import getData from "@/services/getData";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import Modal from "@/components/Modal";
-import { OrderCardType , InformationForDelete } from "@/types/context/OrderCard";
+import { OrderCardType, InformationForDelete } from "@/types/context/OrderCard";
 import { GET_ONE_TYPE } from "@/routeApi/endpoints";
-
 
 export default function Page() {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [informationForDelete, setInformationForDelete] = useState<InformationForDelete>(null)
-  const [isTheSameServiceAndType , setIstheSameServiceAndType]=useState<boolean>(false)
+  const [informationForDelete, setInformationForDelete] =
+    useState<InformationForDelete>(null);
+  const [isTheSameServiceAndType, setIstheSameServiceAndType] =
+    useState<boolean>(false);
 
   const params = useParams();
   const { orders, setOrders } = useOrderCardContext();
@@ -27,17 +28,22 @@ export default function Page() {
       getData(
         `${GET_ONE_TYPE}/?english_type=${params["services"]}&clothing_category_English=${params["group-type"]}`
       ),
-});
+  });
 
-
-
-    useEffect(()=>{
-        if(informationForDelete && informationForDelete.orders && informationForDelete.serviceType){
-            const isTheSameService =  informationForDelete?.orders.some(order=> order.serviceType === informationForDelete.serviceType && order.typeClothing === informationForDelete.type)
-            setIstheSameServiceAndType(isTheSameService)
-            
-        }
-    },[informationForDelete])
+  useEffect(() => {
+    if (
+      informationForDelete &&
+      informationForDelete.orders &&
+      informationForDelete.serviceType
+    ) {
+      const isTheSameService = informationForDelete?.orders.some(
+        (order) =>
+          order.serviceType === informationForDelete.serviceType &&
+          order.typeClothing === informationForDelete.type
+      );
+      setIstheSameServiceAndType(isTheSameService);
+    }
+  }, [informationForDelete]);
 
   const delteHandler = async (
     orders: OrderCardType[],
@@ -46,7 +52,7 @@ export default function Page() {
     serviceType: string,
     type: string
   ) => {
-   await setInformationForDelete({
+    await setInformationForDelete({
       orders,
       setOrders,
       clothingId,
@@ -65,22 +71,20 @@ export default function Page() {
         informationForDelete.serviceType,
         informationForDelete.type
       );
-      setInformationForDelete(null)
+      setInformationForDelete(null);
       setIsShowModal(false);
-      
     }
   };
 
   console.log(orders);
   console.log(informationForDelete);
-  
 
   return (
     <>
       {information ? (
         <div
           style={{ height: `calc(100vh - 248px)` }}
-          className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl overflow-auto "
+          className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl "
         >
           <HeaderComponent title={information.data.type} as="div" />
 
@@ -248,7 +252,7 @@ export default function Page() {
       <Modal
         messageContent="آیا از حذف اطمینان دارید؟"
         setIsShowModal={setIsShowModal}
-        isShowModal={ isTheSameServiceAndType && isShowModal}
+        isShowModal={isTheSameServiceAndType && isShowModal}
         confirmOnClick={confirmDeleteHandler}
       />
     </>
