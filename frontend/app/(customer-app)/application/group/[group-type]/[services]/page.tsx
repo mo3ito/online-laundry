@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useState, Dispatch, SetStateAction } from "react";
+import {  useState } from "react";
 import addClothingHandler from "@/app/utils/addClothingHandler";
-import deleteClothingHandler from "@/app/utils/deleteClothingHandler";
 import minesClothingHandler from "@/app/utils/minesClothingHandler";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
@@ -10,15 +9,14 @@ import { useParams } from "next/navigation";
 import getData from "@/services/getData";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import Modal from "@/components/Modal";
-import { OrderCardType, InformationForDelete } from "@/types/context/OrderCard";
 import { GET_ONE_TYPE } from "@/routeApi/endpoints";
+import useInformation from "@/hooks/useInformation";
+import delteHandler from "@/app/utils/deleteHandler";
+import confirmDeleteHandler from "@/app/utils/confirmDeleteHandler";
 
 export default function Page() {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [informationForDelete, setInformationForDelete] =
-    useState<InformationForDelete>(null);
-  const [isTheSameServiceAndType, setIstheSameServiceAndType] =
-    useState<boolean>(false);
+
 
   const params = useParams();
   const { orders, setOrders } = useOrderCardContext();
@@ -30,51 +28,12 @@ export default function Page() {
       ),
   });
 
-  useEffect(() => {
-    if (
-      informationForDelete &&
-      informationForDelete.orders &&
-      informationForDelete.serviceType
-    ) {
-      const isTheSameService = informationForDelete?.orders.some(
-        (order) =>
-          order.serviceType === informationForDelete.serviceType &&
-          order.typeClothing === informationForDelete.type
-      );
-      setIstheSameServiceAndType(isTheSameService);
-    }
-  }, [informationForDelete]);
+  const {
+    informationForDelete,
+    setInformationForDelete,
+    isTheSameServiceAndType,
+  } = useInformation();
 
-  const delteHandler = async (
-    orders: OrderCardType[],
-    setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
-    clothingId: string,
-    serviceType: string,
-    type: string
-  ) => {
-    await setInformationForDelete({
-      orders,
-      setOrders,
-      clothingId,
-      serviceType,
-      type,
-    });
-    setIsShowModal(true);
-  };
-
-  const confirmDeleteHandler = () => {
-    if (informationForDelete) {
-      deleteClothingHandler(
-        informationForDelete.orders,
-        informationForDelete.setOrders,
-        informationForDelete.clothingId,
-        informationForDelete.serviceType,
-        informationForDelete.type
-      );
-      setInformationForDelete(null);
-      setIsShowModal(false);
-    }
-  };
 
   console.log(orders);
   console.log(informationForDelete);
@@ -157,7 +116,9 @@ export default function Page() {
                               setOrders,
                               information.data._id,
                               "شستشو و اتو بخار",
-                              information.data.type
+                              information.data.type,
+                              setInformationForDelete,
+                              setIsShowModal
                             )
                           }
                           className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
@@ -224,7 +185,9 @@ export default function Page() {
                               setOrders,
                               information.data._id,
                               "اتو بخار",
-                              information.data.type
+                              information.data.type,
+                              setInformationForDelete,
+                              setIsShowModal
                             )
                           }
                           className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
@@ -253,7 +216,7 @@ export default function Page() {
         messageContent="آیا از حذف اطمینان دارید؟"
         setIsShowModal={setIsShowModal}
         isShowModal={isTheSameServiceAndType && isShowModal}
-        confirmOnClick={confirmDeleteHandler}
+        confirmOnClick={()=>confirmDeleteHandler(informationForDelete , setInformationForDelete , setIsShowModal )}
       />
     </>
   );

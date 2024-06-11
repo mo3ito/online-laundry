@@ -7,7 +7,7 @@ const minesClothingHandler = (
   id: string,
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
   typeClothing: string,
-  totalCost: number,
+  cost: number,
   count: number
 ) => {
   const isOrder = orders.find((order) => order.id === id);
@@ -17,7 +17,7 @@ const minesClothingHandler = (
       if (order.id === isOrder.id && order.serviceType === typeClothing) {
         const updatedCount = order.count - count <= 0 ? 1 : order.count - count;
         const updateTotalCost =
-          order.count - count <= 0 ? totalCost : order.totalCost - totalCost;
+          order.count - count <= 0 ? cost : order.totalCost - cost;
         if (order.count > 1) {
           toast.success("سفارش شما با موفقیت کاسته شد");
         }
