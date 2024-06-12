@@ -18,8 +18,7 @@ const addClothingTypes = async (req, res) => {
     clothing_category_English,
     type,
     english_type,
-    first_price,
-    last_price,
+    services,
     unit,
   } = req.body;
 
@@ -38,8 +37,7 @@ const addClothingTypes = async (req, res) => {
       !clothing_category_English &&
       !type &&
       !english_type &&
-      !first_price &&
-      !last_price &&
+      !services || !Array.isArray(services) || services.length === 0 &&
       !unit
     ) {
       return res.status(400).json({
@@ -47,9 +45,7 @@ const addClothingTypes = async (req, res) => {
       });
     }
 
-    const isClothingTypeBefore = await ClothingTypesModel.findOne({
-      $or: [{ type }, { english_type }],
-    });
+    const isClothingTypeBefore = await ClothingTypesModel.findOne({ type , english_type , services });
 
     if (isClothingTypeBefore) {
       return res.status(400).json({
@@ -62,8 +58,7 @@ const addClothingTypes = async (req, res) => {
       clothing_category_English,
       type,
       english_type,
-      first_price,
-      last_price,
+      services,
       unit,
     });
 

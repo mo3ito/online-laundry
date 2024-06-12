@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const servicesSchema = new Schema({
+  name_service: String,
+  price: String,
+});
+
 const ClothingTypesSchema = new Schema({
   clothing_category: {
     type: String,
@@ -14,15 +19,11 @@ const ClothingTypesSchema = new Schema({
     type: String,
     required: true,
   },
+  services: {
+    type: [servicesSchema],
+    required: true,
+  },
   english_type: {
-    type: String,
-    required: true,
-  },
-  first_price: {
-    type: String,
-    required: true,
-  },
-  last_price: {
     type: String,
     required: true,
   },
