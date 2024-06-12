@@ -13,7 +13,8 @@ const addClothingHandler = (
   totalCost: number
 ) => {
   toast.success("سفارش شما با موفقیت اضافه شد");
-
+  console.log(id);
+  
   const newOrder: OrderCardType = {
     id,
     serviceType,
@@ -49,3 +50,57 @@ const addClothingHandler = (
 };
 
 export default addClothingHandler;
+
+
+// import { OrderCardType } from "@/types/context/OrderCard";
+// import { Dispatch, SetStateAction } from "react";
+// import { toast } from "react-toastify";
+
+// const addClothingHandler = (
+//   orders: OrderCardType[],
+//   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
+//   id: string,
+//   serviceType: string,
+//   typeClothing: string,
+//   count: number,
+//   cost: number,
+//   totalCost: number
+// ) => {
+//   toast.success("سفارش شما با موفقیت اضافه شد");
+
+//   const newOrder: OrderCardType = {
+//     id,
+//     serviceType,
+//     typeClothing,
+//     count,
+//     cost,
+//     totalCost,
+//   };
+
+//   setOrders((prevOrders) => {
+//     const hasSimilarOrder = prevOrders.some(
+//       (order) =>
+//         order.typeClothing === typeClothing && order.serviceType === serviceType
+//     );
+
+//     if (!hasSimilarOrder) {
+//       return [...prevOrders, newOrder];
+//     } else {
+//       return prevOrders.map((order) => {
+//         if (
+//           order.typeClothing === typeClothing &&
+//           order.serviceType === serviceType
+//         ) {
+//           return {
+//             ...order,
+//             count: order.count + count,
+//             totalCost: order.totalCost + totalCost,
+//           };
+//         }
+//         return order;
+//       });
+//     }
+//   });
+// };
+
+// export default addClothingHandler;

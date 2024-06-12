@@ -13,6 +13,7 @@ import { GET_ONE_TYPE } from "@/routeApi/endpoints";
 import useInformation from "@/hooks/useInformation";
 import delteHandler from "@/app/utils/deleteHandler";
 import confirmDeleteHandler from "@/app/utils/confirmDeleteHandler";
+import { ServicesInformationclothing } from "@/types/category";
 
 export default function Page() {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -37,6 +38,9 @@ export default function Page() {
 
   console.log(orders);
   console.log(informationForDelete);
+  console.log(params);
+  console.log(information);
+  
 
   return (
     <>
@@ -65,145 +69,79 @@ export default function Page() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="mb-3">
-                    <td className="border border-gray-300 p-2 text-center">
-                      شستشو و اتو بخار
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      {" "}
-                      {Number(information.data.last_price).toLocaleString(
-                        "en-US"
-                      )}
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      <div className="flex flex-col gap-y-2 sm:flex-row items-center justify-center sm:gap-x-2">
-                        <button
-                          onClick={() =>
-                            addClothingHandler(
-                              orders,
-                              setOrders,
-                              information.data._id,
-                              "شستشو و اتو بخار",
-                              information.data.type,
-                              1,
-                              +information.data.last_price,
-                              +information.data.last_price
-                            )
-                          }
-                          className="h-7 w-9 rounded-lg bg-sky-200 text-lg"
+                  { information.data.services.map((service : ServicesInformationclothing)=>
+                  <tr key={service._id} className="mb-3">
+                  <td className="border border-gray-300 p-2 text-center">
+                    {service.service_name}
+                    
+                  </td>
+                  <td className="border border-gray-300 p-2 text-center">
+                    {" "}
+                    {Number(service.price).toLocaleString(
+                      "en-US"
+                    )}
+                  </td>
+                  <td className="border border-gray-300 p-2 text-center">
+                    <div className="flex flex-col gap-y-2 sm:flex-row items-center justify-center sm:gap-x-2">
+                      <button
+                        onClick={() =>
+                          addClothingHandler(
+                            orders,
+                            setOrders,
+                            service._id,
+                            service.service_name,
+                            information.data.type,
+                            1,
+                            +service.price,
+                            +service.price
+                          )
+                        }
+                        className="h-7 w-9 rounded-lg bg-sky-200 text-lg"
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={() =>
+                          minesClothingHandler(
+                            orders,
+                            service._id,
+                            setOrders,
+                            service.service_name,
+                            +service.price,
+                            1
+                          )
+                        }
+                        className="h-7 w-9 rounded-lg bg-sky-200 text-lg"
+                      >
+                        -
+                      </button>
+                      <button
+                        onClick={() =>
+                          delteHandler(
+                            orders,
+                            setOrders,
+                            service._id,
+                            service.service_name,
+                            information.data.type,
+                            setInformationForDelete,
+                            setIsShowModal
+                          )
+                        }
+                        className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
+                      >
+                        <svg
+                          className="size-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
                         >
-                          +
-                        </button>
-                        <button
-                          onClick={() =>
-                            minesClothingHandler(
-                              orders,
-                              information.data._id,
-                              setOrders,
-                              "شستشو و اتو بخار",
-                              +information.data.last_price,
-                              1
-                            )
-                          }
-                          className="h-7 w-9 rounded-lg bg-sky-200 text-lg"
-                        >
-                          -
-                        </button>
-                        <button
-                          onClick={() =>
-                            delteHandler(
-                              orders,
-                              setOrders,
-                              information.data._id,
-                              "شستشو و اتو بخار",
-                              information.data.type,
-                              setInformationForDelete,
-                              setIsShowModal
-                            )
-                          }
-                          className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
-                        >
-                          <svg
-                            className="size-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d="M4 8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="mb-3">
-                    <td className="border border-gray-300 p-2 text-center">
-                      اتو بخار
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      {Number(information.data.first_price).toLocaleString(
-                        "en-US"
-                      )}
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      <div className="flex flex-col gap-y-2 sm:flex-row items-center justify-center sm:gap-x-2">
-                        <button
-                          onClick={() =>
-                            addClothingHandler(
-                              orders,
-                              setOrders,
-                              information.data._id,
-                              "اتو بخار",
-                              information.data.type,
-                              1,
-                              +information.data.first_price,
-                              +information.data.first_price
-                            )
-                          }
-                          className="h-7 w-9 rounded-lg bg-sky-200 text-lg"
-                        >
-                          +
-                        </button>
-                        <button
-                          onClick={() =>
-                            minesClothingHandler(
-                              orders,
-                              information.data._id,
-                              setOrders,
-                              "اتو بخار",
-                              +information.data.first_price,
-                              1
-                            )
-                          }
-                          className="h-7 w-9 rounded-lg bg-sky-200 text-lg"
-                        >
-                          -
-                        </button>
-                        <button
-                          onClick={() =>
-                            delteHandler(
-                              orders,
-                              setOrders,
-                              information.data._id,
-                              "اتو بخار",
-                              information.data.type,
-                              setInformationForDelete,
-                              setIsShowModal
-                            )
-                          }
-                          className="h-7 w-9 rounded-lg bg-sky-200 text-lg flex items-center justify-center"
-                        >
-                          <svg
-                            className="size-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d="M4 8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                          <path d="M4 8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                  ) }
                 </tbody>
               </table>
             </section>

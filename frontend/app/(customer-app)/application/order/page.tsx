@@ -8,18 +8,33 @@ import { useState, useEffect } from "react";
 import confirmDeleteHandler from "@/app/utils/confirmDeleteHandler";
 import delteHandler from "@/app/utils/deleteHandler";
 import useInformation from "@/hooks/useInformation";
+import LoadingPage from "@/components/Loading/LoadingPage";
 
 export default function page() {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { orders, setOrders } = useOrderCardContext();
+  const {totalNumber} = useOrderCardContext()
+  const [totalPrice , setTotalPrice]=useState<number | null>(null)
   const {informationForDelete, setInformationForDelete, isTheSameServiceAndType} = useInformation();
 
+  console.log(orders);
+  
+  useEffect(() => {
+    const totalPrice = orders.reduce((prev, current) => {
+      return prev + current.totalCost;
+    }, 0);
+    setTotalPrice(totalPrice)
+
+  }, [orders]);
+
   return (
+    
     <div
       style={{ height: `calc(100vh - 248px)` }}
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500 pb-10 "
     >
       <HeaderComponent title="سفارشات شما" as="header" />
+      { orders.length ? <>
       <ul className="w-full h-max p-6 sm:p-8 ">
         {orders.map((order) => (
           <li
@@ -115,16 +130,17 @@ export default function page() {
       <div className=" h-max border border-sky-500 p-2 rounded-lg shadow-xl bg-sky-200 max-[280px]:text-xs text-sm sm:text-base mx-6 sm:mx-8">
         <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2  w-full  ">
           <p>تعداد کل سفارشات </p>
-          <p>5 عدد</p>
+          <p>{totalNumber} عدد</p>
         </div>
         <div className="flex max-[280px]:justify-start justify-between  items-center  gap-x-2  w-full mb-3 ">
           <p>مبلغ کل</p>
-          <p>400 هزارتومان</p>
+          <p>{totalPrice?.toLocaleString("en-US")} تومان</p>
         </div>
         <button className="bg-green-500 py-2 w-full rounded-lg text-white">
           تایید و ادامه
         </button>
       </div>
+      </> : <p className="text-center mt-32">سبد سفارش شما خالی است</p>}
 
       <Modal
         messageContent="آیا از حذف اطمینان دارید؟"
@@ -138,6 +154,7 @@ export default function page() {
           )
         }
       />
-    </div>
+    </div> 
+    
   );
 }

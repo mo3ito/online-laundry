@@ -1,10 +1,17 @@
 import Link from "next/link";
-import { InformationClothingsItemProps } from "@/types/category";
+import {
+  InformationClothingsItemProps,
+  ServicesInformationclothing,
+} from "@/types/category";
 
 export default function InformationClothingsItem(
   props: InformationClothingsItemProps
 ) {
-  console.log(props);
+  console.log("props", props);
+
+  const servicePrices = props.services
+    .map((service: ServicesInformationclothing) => service.price)
+    .join(" - ");
 
   return (
     <li key={props._id} className=" max-[280px]:text-xs text-sm sm:text-base ">
@@ -15,9 +22,7 @@ export default function InformationClothingsItem(
         <section className="text-center">
           <h2>{props.type}</h2>
           <p>{`(${props.unit})`}</p>
-          <p>
-            {props.last_price} - {props.first_price}
-          </p>
+          <p>{servicePrices}</p>
         </section>
 
         <img
