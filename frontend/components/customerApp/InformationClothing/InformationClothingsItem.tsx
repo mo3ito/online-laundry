@@ -10,7 +10,9 @@ export default function InformationClothingsItem(
   console.log("props", props);
 
   const servicePrices = props.services
-    .map((service: ServicesInformationclothing) => service.price)
+    .map((service: ServicesInformationclothing) =>
+      Number(service.price).toLocaleString("en-US")
+    )
     .join(" - ");
 
   return (
