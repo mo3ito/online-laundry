@@ -45,7 +45,7 @@ const addClothingTypes = async (req, res) => {
       });
     }
 
-    const isClothingTypeBefore = await ClothingTypesModel.findOne({ type , english_type , services });
+    const isClothingTypeBefore = await ClothingTypesModel.findOne({ type , english_type});
 
     if (isClothingTypeBefore) {
       return res.status(400).json({
