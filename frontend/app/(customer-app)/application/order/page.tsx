@@ -9,6 +9,7 @@ import confirmDeleteHandler from "@/app/utils/confirmDeleteHandler";
 import delteHandler from "@/app/utils/deleteHandler";
 import useInformation from "@/hooks/useInformation";
 import LoadingPage from "@/components/Loading/LoadingPage";
+import Link from "next/link";
 
 export default function page() {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -136,9 +137,9 @@ export default function page() {
           <p>مبلغ کل</p>
           <p>{totalPrice?.toLocaleString("en-US")} تومان</p>
         </div>
-        <button className="bg-green-500 py-2 w-full rounded-lg text-white">
+        <Link href="/application/location" className="bg-green-500 py-2 w-full rounded-lg text-white inline-block text-center">
           تایید و ادامه
-        </button>
+        </Link>
       </div>
       </> : <p className="text-center mt-32">سبد سفارش شما خالی است</p>}
 
