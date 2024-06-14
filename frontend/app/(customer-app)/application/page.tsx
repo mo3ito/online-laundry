@@ -1,6 +1,6 @@
 
 import LaundryMenu from "@/components/customerApp/laundry-menu/LaundryMenu";
-import NeshanMap from "@/components/neshan-map/NeshanMap";
+import NeshanMap from "@/components/neshan-map/Neshan";
 import SubgroupShow from "@/components/customerApp/SubgroupShow";
 import { useState } from "react";
 
