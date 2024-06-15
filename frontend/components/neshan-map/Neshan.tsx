@@ -9,6 +9,7 @@ import { fromLonLat, toLonLat } from 'ol/proj';
 import NeshanMap, { NeshanMapRef  } from "@neshan-maps-platform/react-openlayers";
 import LoadingPage from "../Loading/LoadingPage";
 
+
 type LatLongType = {
   lat: number,
   long: number
@@ -88,3 +89,5 @@ export default function Neshan() {
     </div>
   );
 }
+
+

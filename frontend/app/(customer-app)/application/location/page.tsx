@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 import Neshan from "@/components/neshan-map/Neshan";
