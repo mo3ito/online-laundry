@@ -9,6 +9,7 @@ const customerRegistration = require("../routes/customers/registration");
 const startServer = require("../routes/index");
 const ClothingCategory = require("../routes/laundry-clothing/laundry-clothing-category");
 const ClothingTypes = require("../routes/laundry-clothing/clothing-type");
+const Orders = require("../routes/orders/orders");
 
 const configureServer = (app) => {
   app.use(express.json());
@@ -20,6 +21,7 @@ const configureServer = (app) => {
   app.use("/", customerRegistration);
   app.use("/", ClothingCategory);
   app.use("/", ClothingTypes);
+  app.use("/", Orders);
   connectToDatabase();
 };
 
