@@ -13,8 +13,8 @@ export type OrderCardContextType = {
   orders: OrderCardType[];
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
   totalNumber: number;
-  ordersAddress : [latitude : number  , longitude: number] | null;
-  setOrdersAddress: Dispatch<SetStateAction<[latitude : number , longitude: number] | null>>
+  ordersAddress : {latitude : number  , longitude: number} | null;
+  setOrdersAddress: Dispatch<SetStateAction<{latitude : number , longitude: number } | null>>
 };
 
 export type InformationForDelete = {

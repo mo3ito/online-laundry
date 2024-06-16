@@ -1,12 +1,20 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const sendData = async (path: string, body: Object): Promise<AxiosResponse> => {
+const sendData = async (
+  path: string,
+  body: Object,
+  id?: string
+): Promise<AxiosResponse> => {
   try {
-    const response = await axios.post(path, body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const headers: { [key: string]: string } = {
+      "Content-Type": "application/json",
+    };
+
+    if (id) {
+      headers.Authorization = id;
+    }
+
+    const response = await axios.post(path, body, { headers });
 
     return response;
   } catch (error: unknown) {
