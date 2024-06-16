@@ -5,13 +5,12 @@ import { toLonLat } from 'ol/proj';
 import LoadingPage from '../Loading/LoadingPage';
 
 type LatLongType = {
-  lat: number;
-  long: number;
+  latitude: number;
+  longitude: number;
 };
 
 export default function Neshan() {
-  const [latLong, setLatLong] = useState<LatLongType | null>(null);
-  const [centerLocation, setCenterLocation] = useState({ latitude: 34.099526, longitude: 49.691117 });
+  const [latLong, setLatLong] = useState<LatLongType>({ latitude: 34.099526, longitude: 49.691117 });
   const mapRef = useRef<NeshanMapRef | null>(null);
 
   useEffect(() => {
@@ -22,8 +21,8 @@ export default function Neshan() {
         const center = view.getCenter();
         if (center) {
           const [longitude, latitude] = toLonLat(center);
-          setLatLong({ lat: latitude, long: longitude });
-          setCenterLocation({ latitude, longitude });
+          setLatLong({  latitude,longitude });
+          
         }
       });
     }
@@ -33,7 +32,7 @@ export default function Neshan() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setCenterLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+          setLatLong({ latitude: position.coords.latitude, longitude: position.coords.longitude });
         },
         (error) => {
           console.error('Error Code = ' + error.code + ' - ' + error.message);
@@ -44,7 +43,7 @@ export default function Neshan() {
     }
   };
 
-  console.log(centerLocation);
+  console.log(latLong);
   
 
   return (
@@ -53,7 +52,7 @@ export default function Neshan() {
         ref={mapRef}
         mapKey="web.1b9b48ae807d4009b26658e973d92ce1"
         defaultType="neshan"
-        center={centerLocation}
+        center={latLong}
         style={{ height: '100%', width: '100%' }}
         zoom={13}
         traffic={true}
@@ -71,15 +70,6 @@ export default function Neshan() {
 
       <button className='bg-sky-500 rounded-lg text-white  w-28 h-12'>تایید آدرس</button>
     </div>
-
-
-
-      {latLong && (
-        <div className="absolute top-0 left-0 m-4 p-2 bg-white rounded shadow">
-          <p>Lat: {latLong.lat.toFixed(6)}</p>
-          <p>Long: {latLong.long.toFixed(6)}</p>
-        </div>
-      )}
     </div>
   );
 }

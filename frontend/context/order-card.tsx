@@ -9,6 +9,7 @@ export const OrderCardContext = createContext<OrderCardContextType | null>(
 const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<OrderCardType[]>([]);
   const [totalNumber, setTotalNumber] = useState(0);
+  const [ordersAddress, setOrdersAddress] = useState<[latitude: number, longitude: number] | null>(null);
 
   useEffect(() => {
     if (orders) {
@@ -20,7 +21,15 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   console.log(totalNumber);
 
   return (
-    <OrderCardContext.Provider value={{ orders, setOrders, totalNumber }}>
+    <OrderCardContext.Provider
+      value={{
+        orders,
+        setOrders,
+        totalNumber,
+        ordersAddress,
+        setOrdersAddress,
+      }}
+    >
       {children}
     </OrderCardContext.Provider>
   );
