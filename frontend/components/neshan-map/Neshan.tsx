@@ -33,14 +33,13 @@ export default function Neshan() {
   const { setOrdersAddress, ordersAddress } = useOrderCardContext();
   const mapRef = useRef<NeshanMapRef | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
-  const [isLoading , setIsLoading]=useState<boolean>(false)
-  const [isLoadingSearch , setIsLoadingSearch]=useState<boolean>(false)
-  const {infos} = useAuthContext()
-  const {orders} = useOrderCardContext()
-  const router = useRouter()
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
+  const { infos } = useAuthContext();
+  const { orders } = useOrderCardContext();
+  const router = useRouter();
 
   console.log(orders);
-  
 
   useEffect(() => {
     if (
@@ -82,14 +81,12 @@ export default function Neshan() {
 
   console.log(ordersAddress);
 
-  
-
   const submitSearchHandler = async (event: FormEvent) => {
     event.preventDefault();
     if (!searchInput.trim()) return;
 
     try {
-      setIsLoadingSearch(true)
+      setIsLoadingSearch(true);
       const response = await getData(
         `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong.latitude}&lng=${latLong.longitude}`,
         true,
@@ -98,59 +95,65 @@ export default function Neshan() {
 
       console.log(response);
 
-      if(response?.status === 200){
-       
-      const data = response?.data;
+      if (response?.status === 200) {
+        const data = response?.data;
 
-      if (data.items && data.items.length > 0) {
-        const { location } = data.items[0];
-        const newCenter = fromLonLat([location.x, location.y]);
+        if (data.items && data.items.length > 0) {
+          const { location } = data.items[0];
+          const newCenter = fromLonLat([location.x, location.y]);
 
-        if (mapRef.current && mapRef.current.map) {
-          const view = mapRef.current.map.getView();
-          view.setCenter(newCenter);
-          setLatLong({ latitude: location.y, longitude: location.x });
+          if (mapRef.current && mapRef.current.map) {
+            const view = mapRef.current.map.getView();
+            view.setCenter(newCenter);
+            setLatLong({ latitude: location.y, longitude: location.x });
+          }
+          setIsLoadingSearch(false);
+        } else {
+          setIsLoadingSearch(false);
+          console.error("Location not found");
         }
-       setIsLoadingSearch(false)
-      } else {
-        setIsLoadingSearch(false)
-        console.error("Location not found");
       }
-    }
     } catch (error) {
-      setIsLoadingSearch(false)
+      setIsLoadingSearch(false);
       console.error("Error fetching location:", error);
     }
   };
 
   const confirmAddressHandler = async () => {
-
-
     try {
-      if(orders.length === 0){
-        return toast.error("شما سفارشی ثبت نکرده‌اید")
+      if (orders.length === 0) {
+        return toast.error("شما سفارشی ثبت نکرده‌اید");
       }
-      setIsLoading(true)
-      const addressResponse = await getData(`https://api.neshan.org/v5/reverse?lat=${latLong.latitude}&lng=${latLong.longitude}`, true , process.env.NEXT_PUBLIC_MAP_API_KEY )
-      if(addressResponse?.status === 200 ){
+      setIsLoading(true);
+      const addressResponse = await getData(
+        `https://api.neshan.org/v5/reverse?lat=${latLong.latitude}&lng=${latLong.longitude}`,
+        true,
+        process.env.NEXT_PUBLIC_MAP_API_KEY
+      );
+      if (addressResponse?.status === 200) {
         const body = {
-        "customer_id": infos?._id,
-        "name": infos?.name,
-        "last_name":infos?.last_name,
-        "phone_number": infos?.phone_number,
-        "orders" : orders,
-        "address": addressResponse.data.formatted_address,
-        "latitude": latLong.latitude,
-        "longitude":latLong.longitude}
-      const sendOrderResponse = await sendData('http://localhost:4000/orders/send-orders' , body , infos?._id )
+          customer_id: infos?._id,
+          name: infos?.name,
+          last_name: infos?.last_name,
+          phone_number: infos?.phone_number,
+          orders: orders,
+          address: addressResponse.data.formatted_address,
+          latitude: latLong.latitude,
+          longitude: latLong.longitude,
+        };
+        const sendOrderResponse = await sendData(
+          "http://localhost:4000/orders/send-orders",
+          body,
+          infos?._id
+        );
 
-      if(sendOrderResponse.status === 200){
-        setIsLoading(false)
-        router.push("/application/order/registered-orders")
-      }
+        if (sendOrderResponse.status === 200) {
+          setIsLoading(false);
+          router.push("/application/order/registered-orders");
+        }
       }
     } catch (error: any) {
-      setIsLoading(false)
+      setIsLoading(false);
       console.error("خطا در ارتباط با سرور:", error);
       setIsLoading(false);
       if (error.response && error.response.status === 400) {
@@ -163,11 +166,6 @@ export default function Neshan() {
       }
     }
   };
-    
-    
-  if(isLoading){
-    return <LoadingPage/>
-  }
 
   return (
     <div className="relative w-full h-[94%]">
@@ -187,7 +185,12 @@ export default function Neshan() {
           placeholder="جستجوی آدرس"
           type="text"
         />
-        <DefaultButton svgClassName="fill-white" className="bg-sky-500 text-white h-8 w-full sm:w-28 rounded-lg " content="تایید" isLoading={isLoadingSearch}/>
+        <DefaultButton
+          svgClassName="fill-white"
+          className="bg-sky-500 text-white h-8 w-full sm:w-28 rounded-lg "
+          content="تایید"
+          isLoading={isLoadingSearch}
+        />
       </form>
       <NeshanMap
         ref={mapRef}
@@ -222,12 +225,13 @@ export default function Neshan() {
           </svg>
         </button>
 
-        <button
+        <DefaultButton
+          svgClassName="fill-white"
+          className="bg-sky-500 rounded-lg text-white text-sm  h-9  w-32 sm:h-12 sm:text-base"
           onClick={confirmAddressHandler}
-          className="bg-sky-500 rounded-lg text-white text-sm w-20 h-9  sm:w-28 sm:h-12 sm:text-base"
-        >
-          تایید آدرس
-        </button>
+          isLoading={isLoading}
+          content="تایید آدرس"
+        />
       </div>
     </div>
   );

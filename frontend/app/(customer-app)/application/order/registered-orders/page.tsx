@@ -1,3 +1,4 @@
+'use client'
 import HeaderComponent from '@/components/customerApp/headerComponent/HeaderComponent'
 import React from 'react'
 
