@@ -146,7 +146,7 @@ export default function Neshan() {
 
       if(sendOrderResponse.status === 200){
         setIsLoading(false)
-        router.push("/application")
+        router.push("/application/order/registered-orders")
       }
       }
     } catch (error: any) {
