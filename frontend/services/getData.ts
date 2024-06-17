@@ -1,11 +1,19 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { toast } from "react-toastify";
 
-const getData = async (path: string) => {
+const getData = async (path: string, isHeader?: boolean, ApiKey?: string) => {
   try {
-    const response: AxiosResponse = await axios.get(path);
+    let headers: { [key: string]: string } = {};
+
+    if (isHeader && ApiKey) {
+      headers = {
+        "Api-Key": ApiKey,
+      };
+    }
+
+    const response: AxiosResponse = await axios.get(path, { headers });
     return response;
-  } catch (error : unknown) {
+  } catch (error: unknown) {
     console.error("error: ", error);
     if (error instanceof AxiosError) {
       console.error("Request failed with status:", error.response?.status);
