@@ -13,6 +13,7 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const initInfos = {
+    _id:"",
     name: "",
     last_name: "",
     phone_number: "",

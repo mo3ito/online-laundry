@@ -14,7 +14,11 @@ import { toLonLat, fromLonLat } from "ol/proj";
 import LoadingPage from "../Loading/LoadingPage";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
 import getData from "@/services/getData";
-import axios from "axios";
+import sendData from "@/services/sendData";
+import useAuthContext from "@/hooks/useAuthContext";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import DefaultButton from "../share/defaultButton";
 
 type LatLongType = {
   latitude: number;
@@ -29,6 +33,14 @@ export default function Neshan() {
   const { setOrdersAddress, ordersAddress } = useOrderCardContext();
   const mapRef = useRef<NeshanMapRef | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
+  const [isLoading , setIsLoading]=useState<boolean>(false)
+  const [isLoadingSearch , setIsLoadingSearch]=useState<boolean>(false)
+  const {infos} = useAuthContext()
+  const {orders} = useOrderCardContext()
+  const router = useRouter()
+
+  console.log(orders);
+  
 
   useEffect(() => {
     if (
@@ -70,28 +82,24 @@ export default function Neshan() {
 
   console.log(ordersAddress);
 
-  const confirmAddressHandler = () => {
-    setOrdersAddress({
-      latitude: latLong.latitude,
-      longitude: latLong.longitude,
-    });
-  };
+  
 
   const submitSearchHandler = async (event: FormEvent) => {
     event.preventDefault();
     if (!searchInput.trim()) return;
 
     try {
+      setIsLoadingSearch(true)
       const response = await getData(
         `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong.latitude}&lng=${latLong.longitude}`,
         true,
-        "service.55c11240ab1d451eb4ea67968d2febe7"
+        process.env.NEXT_PUBLIC_MAP_API_KEY
       );
 
       console.log(response);
 
       if(response?.status === 200){
-
+       
       const data = response?.data;
 
       if (data.items && data.items.length > 0) {
@@ -103,20 +111,69 @@ export default function Neshan() {
           view.setCenter(newCenter);
           setLatLong({ latitude: location.y, longitude: location.x });
         }
+       setIsLoadingSearch(false)
       } else {
+        setIsLoadingSearch(false)
         console.error("Location not found");
       }
     }
     } catch (error) {
+      setIsLoadingSearch(false)
       console.error("Error fetching location:", error);
     }
   };
+
+  const confirmAddressHandler = async () => {
+
+
+    try {
+      if(orders.length === 0){
+        return toast.error("شما سفارشی ثبت نکرده‌اید")
+      }
+      setIsLoading(true)
+      const addressResponse = await getData(`https://api.neshan.org/v5/reverse?lat=${latLong.latitude}&lng=${latLong.longitude}`, true , process.env.NEXT_PUBLIC_MAP_API_KEY )
+      if(addressResponse?.status === 200 ){
+        const body = {
+        "customer_id": infos?._id,
+        "name": infos?.name,
+        "last_name":infos?.last_name,
+        "phone_number": infos?.phone_number,
+        "orders" : orders,
+        "address": addressResponse.data.formatted_address,
+        "latitude": latLong.latitude,
+        "longitude":latLong.longitude}
+      const sendOrderResponse = await sendData('http://localhost:4000/orders/send-orders' , body , infos?._id )
+
+      if(sendOrderResponse.status === 200){
+        setIsLoading(false)
+        router.push("/application")
+      }
+      }
+    } catch (error: any) {
+      setIsLoading(false)
+      console.error("خطا در ارتباط با سرور:", error);
+      setIsLoading(false);
+      if (error.response && error.response.status === 400) {
+        const errorMessage: string =
+          error.response.data?.message || "خطایی رخ داده است.";
+        toast.error(errorMessage);
+      } else {
+        console.log("خطا:", error);
+        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
+      }
+    }
+  };
+    
+    
+  if(isLoading){
+    return <LoadingPage/>
+  }
 
   return (
     <div className="relative w-full h-[94%]">
       <form
         onSubmit={submitSearchHandler}
-        className="absolute top-2 right-4 z-50 text-sm sm:text-base"
+        className="absolute top-1 sm:top-2 inset-x-4 z-50 text-sm sm:text-base flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-x-2"
         action=""
       >
         <input
@@ -126,13 +183,11 @@ export default function Neshan() {
               setSearchInput(event.target.value),
             []
           )}
-          className=" w-40 sm:w-64 h-8 rounded-lg outline-none border border-sky-500 px-2"
-          placeholder="جستجو"
+          className=" w-full sm:w-96 h-8 rounded-lg outline-none border border-sky-500 px-2"
+          placeholder="جستجوی آدرس"
           type="text"
         />
-        <button className="bg-sky-500 text-white h-8 px-2 rounded-lg mr-2">
-          تایید
-        </button>
+        <DefaultButton svgClassName="fill-white" className="bg-sky-500 text-white h-8 w-full sm:w-28 rounded-lg " content="تایید" isLoading={isLoadingSearch}/>
       </form>
       <NeshanMap
         ref={mapRef}
@@ -152,7 +207,7 @@ export default function Neshan() {
         />
       </div>
 
-      <div className="absolute bottom-10 right-4 flex items-center justify-center gap-x-4">
+      <div className="absolute bottom-4 right-4 flex items-center justify-center gap-x-4">
         <button
           onClick={findLocationHandler}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"
@@ -169,7 +224,7 @@ export default function Neshan() {
 
         <button
           onClick={confirmAddressHandler}
-          className="bg-sky-500 rounded-lg text-white  w-28 h-12"
+          className="bg-sky-500 rounded-lg text-white text-sm w-20 h-9  sm:w-28 sm:h-12 sm:text-base"
         >
           تایید آدرس
         </button>

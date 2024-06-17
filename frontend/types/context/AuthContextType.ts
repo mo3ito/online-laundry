@@ -1,4 +1,5 @@
 export type InitialInfosType = {
+  _id: string;
   name: string;
   last_name: string;
   phone_number: string;

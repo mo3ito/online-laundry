@@ -9,7 +9,7 @@ export const OrderCardContext = createContext<OrderCardContextType | null>(
 const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<OrderCardType[]>([]);
   const [totalNumber, setTotalNumber] = useState(0);
-  const [ordersAddress, setOrdersAddress] = useState<{latitude: number, longitude: number } | null>(null);
+  const [ordersAddress, setOrdersAddress] = useState<{latitude: number, longitude: number , address: string } | null>(null);
 
   useEffect(() => {
     if (orders) {

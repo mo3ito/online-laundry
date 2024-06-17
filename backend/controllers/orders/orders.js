@@ -37,6 +37,7 @@ const sendOrders = async (req, res) => {
     }
 
     const ordersInfos = {
+      customer_id : customerId,
       name,
       last_name,
       phone_number,
@@ -62,4 +63,28 @@ const sendOrders = async (req, res) => {
   }
 };
 
-module.exports = { sendOrders };
+
+const getOrdersCustomer =async(req , res)=>{
+
+  const customerId = req.headers.authorization
+
+
+  try {
+
+    if(!customerId){
+      return res.status(400).json({
+        message: "آیدی مشتری وارد نشده است"
+      })
+    }
+    
+    const orders = await OrdersModel.find({customer_id : customerId })
+
+    return res.status(200).json(orders)
+
+  } catch (error) {
+    
+  }
+
+}
+
+module.exports = { sendOrders , getOrdersCustomer };

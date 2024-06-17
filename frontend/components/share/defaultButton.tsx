@@ -10,7 +10,8 @@ type DefaultButtonProps = {
   isLinkTag?: boolean;
   onClick?: () => void;
   isLoading?: boolean;
-  disabled?:boolean
+  disabled?:boolean;
+  svgClassName?:string
 };
 
 export default function DefaultButton({
@@ -21,7 +22,8 @@ export default function DefaultButton({
   isLinkTag = false,
   onClick,
   isLoading = false,
-  disabled = false
+  disabled = false,
+  svgClassName = 'fill-zinc-500'
 }: DefaultButtonProps) {
   return (
     <>
@@ -40,7 +42,7 @@ export default function DefaultButton({
         >
           {isLoading && (
             <svg
-              className=" fill-zinc-500 translate-x-3 size-5 sm:size-6"
+              className={`${svgClassName} translate-x-3 size-5 sm:size-6`}
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
               height="1em"
