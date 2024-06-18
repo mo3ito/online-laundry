@@ -1,4 +1,4 @@
-
+'use client'
 import LaundryMenu from "@/components/customerApp/laundry-menu/LaundryMenu";
 import NeshanMap from "@/components/neshan-map/Neshan";
 import SubgroupShow from "@/components/customerApp/SubgroupShow";

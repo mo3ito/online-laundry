@@ -30,13 +30,13 @@ export default function Neshan() {
     latitude: 34.083774237954756,
     longitude: 49.6975543016356,
   });
-  const { setOrdersAddress, ordersAddress } = useOrderCardContext();
+  
   const mapRef = useRef<NeshanMapRef | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
   const { infos } = useAuthContext();
-  const { orders } = useOrderCardContext();
+  const { orders , setTotalNumber ,setRegisteredOrders , registeredOrders} = useOrderCardContext();
   const router = useRouter();
 
   console.log(orders);
@@ -79,7 +79,7 @@ export default function Neshan() {
 
   console.log(latLong);
 
-  console.log(ordersAddress);
+ 
 
   const submitSearchHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -149,7 +149,13 @@ export default function Neshan() {
 
         if (sendOrderResponse.status === 200) {
           setIsLoading(false);
-          router.push("/application/order/registered-orders");
+         await setTotalNumber(0)
+      const  getRegisteredOrdersResponse = await getData("http://localhost:4000/orders/get-orders-customer",true , undefined , infos?._id)
+      if(getRegisteredOrdersResponse?.status===200){
+       await setRegisteredOrders(getRegisteredOrdersResponse.data)
+       router.push("/application/order/registered-orders");
+      }
+          
         }
       }
     } catch (error: any) {
@@ -166,6 +172,9 @@ export default function Neshan() {
       }
     }
   };
+
+  console.log(registeredOrders);
+  
 
   return (
     <div className="relative w-full h-[94%]">

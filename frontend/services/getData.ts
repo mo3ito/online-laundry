@@ -1,13 +1,23 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { toast } from "react-toastify";
 
-const getData = async (path: string, isHeader?: boolean, ApiKey?: string) => {
+const getData = async (
+  path: string,
+  isHeader?: boolean,
+  ApiKey?: string,
+  id?: string
+) => {
   try {
     let headers: { [key: string]: string } = {};
 
     if (isHeader && ApiKey) {
       headers = {
         "Api-Key": ApiKey,
+      };
+    }
+    if (isHeader && id) {
+      headers = {
+        Authorization: id,
       };
     }
 
