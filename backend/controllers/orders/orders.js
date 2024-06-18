@@ -1,5 +1,6 @@
 const OrdersModel = require("../../models/orders/Orders");
 const CustomersModel = require("../../models/customer/CustomerModel");
+const createToken = require("../../utils/createToken");
 
 const sendOrders = async (req, res) => {
   const customerId = req.headers.authorization;
@@ -37,7 +38,7 @@ const sendOrders = async (req, res) => {
     }
 
     const ordersInfos = {
-      customer_id : customerId,
+      customer_id: customerId,
       name,
       last_name,
       phone_number,
@@ -63,28 +64,49 @@ const sendOrders = async (req, res) => {
   }
 };
 
-
-const getOrdersCustomer =async(req , res)=>{
-
-  const customerId = req.headers.authorization
-
+const getOrdersCustomer = async (req, res) => {
+  const customerId = req.headers.authorization;
 
   try {
-
-    if(!customerId){
+    if (!customerId) {
       return res.status(400).json({
-        message: "آیدی مشتری وارد نشده است"
-      })
+        message: "آیدی مشتری وارد نشده است",
+      });
     }
-    
-    const orders = await OrdersModel.find({customer_id : customerId })
 
-    return res.status(200).json(orders)
+    const ordersData = await OrdersModel.find(
+      { customer_id: customerId },
+      { orders: 1, _id: 0 }
+    );
+    const customer = await CustomersModel.findById(customerId);
 
+    let desiredData = await ordersData.reduce(
+      (acc, orderGroup) => acc.concat(orderGroup.orders),
+      []
+    );
+
+    console.log(desiredData);
+
+    const infos = {
+      _id: customerId,
+      name: customer.name,
+      last_name: customer.last_name,
+      phone_number: customer.phone_number,
+      orders: desiredData,
+    };
+
+    const token = await createToken(infos);
+
+    return res.status(200).json({
+      infos,
+      token,
+    });
   } catch (error) {
-    
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
   }
+};
 
-}
-
-module.exports = { sendOrders , getOrdersCustomer };
+module.exports = { sendOrders, getOrdersCustomer };

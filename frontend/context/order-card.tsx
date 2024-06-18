@@ -7,7 +7,6 @@ import {
 } from "@/types/context/OrderCard";
 import getData from "@/services/getData";
 import useAuthContext from "@/hooks/useAuthContext";
-import { toast } from "react-toastify";
 
 export const OrderCardContext = createContext<OrderCardContextType | null>(
   null
@@ -41,33 +40,33 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
 
 
 
-  useEffect(()=>{
-    const getRegisteredOrders = async ()=>{
+  // useEffect(()=>{
+  //   const getRegisteredOrders = async ()=>{
 
-      try {
-          if(!!login && infos ){
-          const response = await getData("http://localhost:4000/orders/get-orders-customer" , true , undefined , infos._id)
-          if(response?.status === 200){
-          await setRegisteredOrders(response.data)
-          }
-        }
-      } catch (error: any) {
-        console.error("خطا در ارتباط با سرور:", error);
+  //     try {
+  //         if(!!login && infos ){
+  //         const response = await getData("http://localhost:4000/orders/get-orders-customer" , true , undefined , infos._id)
+  //         if(response?.status === 200){
+  //         await setRegisteredOrders(response.data)
+  //         }
+  //       }
+  //     } catch (error: any) {
+  //       console.error("خطا در ارتباط با سرور:", error);
         
-        if (error.response && error.response.status === 400) {
-          const errorMessage: string =
-            error.response.data?.message || "خطایی رخ داده است.";
-          toast.error(errorMessage);
-        } else {
-          console.log("خطا:", error);
-          toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-        }
-      }
-    };
-     getRegisteredOrders()
-  },[login , infos])
+  //       if (error.response && error.response.status === 400) {
+  //         const errorMessage: string =
+  //           error.response.data?.message || "خطایی رخ داده است.";
+        
+  //       } else {
+  //         console.log("خطا:", error);
+          
+  //       }
+  //     }
+  //   };
+  //    getRegisteredOrders()
+  // },[login , infos])
 
-  console.log(registeredOrders);
+  // console.log(registeredOrders);
   
 
 
