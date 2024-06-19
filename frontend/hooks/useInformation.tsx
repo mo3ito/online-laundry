@@ -10,12 +10,12 @@ const useInformation = () => {
     if (
       informationForDelete &&
       informationForDelete.orders &&
-      informationForDelete.serviceType
+      informationForDelete.service_type
     ) {
       const isTheSameService = informationForDelete?.orders.some(
         (order) =>
-          order.serviceType === informationForDelete.serviceType &&
-          order.typeClothing === informationForDelete.type
+          order.service_type === informationForDelete.service_type &&
+          order.type_clothing === informationForDelete.type
       );
       setIstheSameServiceAndType(isTheSameService);
     }

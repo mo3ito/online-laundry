@@ -131,6 +131,7 @@ export default function Neshan() {
         process.env.NEXT_PUBLIC_MAP_API_KEY
       );
       if (addressResponse?.status === 200) {
+
         const body = {
           customer_id: infos?._id,
           name: infos?.name,
@@ -152,7 +153,7 @@ export default function Neshan() {
          await setTotalNumber(0)
       const  getRegisteredOrdersResponse = await getData("http://localhost:4000/orders/get-orders-customer",true , undefined , infos?._id)
       if(getRegisteredOrdersResponse?.status===200){
-       login(getRegisteredOrdersResponse.data.infos , getRegisteredOrdersResponse.data.token)
+      await login(getRegisteredOrdersResponse.data.infos , getRegisteredOrdersResponse.data.token)
        router.push("/application/order/registered-orders");
       }
           
@@ -175,6 +176,8 @@ export default function Neshan() {
 
   console.log(registeredOrders);
   console.log(orders);
+  console.log(infos);
+  
   
   
 

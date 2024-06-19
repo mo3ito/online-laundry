@@ -6,7 +6,7 @@ const minesClothingHandler = (
   orders: OrderCardType[],
   id: string,
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
-  typeClothing: string,
+  type_clothing: string,
   cost: number,
   count: number
 ) => {
@@ -14,7 +14,7 @@ const minesClothingHandler = (
 
   if (isOrder) {
     const updatedOrders = orders.map((order) => {
-      if (order.id === isOrder.id && order.serviceType === typeClothing) {
+      if (order.id === isOrder.id && order.service_type === type_clothing) {
         const updatedCount = order.count - count <= 0 ? 1 : order.count - count;
         const updateTotalCost =
           order.count - count <= 0 ? cost : order.totalCost - cost;

@@ -6,8 +6,8 @@ const addClothingHandler = (
   orders: OrderCardType[],
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
   id: string,
-  serviceType: string,
-  typeClothing: string,
+  service_type: string,
+  type_clothing: string,
   count: number,
   cost: number,
   totalCost: number
@@ -17,8 +17,8 @@ const addClothingHandler = (
   
   const newOrder: OrderCardType = {
     id,
-    serviceType,
-    typeClothing,
+    service_type,
+    type_clothing,
     count,
     cost,
     totalCost,
@@ -26,7 +26,7 @@ const addClothingHandler = (
 
   const hasSimilarOrder = orders?.some(
     (order) =>
-      order.typeClothing === typeClothing && order.serviceType === serviceType
+      order.type_clothing === type_clothing && order.service_type === service_type
   );
 
   if (!hasSimilarOrder) {
@@ -34,8 +34,8 @@ const addClothingHandler = (
   } else {
     const updatedOrders = orders.map((order) => {
       if (
-        order.typeClothing === typeClothing &&
-        order.serviceType === serviceType
+        order.type_clothing === type_clothing &&
+        order.service_type === service_type
       ) {
         return {
           ...order,

@@ -6,15 +6,15 @@ const deleteClothingHandler = async (
   orders: OrderCardType[],
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
   clothingId: string,
-  serviceType: string,
+  service_type: string,
   type: string
 ) => {
   const newOrderList = orders.filter(
     (order) =>
       !(
         order.id === clothingId &&
-        order.serviceType === serviceType &&
-        order.typeClothing === type
+        order.service_type === service_type &&
+        order.type_clothing === type
       )
   );
 

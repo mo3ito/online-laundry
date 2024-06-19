@@ -2,21 +2,48 @@ const mongoose = require("mongoose")
 const {Schema} = mongoose;
 
 
-const OrderSchema = new Schema({
-    id: {
-        type: String,
-        required: true,
-    },
-    type_of_clothing: {
-        type: String,
-        required: true,
-    },
-    number: {
-        type: String,
-        required: true,
-    }
-});
+// const OrderSchema = new Schema({
+//     id: {
+//         type: String,
+//         required: true,
+//     },
+//     type_of_clothing: {
+//         type: String,
+//         required: true,
+//     },
+//     number: {
+//         type: String,
+//         required: true,
+//     }
+// });
 
+//  const OrderSchema = new Schema({
+//     id:{
+//       type : String,
+//       required: true
+//     },
+//     service_type: {
+//       type : String,
+//       required: true
+//     },
+//     type_clothing: {
+//       type : String,
+//       required: true
+//     },
+//     count: {
+//       type : Number,
+//       required: true
+//     },
+//     cost: {
+//       type : Number,
+//       required: true
+//     },
+//     totalCost: {
+//       type : Number,
+//       required: true
+//     }
+//   })
+  
 
 
 const CustomersSchema = new Schema({
@@ -33,7 +60,7 @@ const CustomersSchema = new Schema({
         required: true,
     },
     orders:{
-        type: [OrderSchema],
+        type: [],
         default: []
 
     },

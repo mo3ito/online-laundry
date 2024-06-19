@@ -69,37 +69,7 @@ export default function Page() {
     checkAllInputsFilled();
   };
 
-  // const sendCodeHandler = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await sendData(VERIFY_CODE, {
-  //       code_number: allInputValues,
-  //     });
 
-  //     if (response.status === 200 && response.data) {
-  //       if(response.data.token){
-  //        await login(response?.data.infos , response?.data.token)
-  //        router.replace("/application");
-  //        setIsLoading(false);
-  //       } else{
-  //         console.log(response);
-  //         setIsLoading(false);
-  //         router.replace("/application/registration");
-  //       }
-
-  //     }
-  //   } catch (error: any) {
-  //     console.error("خطا در ارتباط با سرور:", error);
-  //     setIsLoading(false);
-  //     if (error.response && error.response.status === 400) {
-  //       const errorMessage: string =
-  //         error.response.data?.message || "خطایی رخ داده است.";
-  //       toast.error(errorMessage);
-  //     } else {
-  //       toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-  //     }
-  //   }
-  // };
 
   const sendCodeHandler = async () => {
     try {

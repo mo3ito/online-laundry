@@ -14,7 +14,7 @@ const confirmDeleteHandler =  (
       informationForDelete.orders,
       informationForDelete.setOrders,
       informationForDelete.clothingId,
-      informationForDelete.serviceType,
+      informationForDelete.service_type,
       informationForDelete.type
     );
     setInformationForDelete(null);

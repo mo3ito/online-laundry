@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 
 export type OrderCardType = {
   id: string;
-  typeClothing: string;
-  serviceType: string;
+  type_clothing: string;
+  service_type: string;
   count: number;
   cost: number;
   totalCost: number;
@@ -11,8 +11,8 @@ export type OrderCardType = {
 
 export type Orders = {
   id: string;
-  serviceType: string;
-  typeClothing: string;
+  service_type: string;
+  type_clothing: string;
   count: number;
   cost: number;
   totalCost: number;
@@ -45,6 +45,6 @@ export type InformationForDelete = {
   orders: OrderCardType[];
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
   clothingId: string;
-  serviceType: string;
+  service_type: string;
   type: string;
 } | null;

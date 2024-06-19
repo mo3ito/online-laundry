@@ -5,7 +5,7 @@ const delteHandler = async (
   orders: OrderCardType[],
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
   clothingId: string,
-  serviceType: string,
+  service_type: string,
   type: string,
   setInformationForDelete: Dispatch<SetStateAction<InformationForDelete>>,
   setIsShowModal: Dispatch<SetStateAction<boolean>>
@@ -14,7 +14,7 @@ const delteHandler = async (
     orders,
     setOrders,
     clothingId,
-    serviceType,
+    service_type,
     type,
   });
   setIsShowModal(true);

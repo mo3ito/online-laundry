@@ -45,11 +45,11 @@ export default function page() {
             <article>
               <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
                 <p>نوع لباس</p>
-                <p className="">{order.typeClothing}</p>
+                <p className="">{order.type_clothing}</p>
               </div>
               <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                 <p>نوع خدمات</p>
-                <p>{order.serviceType}</p>
+                <p>{order.service_type}</p>
               </div>
               <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                 <p>مبلغ واحد</p>
@@ -72,8 +72,8 @@ export default function page() {
                         orders,
                         setOrders,
                         order.id,
-                        order.serviceType,
-                        order.typeClothing,
+                        order.service_type,
+                        order.type_clothing,
                         setInformationForDelete,
                         setIsShowModal
                       )
@@ -95,8 +95,8 @@ export default function page() {
                         orders,
                         setOrders,
                         order.id,
-                        order.serviceType,
-                        order.typeClothing,
+                        order.service_type,
+                        order.type_clothing,
                         1,
                         order.cost,
                         order.totalCost
@@ -112,7 +112,7 @@ export default function page() {
                         orders,
                         order.id,
                         setOrders,
-                        order.serviceType,
+                        order.service_type,
                         order.cost,
                         1
                       )

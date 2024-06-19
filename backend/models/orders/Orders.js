@@ -1,6 +1,30 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+
+ const OrderSchema = new Schema({
+  service_type: {
+    type : String,
+    required: true
+  },
+  type_clothing: {
+    type : String,
+    required: true
+  },
+  count: {
+    type : Number,
+    required: true
+  },
+  cost: {
+    type : Number,
+    required: true
+  },
+  totalCost: {
+    type : Number,
+    required: true
+  }
+})
+
 const OrdersSchema = new Schema({
   customer_id:{
     type: String,
@@ -13,7 +37,7 @@ const OrdersSchema = new Schema({
     type: String,
   },
   orders: {
-    type: [],
+    type: [OrderSchema],
     required: true,
   },
   phone_number: {

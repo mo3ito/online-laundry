@@ -15,6 +15,8 @@ const sendOrders = async (req, res) => {
     longitude,
   } = req.body;
 
+
+  console.log(orders);
   try {
     const customer = await CustomersModel.findById(customerId);
 
@@ -77,34 +79,21 @@ const getOrdersCustomer = async (req, res) => {
       });
     }
 
-    const ordersData = await OrdersModel.find(
-      { customer_id: customerId },
-      { orders: 1, _id: 0 }
-    );
-    const customer = await CustomersModel.findById(customerId);
+   const customer = await CustomersModel.findById(customerId)
 
-    let desiredData = await ordersData.reduce(
-      (acc, orderGroup) => acc.concat(orderGroup.orders),
-      []
-    );
-
-    console.log(desiredData);
-
+   console.log(customer);
     const infos = {
       _id: customerId,
       name: customer.name,
       last_name: customer.last_name,
       phone_number: customer.phone_number,
-      orders: desiredData,
+      orders: customer.orders,
+      created_at:customer.created_at
     };
 
     const token = await createToken(infos);
 
-    await CustomersModel.findByIdAndUpdate(
-      customerId,
-      { $set: { orders: desiredData } },
-      { new: true }
-    );
+ 
 
     return res.status(200).json({
       infos,
