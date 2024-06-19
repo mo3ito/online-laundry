@@ -52,6 +52,9 @@ const sendOrders = async (req, res) => {
 
     await newOrdersModel.save();
 
+    customer.orders.push(...ordersInfos.orders);
+    await customer.save();
+
     res.status(200).json({
       message: "سفارش با موفقیت ثبت شد",
       ordersInfo: newOrdersModel,
@@ -96,6 +99,12 @@ const getOrdersCustomer = async (req, res) => {
     };
 
     const token = await createToken(infos);
+
+    await CustomersModel.findByIdAndUpdate(
+      customerId,
+      { $set: { orders: desiredData } },
+      { new: true }
+    );
 
     return res.status(200).json({
       infos,

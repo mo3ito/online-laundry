@@ -35,7 +35,7 @@ export default function Neshan() {
   const [searchInput, setSearchInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
-  const { infos } = useAuthContext();
+  const { infos , setInfos , login} = useAuthContext();
   const { orders , setTotalNumber ,setRegisteredOrders , registeredOrders} = useOrderCardContext();
   const router = useRouter();
 
@@ -152,7 +152,7 @@ export default function Neshan() {
          await setTotalNumber(0)
       const  getRegisteredOrdersResponse = await getData("http://localhost:4000/orders/get-orders-customer",true , undefined , infos?._id)
       if(getRegisteredOrdersResponse?.status===200){
-       await setRegisteredOrders(getRegisteredOrdersResponse.data)
+       login(getRegisteredOrdersResponse.data.infos , getRegisteredOrdersResponse.data.token)
        router.push("/application/order/registered-orders");
       }
           
@@ -174,6 +174,8 @@ export default function Neshan() {
   };
 
   console.log(registeredOrders);
+  console.log(orders);
+  
   
 
   return (

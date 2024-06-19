@@ -14,8 +14,8 @@ export type Orders = {
   serviceType: string;
   typeClothing: string;
   count: number;
-  cost: string;
-  totalCost: string;
+  cost: number;
+  totalCost: number;
 };
 
 export type OrderRegisteredType = {
