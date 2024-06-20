@@ -1,19 +1,10 @@
 "use client";
-import {
-  useState,
-  useEffect,
-  useRef,
-  FormEvent,
-  useCallback,
-  ChangeEvent,
-} from "react";
+import { useState, useRef, useCallback, ChangeEvent } from "react";
 import NeshanMap, {
   NeshanMapRef,
 } from "@neshan-maps-platform/react-openlayers";
-import { toLonLat, fromLonLat } from "ol/proj";
 import LoadingPage from "../Loading/LoadingPage";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
-import getData from "@/services/getData";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
 import DefaultButton from "../share/defaultButton";
@@ -21,6 +12,7 @@ import { LatLongType } from "@/types/neshan-map";
 import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler";
 import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
 import submitSearchHandler from "@/app/utils/neshan-map/submitSearchHandler";
+import useMapCenter from "@/hooks/useMapCenter";
 
 export default function Neshan() {
   const [latLong, setLatLong] = useState<LatLongType>({
@@ -35,74 +27,25 @@ export default function Neshan() {
   const { infos, login } = useAuthContext();
   const { orders, setTotalNumber, setOrders } = useOrderCardContext();
   const router = useRouter();
+  useMapCenter(mapRef, setLatLong);
 
   console.log(orders);
-
-  useEffect(() => {
-    if (
-      mapRef.current &&
-      mapRef.current?.map &&
-      typeof window !== "undefined"
-    ) {
-      const map = mapRef.current.map;
-      map.on("moveend", () => {
-        const view = map.getView();
-        const center = view.getCenter();
-        if (center) {
-          const [longitude, latitude] = toLonLat(center);
-          setLatLong({ latitude, longitude });
-        }
-      });
-    }
-  }, [mapRef]);
-
   console.log(latLong);
-
-  // const submitSearchHandler = async (event: FormEvent) => {
-  //   event.preventDefault();
-  //   if (!searchInput.trim()) return;
-
-  //   try {
-  //     setIsLoadingSearch(true);
-  //     const response = await getData(
-  //       `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong.latitude}&lng=${latLong.longitude}`,
-  //       true,
-  //       process.env.NEXT_PUBLIC_MAP_API_KEY
-  //     );
-
-  //     console.log(response);
-
-  //     if (response?.status === 200) {
-  //       const data = response?.data;
-
-  //       if (data.items && data.items.length > 0) {
-  //         const { location } = data.items[0];
-  //         const newCenter = fromLonLat([location.x, location.y]);
-
-  //         if (mapRef.current && mapRef.current.map) {
-  //           const view = mapRef.current.map.getView();
-  //           view.setCenter(newCenter);
-  //           setLatLong({ latitude: location.y, longitude: location.x });
-  //         }
-  //         setIsLoadingSearch(false);
-  //       } else {
-  //         setIsLoadingSearch(false);
-  //         console.error("Location not found");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     setIsLoadingSearch(false);
-  //     console.error("Error fetching location:", error);
-  //   }
-  // };
-
-  console.log(orders);
   console.log(infos);
 
   return (
     <div className="relative w-full h-[94%]">
       <form
-        onSubmit={(event)=>submitSearchHandler(event , setIsLoadingSearch,searchInput , mapRef , setLatLong)}
+        onSubmit={(event) =>
+          submitSearchHandler(
+            event,
+            setIsLoadingSearch,
+            searchInput,
+            mapRef,
+            setLatLong,
+            latLong
+          )
+        }
         className="absolute top-1 sm:top-2 inset-x-4 z-50 text-sm sm:text-base flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-x-2"
         action=""
       >
@@ -144,7 +87,7 @@ export default function Neshan() {
 
       <div className="absolute bottom-4 right-4 flex items-center justify-center gap-x-4">
         <button
-          onClick={()=>findLocationHandler(setLatLong)}
+          onClick={() => findLocationHandler(setLatLong)}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"
         >
           <svg

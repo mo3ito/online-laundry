@@ -1,6 +1,7 @@
 import { OrderCardType } from "@/types/context/OrderCard";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 const addClothingHandler = (
   orders: OrderCardType[],
@@ -14,9 +15,10 @@ const addClothingHandler = (
 ) => {
   toast.success("سفارش شما با موفقیت اضافه شد");
   console.log(id);
-  
+
   const newOrder: OrderCardType = {
     id,
+    orders_id: uuidv4(),
     service_type,
     type_clothing,
     count,
@@ -26,7 +28,9 @@ const addClothingHandler = (
 
   const hasSimilarOrder = orders?.some(
     (order) =>
-      order.type_clothing === type_clothing && order.service_type === service_type
+      order.id === id &&
+      order.type_clothing === type_clothing &&
+      order.service_type === service_type
   );
 
   if (!hasSimilarOrder) {
@@ -50,4 +54,3 @@ const addClothingHandler = (
 };
 
 export default addClothingHandler;
-

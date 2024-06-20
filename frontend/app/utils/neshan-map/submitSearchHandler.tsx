@@ -4,13 +4,13 @@ import { NeshanMapRef } from "@neshan-maps-platform/react-openlayers";
 import { fromLonLat } from "ol/proj";
 import { Dispatch, FormEvent, MutableRefObject, SetStateAction } from "react";
 
-
 const submitSearchHandler = async (
   event: FormEvent,
   setIsLoadingSearch: Dispatch<SetStateAction<boolean>>,
   searchInput: string,
   mapRef: MutableRefObject<NeshanMapRef | null>,
-  setLatLong: Dispatch<SetStateAction<LatLongType>>
+  setLatLong: Dispatch<SetStateAction<LatLongType>>,
+  latLong: LatLongType
 ) => {
   event.preventDefault();
   if (!searchInput.trim()) return;
@@ -22,8 +22,6 @@ const submitSearchHandler = async (
       true,
       process.env.NEXT_PUBLIC_MAP_API_KEY
     );
-
-    console.log(response);
 
     if (response?.status === 200) {
       const data = response?.data;

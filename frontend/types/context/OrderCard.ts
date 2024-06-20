@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export type OrderCardType = {
   id: string;
+  orders_id:string;
   type_clothing: string;
   service_type: string;
   count: number;
