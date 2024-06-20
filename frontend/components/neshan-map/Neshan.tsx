@@ -19,6 +19,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import DefaultButton from "../share/defaultButton";
+import { SEND_ORDERS, GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
 
 type LatLongType = {
   latitude: number;
@@ -30,13 +31,13 @@ export default function Neshan() {
     latitude: 34.083774237954756,
     longitude: 49.6975543016356,
   });
-  
+
   const mapRef = useRef<NeshanMapRef | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
-  const { infos , setInfos , login} = useAuthContext();
-  const { orders , setTotalNumber } = useOrderCardContext();
+  const { infos, setInfos, login } = useAuthContext();
+  const { orders, setTotalNumber, setOrders } = useOrderCardContext();
   const router = useRouter();
 
   console.log(orders);
@@ -78,8 +79,6 @@ export default function Neshan() {
   };
 
   console.log(latLong);
-
- 
 
   const submitSearchHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -131,7 +130,6 @@ export default function Neshan() {
         process.env.NEXT_PUBLIC_MAP_API_KEY
       );
       if (addressResponse?.status === 200) {
-
         const body = {
           customer_id: infos?._id,
           name: infos?.name,
@@ -142,21 +140,25 @@ export default function Neshan() {
           latitude: latLong.latitude,
           longitude: latLong.longitude,
         };
-        const sendOrderResponse = await sendData(
-          "http://localhost:4000/orders/send-orders",
-          body,
-          infos?._id
-        );
+        const sendOrderResponse = await sendData(SEND_ORDERS, body, infos?._id);
 
         if (sendOrderResponse.status === 200) {
-          setIsLoading(false);
-         await setTotalNumber(0)
-      const  getRegisteredOrdersResponse = await getData("http://localhost:4000/orders/get-orders-customer",true , undefined , infos?._id)
-      if(getRegisteredOrdersResponse?.status === 200){
-      await login(getRegisteredOrdersResponse.data.infos , getRegisteredOrdersResponse.data.token)
-       router.push("/application/order/registered-orders");
-      }
-          
+          const getRegisteredOrdersResponse = await getData(
+            GET_ORDERS_CUSTOER,
+            true,
+            undefined,
+            infos?._id
+          );
+          if (getRegisteredOrdersResponse?.status === 200) {
+            await login(
+              getRegisteredOrdersResponse.data.infos,
+              getRegisteredOrdersResponse.data.token
+            );
+            setIsLoading(false);
+            await setTotalNumber(0);
+            setOrders([]);
+            router.push("/application/order/registered-orders");
+          }
         }
       }
     } catch (error: any) {
@@ -176,9 +178,6 @@ export default function Neshan() {
 
   console.log(orders);
   console.log(infos);
-  
-  
-  
 
   return (
     <div className="relative w-full h-[94%]">
