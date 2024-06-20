@@ -27,7 +27,7 @@ export default function BottomMenu() {
         <p className="text-white text-sm">خانه</p>
       </Link>
       <Link
-        href="/application/order"
+        href="/application/order/registered-orders"
         className="flex items-center flex-col justify-center relative"
       >
         <svg

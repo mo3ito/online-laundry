@@ -53,7 +53,7 @@ export default function page() {
               </div>
               <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                 <p>مبلغ واحد</p>
-                <p>{Number(order.cost).toLocaleString("en-US")}</p>
+                <p>{Number(order.cost).toLocaleString("en-US")} تومان</p>
               </div>
               <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                 <p>تعداد</p>
@@ -61,7 +61,7 @@ export default function page() {
               </div>
               <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                 <p>مبلغ</p>
-                <p>{Number(order.totalCost).toLocaleString("en-US")}</p>
+                <p>{Number(order.totalCost).toLocaleString("en-US")} تومان</p>
               </div>
               <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                 <p>عملیات</p>

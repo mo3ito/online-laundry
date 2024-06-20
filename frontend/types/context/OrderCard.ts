@@ -18,17 +18,7 @@ export type Orders = {
   totalCost: number;
 };
 
-export type OrderRegisteredType = {
-  _id: string;
-  customer_id: string;
-  name: string;
-  last_name: string;
-  phone_number: string;
-  latitude: string;
-  longiude: string;
-  orders: Orders;
-  address: string;
-};
+
 
 export type OrderCardContextType = {
   orders: OrderCardType[];
@@ -37,8 +27,6 @@ export type OrderCardContextType = {
   setTotalNumber: Dispatch<SetStateAction<number>>;
   totalNumberRegisterdOrders: number;
   setTotalNumberRegisterdOrders: Dispatch<SetStateAction<number>>;
-  registeredOrders: OrderRegisteredType[];
-  setRegisteredOrders: Dispatch<SetStateAction<OrderRegisteredType[]>>;
 };
 
 export type InformationForDelete = {
