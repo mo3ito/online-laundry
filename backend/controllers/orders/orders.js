@@ -52,11 +52,10 @@ const sendOrders = async (req, res) => {
       name,
       last_name,
       phone_number,
-      orders,
+      orders: orders.map(order=>({...order , created_at:formatedDate})),
       address,
       latitude,
       longitude,
-      created_at: formatedDate
     };
 
     const newOrdersModel = await new OrdersModel(ordersInfos);
