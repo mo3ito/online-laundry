@@ -20,6 +20,7 @@ import DefaultButton from "../share/defaultButton";
 import { LatLongType } from "@/types/neshan-map";
 import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler";
 import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
+import submitSearchHandler from "@/app/utils/neshan-map/submitSearchHandler";
 
 export default function Neshan() {
   const [latLong, setLatLong] = useState<LatLongType>({
@@ -57,43 +58,43 @@ export default function Neshan() {
 
   console.log(latLong);
 
-  const submitSearchHandler = async (event: FormEvent) => {
-    event.preventDefault();
-    if (!searchInput.trim()) return;
+  // const submitSearchHandler = async (event: FormEvent) => {
+  //   event.preventDefault();
+  //   if (!searchInput.trim()) return;
 
-    try {
-      setIsLoadingSearch(true);
-      const response = await getData(
-        `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong.latitude}&lng=${latLong.longitude}`,
-        true,
-        process.env.NEXT_PUBLIC_MAP_API_KEY
-      );
+  //   try {
+  //     setIsLoadingSearch(true);
+  //     const response = await getData(
+  //       `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong.latitude}&lng=${latLong.longitude}`,
+  //       true,
+  //       process.env.NEXT_PUBLIC_MAP_API_KEY
+  //     );
 
-      console.log(response);
+  //     console.log(response);
 
-      if (response?.status === 200) {
-        const data = response?.data;
+  //     if (response?.status === 200) {
+  //       const data = response?.data;
 
-        if (data.items && data.items.length > 0) {
-          const { location } = data.items[0];
-          const newCenter = fromLonLat([location.x, location.y]);
+  //       if (data.items && data.items.length > 0) {
+  //         const { location } = data.items[0];
+  //         const newCenter = fromLonLat([location.x, location.y]);
 
-          if (mapRef.current && mapRef.current.map) {
-            const view = mapRef.current.map.getView();
-            view.setCenter(newCenter);
-            setLatLong({ latitude: location.y, longitude: location.x });
-          }
-          setIsLoadingSearch(false);
-        } else {
-          setIsLoadingSearch(false);
-          console.error("Location not found");
-        }
-      }
-    } catch (error) {
-      setIsLoadingSearch(false);
-      console.error("Error fetching location:", error);
-    }
-  };
+  //         if (mapRef.current && mapRef.current.map) {
+  //           const view = mapRef.current.map.getView();
+  //           view.setCenter(newCenter);
+  //           setLatLong({ latitude: location.y, longitude: location.x });
+  //         }
+  //         setIsLoadingSearch(false);
+  //       } else {
+  //         setIsLoadingSearch(false);
+  //         console.error("Location not found");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     setIsLoadingSearch(false);
+  //     console.error("Error fetching location:", error);
+  //   }
+  // };
 
   console.log(orders);
   console.log(infos);
@@ -101,7 +102,7 @@ export default function Neshan() {
   return (
     <div className="relative w-full h-[94%]">
       <form
-        onSubmit={submitSearchHandler}
+        onSubmit={(event)=>submitSearchHandler(event , setIsLoadingSearch,searchInput , mapRef , setLatLong)}
         className="absolute top-1 sm:top-2 inset-x-4 z-50 text-sm sm:text-base flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-x-2"
         action=""
       >
