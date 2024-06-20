@@ -14,17 +14,11 @@ import { toLonLat, fromLonLat } from "ol/proj";
 import LoadingPage from "../Loading/LoadingPage";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
 import getData from "@/services/getData";
-import sendData from "@/services/sendData";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import DefaultButton from "../share/defaultButton";
-import { SEND_ORDERS, GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
-
-type LatLongType = {
-  latitude: number;
-  longitude: number;
-};
+import { LatLongType } from "@/types/neshan-map";
+import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler";
 
 export default function Neshan() {
   const [latLong, setLatLong] = useState<LatLongType>({
@@ -36,7 +30,7 @@ export default function Neshan() {
   const [searchInput, setSearchInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
-  const { infos, setInfos, login } = useAuthContext();
+  const { infos, login } = useAuthContext();
   const { orders, setTotalNumber, setOrders } = useOrderCardContext();
   const router = useRouter();
 
@@ -118,64 +112,6 @@ export default function Neshan() {
     }
   };
 
-  const confirmAddressHandler = async () => {
-    try {
-      if (orders.length === 0) {
-        return toast.error("شما سفارشی ثبت نکرده‌اید");
-      }
-      setIsLoading(true);
-      const addressResponse = await getData(
-        `https://api.neshan.org/v5/reverse?lat=${latLong.latitude}&lng=${latLong.longitude}`,
-        true,
-        process.env.NEXT_PUBLIC_MAP_API_KEY
-      );
-      if (addressResponse?.status === 200) {
-        const body = {
-          customer_id: infos?._id,
-          name: infos?.name,
-          last_name: infos?.last_name,
-          phone_number: infos?.phone_number,
-          orders: orders,
-          address: addressResponse.data.formatted_address,
-          latitude: latLong.latitude,
-          longitude: latLong.longitude,
-        };
-        const sendOrderResponse = await sendData(SEND_ORDERS, body, infos?._id);
-
-        if (sendOrderResponse.status === 200) {
-          const getRegisteredOrdersResponse = await getData(
-            GET_ORDERS_CUSTOER,
-            true,
-            undefined,
-            infos?._id
-          );
-          if (getRegisteredOrdersResponse?.status === 200) {
-            await login(
-              getRegisteredOrdersResponse.data.infos,
-              getRegisteredOrdersResponse.data.token
-            );
-            setIsLoading(false);
-            await setTotalNumber(0);
-            setOrders([]);
-            router.push("/application/order/registered-orders");
-          }
-        }
-      }
-    } catch (error: any) {
-      setIsLoading(false);
-      console.error("خطا در ارتباط با سرور:", error);
-      setIsLoading(false);
-      if (error.response && error.response.status === 400) {
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        toast.error(errorMessage);
-      } else {
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    }
-  };
-
   console.log(orders);
   console.log(infos);
 
@@ -240,7 +176,18 @@ export default function Neshan() {
         <DefaultButton
           svgClassName="fill-white"
           className="bg-sky-500 rounded-lg text-white text-sm  h-9  w-32 sm:h-12 sm:text-base"
-          onClick={confirmAddressHandler}
+          onClick={() =>
+            confirmAddressHandler(
+              setIsLoading,
+              orders,
+              setOrders,
+              infos,
+              latLong,
+              setTotalNumber,
+              login,
+              router
+            )
+          }
           isLoading={isLoading}
           content="تایید آدرس"
         />
