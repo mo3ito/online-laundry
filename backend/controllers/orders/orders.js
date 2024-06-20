@@ -1,6 +1,7 @@
 const OrdersModel = require("../../models/orders/Orders");
 const CustomersModel = require("../../models/customer/CustomerModel");
 const createToken = require("../../utils/createToken");
+const JDate = require('jalali-date');
 
 const sendOrders = async (req, res) => {
   const customerId = req.headers.authorization;
@@ -39,6 +40,13 @@ const sendOrders = async (req, res) => {
       });
     }
 
+    const jdate = new JDate;
+   const formatedDate =  jdate.date.join("/")
+
+   console.log(formatedDate);
+
+    
+
     const ordersInfos = {
       customer_id: customerId,
       name,
@@ -48,6 +56,7 @@ const sendOrders = async (req, res) => {
       address,
       latitude,
       longitude,
+      created_at: formatedDate
     };
 
     const newOrdersModel = await new OrdersModel(ordersInfos);
@@ -68,6 +77,8 @@ const sendOrders = async (req, res) => {
     });
   }
 };
+
+
 
 const getOrdersCustomer = async (req, res) => {
   const customerId = req.headers.authorization;

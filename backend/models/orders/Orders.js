@@ -55,6 +55,10 @@ const OrdersSchema = new Schema({
     type: String,
     required: true,
   },
+  created_at:{
+    type : String,
+    default: ""
+  }
 });
 
 const Orders = mongoose.model("orders", OrdersSchema);
