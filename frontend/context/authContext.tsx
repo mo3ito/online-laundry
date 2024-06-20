@@ -13,7 +13,7 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const initInfos = {
-    _id:"",
+    _id: "",
     name: "",
     last_name: "",
     phone_number: "",
@@ -37,17 +37,23 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (!!login) {
-      const getInfosFromToken = async () => {
+    const getInfosFromToken = async () => {
+      try {
         const token = await Cookies.get(mo3itoPakToken);
-        if (token?.length) {
+        if (token && token.length > 0) {
           const decodedToken: DecodedTokenType =
             await jwtDecode<DecodedTokenType>(token);
+          console.log("decodedToken:", decodedToken);
           setInfos(decodedToken.infos);
         } else {
           setInfos(null);
         }
-      };
+      } catch (error) {
+        setInfos(null);
+      }
+    };
+
+    if (!!login) {
       getInfosFromToken();
     }
   }, [login]);

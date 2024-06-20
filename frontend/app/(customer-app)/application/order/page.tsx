@@ -141,7 +141,7 @@ export default function page() {
           تایید و ادامه
         </Link>
       </div>
-      </> : <p className="text-center mt-32">سبد سفارش شما خالی است</p>}
+      </> : <p className="text-center mt-32">سبد سفارشات جدید شما خالی است</p>}
 
       <Modal
         messageContent="آیا از حذف اطمینان دارید؟"

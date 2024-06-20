@@ -101,7 +101,7 @@ const getOrdersCustomer = async (req, res) => {
       created_at:customer.created_at
     };
 
-    const token = await createToken(infos);
+    const token = await createToken({infos});
 
  
 
