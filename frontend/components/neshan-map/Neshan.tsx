@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import DefaultButton from "../share/defaultButton";
 import { LatLongType } from "@/types/neshan-map";
 import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler";
+import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
 
 export default function Neshan() {
   const [latLong, setLatLong] = useState<LatLongType>({
@@ -53,24 +54,6 @@ export default function Neshan() {
       });
     }
   }, [mapRef]);
-
-  const findLocationHandler = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatLong({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error Code = " + error.code + " - " + error.message);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
 
   console.log(latLong);
 
@@ -160,7 +143,7 @@ export default function Neshan() {
 
       <div className="absolute bottom-4 right-4 flex items-center justify-center gap-x-4">
         <button
-          onClick={findLocationHandler}
+          onClick={()=>findLocationHandler(setLatLong)}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"
         >
           <svg
