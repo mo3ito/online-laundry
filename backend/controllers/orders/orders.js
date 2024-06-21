@@ -1,7 +1,7 @@
 const OrdersModel = require("../../models/orders/Orders");
 const CustomersModel = require("../../models/customer/CustomerModel");
 const createToken = require("../../utils/createToken");
-const JDate = require('jalali-date');
+const JDate = require("jalali-date");
 
 const sendOrders = async (req, res) => {
   const customerId = req.headers.authorization;
@@ -15,7 +15,6 @@ const sendOrders = async (req, res) => {
     latitude,
     longitude,
   } = req.body;
-
 
   console.log(orders);
   try {
@@ -40,19 +39,17 @@ const sendOrders = async (req, res) => {
       });
     }
 
-    const jdate = new JDate;
-   const formatedDate =  jdate.date.join("/")
+    const jdate = new JDate();
+    const formatedDate = jdate.date.join("/");
 
-   console.log(formatedDate);
-
-    
+    console.log(formatedDate);
 
     const ordersInfos = {
       customer_id: customerId,
       name,
       last_name,
       phone_number,
-      orders: orders.map(order=>({...order , created_at:formatedDate})),
+      orders: orders.map((order) => ({ ...order, created_at: formatedDate })),
       address,
       latitude,
       longitude,
@@ -77,8 +74,6 @@ const sendOrders = async (req, res) => {
   }
 };
 
-
-
 const getOrdersCustomer = async (req, res) => {
   const customerId = req.headers.authorization;
 
@@ -89,21 +84,19 @@ const getOrdersCustomer = async (req, res) => {
       });
     }
 
-   const customer = await CustomersModel.findById(customerId)
+    const customer = await CustomersModel.findById(customerId);
 
-   console.log(customer);
+    console.log(customer);
     const infos = {
       _id: customerId,
       name: customer.name,
       last_name: customer.last_name,
       phone_number: customer.phone_number,
       orders: customer.orders,
-      created_at:customer.created_at
+      created_at: customer.created_at,
     };
 
-    const token = await createToken({infos});
-
- 
+    const token = await createToken({ infos });
 
     return res.status(200).json({
       infos,
@@ -117,4 +110,53 @@ const getOrdersCustomer = async (req, res) => {
   }
 };
 
-module.exports = { sendOrders, getOrdersCustomer };
+const deleteOrders = async (req, res) => {
+  const customerId = req.headers.authorization;
+  const { orders_id } = req.body;
+
+  try {
+    const customer = await CustomersModel.findById(customerId);
+    const orders = await OrdersModel.findOne({ customer_id: customerId });
+
+    if (!customer) {
+      return res.status(400).json({
+        message: "مشتری با چنین آیدی وجود ندارد",
+      });
+    }
+    if (!orders) {
+      return res.status(400).json({
+        message: "سفارشی با چنین آیدی مشتری وجود ندارد ",
+      });
+    }
+
+    const ordersUpdateResult = await OrdersModel.updateOne(
+      { customer_id: customerId },
+      { $pull: { orders: { orders_id } } }
+    );
+
+    const customerUpdateResult = await CustomersModel.updateOne(
+      { _id: customerId },
+      { $pull: { orders: { orders_id } } }
+    );
+
+    if (
+      ordersUpdateResult.modifiedCount === 0 &&
+      customerUpdateResult.modifiedCount === 0
+    ) {
+      return res.status(404).json({
+        message: "سفارش یافت نشد",
+      });
+    }
+
+    return res.status(200).json({
+      message: "سفارش با موفقیت حذف شد",
+    });
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
+
+module.exports = { sendOrders, getOrdersCustomer, deleteOrders };
