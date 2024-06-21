@@ -4,58 +4,20 @@ import React, { useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import DefaultButton from "@/components/share/defaultButton";
-import updateData from "@/services/updateData";
-import { toast } from "react-toastify";
 import Modal from "@/components/Modal";
+import deleteHandler from "@/app/utils/orders/deleteHandler";
 
 export default function page() {
   const { infos, login } = useAuthContext();
   const [isShowDelteModal, setIsShowDeleteModal] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string>("");
-  
 
-  console.log(infos);
-
-  const deleteHandler = async () => {
-    const body = {
-      orders_id: orderId,
-    };
-
-    try {
-      
-      const response = await updateData(
-        "http://localhost:4000/orders/delete-order",
-        body,
-        infos?._id
-      );
-      if (response.status === 200) {
-        await login(response.data.infos, response.data.token);
-        toast.success("سفارش با موفقیت حذف شد");
-        setIsShowDeleteModal(false);
-      }
-    } catch (error: any) {
-      console.error("خطا در ارتباط با سرور:", error);
-
-      if (error.response && error.response.status === 400) {
-        setIsShowDeleteModal(false)
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        toast.error(errorMessage);
-      } else {
-        setIsShowDeleteModal(false);
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    }
-  };
   const deleteHandlerProccess = (orderId: string) => {
     if (orderId) {
       setOrderId(orderId);
       setIsShowDeleteModal(true);
     }
   };
-
-  console.log(infos?.orders);
 
   return (
     <>
@@ -102,7 +64,9 @@ export default function page() {
                     </div>
                     <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                       <p>آدرس:</p>
-                      <p className="text-xs sm:text-sm truncate">{order.address}</p>
+                      <p className="text-xs sm:text-sm truncate">
+                        {order.address}
+                      </p>
                     </div>
                     <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                       <p>وضعیت:</p>
@@ -110,9 +74,8 @@ export default function page() {
                     </div>
                     <DefaultButton
                       content="لغو"
-                      className="w-full h-10 bg-red-300"
+                      className="w-full h-10 bg-pink-300"
                       onClick={() => deleteHandlerProccess(order.orders_id)}
-                      
                     />
                   </article>
                 </li>
@@ -127,7 +90,9 @@ export default function page() {
         messageContent="آیا از حذف اطمینان دارید؟"
         isShowModal={isShowDelteModal}
         setIsShowModal={setIsShowDeleteModal}
-        confirmOnClick={() => deleteHandler()}
+        confirmOnClick={() =>
+          deleteHandler(orderId, infos?._id, login, setIsShowDeleteModal)
+        }
       />
     </>
   );

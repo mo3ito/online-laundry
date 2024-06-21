@@ -59,7 +59,7 @@ export default function Modal({
           </button>
           <button
             onClick={() => setIsShowModal(false)}
-            className="bg-red-300 w-24 py-2 rounded-lg mr-2  max-[280px]:text-sm text-base"
+            className="bg-pink-300 w-24 py-2 rounded-lg mr-2  max-[280px]:text-sm text-base"
             aria-label="لغو"
           >
             خیر
