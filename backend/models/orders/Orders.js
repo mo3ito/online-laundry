@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
-
   service_type: {
     type: String,
     required: true,
@@ -31,6 +30,10 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
+  address:{
+    type: String,
+    required: true,
+  }
 });
 
 const OrdersSchema = new Schema({

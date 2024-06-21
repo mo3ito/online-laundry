@@ -49,7 +49,7 @@ const sendOrders = async (req, res) => {
       name,
       last_name,
       phone_number,
-      orders: orders.map((order) => ({ ...order, created_at: formatedDate })),
+      orders: orders.map((order) => ({ ...order, created_at: formatedDate , address })),
       address,
       latitude,
       longitude,
@@ -148,21 +148,13 @@ const deleteOrders = async (req, res) => {
       });
     }
 
-    const updatedCustomer = await CustomersModel.findById(customerId)
-    // const infos = {
-    //   _id : customer._id,
-    //   name : customer.name,
-    //   last_name : customer.last_name,
-    //   phone_number : customer.phone_number,
-    //   orders : 
-    //   created_at : customer.created_at
-    // }
+    const updatedCustomer = await CustomersModel.findById(customerId);
 
-    const token = await createToken({infos : updatedCustomer})
+    const token = await createToken({ infos: updatedCustomer });
 
     return res.status(200).json({
-      infos : updatedCustomer,
-      token
+      infos: updatedCustomer,
+      token,
     });
   } catch (error) {
     console.error("error:", error.message);
