@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
+
   service_type: {
     type: String,
     required: true,
@@ -25,6 +26,10 @@ const OrderSchema = new Schema({
   created_at: {
     type: String,
     default: "",
+  },
+  orders_id: {
+    type: String,
+    required: true,
   },
 });
 
@@ -58,7 +63,6 @@ const OrdersSchema = new Schema({
     type: String,
     required: true,
   },
-
 });
 
 const Orders = mongoose.model("orders", OrdersSchema);

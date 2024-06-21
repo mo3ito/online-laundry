@@ -148,8 +148,21 @@ const deleteOrders = async (req, res) => {
       });
     }
 
+    const updatedCustomer = await CustomersModel.findById(customerId)
+    // const infos = {
+    //   _id : customer._id,
+    //   name : customer.name,
+    //   last_name : customer.last_name,
+    //   phone_number : customer.phone_number,
+    //   orders : 
+    //   created_at : customer.created_at
+    // }
+
+    const token = await createToken({infos : updatedCustomer})
+
     return res.status(200).json({
-      message: "سفارش با موفقیت حذف شد",
+      infos : updatedCustomer,
+      token
     });
   } catch (error) {
     console.error("error:", error.message);
