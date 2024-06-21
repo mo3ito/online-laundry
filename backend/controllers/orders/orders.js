@@ -49,7 +49,11 @@ const sendOrders = async (req, res) => {
       name,
       last_name,
       phone_number,
-      orders: orders.map((order) => ({ ...order, created_at: formatedDate , address })),
+      orders: orders.map((order) => ({
+        ...order,
+        created_at: formatedDate,
+        address,
+      })),
       address,
       latitude,
       longitude,
@@ -149,6 +153,10 @@ const deleteOrders = async (req, res) => {
     }
 
     const updatedCustomer = await CustomersModel.findById(customerId);
+
+    if (updatedCustomer.orders.length === 0) {
+      await orders.deleteOne({ customer_id: customerId });
+    }
 
     const token = await createToken({ infos: updatedCustomer });
 

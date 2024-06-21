@@ -21,13 +21,13 @@ export default function page() {
 
   return (
     <>
-      {infos ? (
-        <div
-          style={{ height: `calc(100vh - 248px)` }}
-          className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
-        >
-          <HeaderComponent title="سفارشات ثبت شده" />
+      <div
+        style={{ height: `calc(100vh - 248px)` }}
+        className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
+      >
+        <HeaderComponent title="سفارشات ثبت شده" />
 
+        {infos?.orders.length ? (
           <section className="w-full">
             <ul className="w-full h-max p-6 sm:p-8 ">
               {infos.orders.map((order) => (
@@ -82,12 +82,13 @@ export default function page() {
               ))}
             </ul>
           </section>
-        </div>
-      ) : (
-        <LoadingPage />
-      )}
+        ) : (
+          <p className="text-center mt-32">سبد سفارشات ثبت شده شما خالی است</p>
+        )}
+      </div>
+
       <Modal
-        messageContent="آیا از حذف اطمینان دارید؟"
+        messageContent="آیا از لغو اطمینان دارید؟"
         isShowModal={isShowDelteModal}
         setIsShowModal={setIsShowDeleteModal}
         confirmOnClick={() =>
