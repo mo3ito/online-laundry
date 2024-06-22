@@ -74,7 +74,7 @@ export default function page() {
                     </div>
                     <DefaultButton
                       content="لغو"
-                      className="w-full h-10 bg-pink-300"
+                      className="w-full h-10  bg-pink-400"
                       onClick={() => deleteHandlerProccess(order.orders_id)}
                     />
                   </article>
