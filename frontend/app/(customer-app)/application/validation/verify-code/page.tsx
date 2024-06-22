@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import DefaultButton from "@/components/share/defaultButton";
@@ -13,7 +13,7 @@ export default function Page() {
   const [isActiveSendButton, setIsActiveSendButton] = useState<boolean>(false);
   const [allInputValues, setAllInputValues] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const {login} = useAuthContext()
+  const { login } = useAuthContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -69,16 +69,17 @@ export default function Page() {
     checkAllInputsFilled();
   };
 
-
-
-  const sendCodeHandler = async () => {
+  const sendCodeHandler = async (event: FormEvent) => {
+    event.preventDefault();
     try {
       setIsLoading(true);
-      const response = await sendData(VERIFY_CODE, { code_number: allInputValues });
-  
+      const response = await sendData(VERIFY_CODE, {
+        code_number: allInputValues,
+      });
+
       if (response.status === 200 && response.data) {
         const { token, infos } = response.data;
-  
+
         if (token) {
           await login(infos, token);
           router.replace("/application");
@@ -92,7 +93,8 @@ export default function Page() {
     } catch (error: any) {
       console.error("خطا در ارتباط با سرور:", error);
       if (error.response?.status === 400) {
-        const errorMessage: string = error.response.data?.message || "خطایی رخ داده است.";
+        const errorMessage: string =
+          error.response.data?.message || "خطایی رخ داده است.";
         toast.error(errorMessage);
       } else {
         toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
@@ -101,11 +103,13 @@ export default function Page() {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <div className="w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center flex-col">
-      <div className="-translate-y-44 text-center  max-[350px]:w-full max-[350px]:px-6 w-8/12 sm:w-96">
+      <form
+        onSubmit={sendCodeHandler}
+        className="-translate-y-44 text-center  max-[350px]:w-full max-[350px]:px-6 w-8/12 sm:w-96"
+      >
         <Logo as="header" />
         <h1 className="my-4 max-[350px]:text-base text-xl sm:text-2xl">
           کد پیامک شده را وارد کنید
@@ -130,20 +134,19 @@ export default function Page() {
           ))}
         </div>
         <DefaultButton
-          onClick={sendCodeHandler}
           content="تایید"
           disabled={!isActiveSendButton}
           isLoading={isLoading}
           className={`${
             isActiveSendButton
               ? "bg-sky-200 border-sky-600 "
-              : "bg-zinc-300 border-red-300"
+              : "bg-zinc-300 border-sky-300"
           } w-full h-12 rounded-lg mt-4 border`}
           classNameContent={`${
             isActiveSendButton ? "text-black" : "text-zinc-500 "
           }`}
         />
-      </div>
+      </form>
     </div>
   );
 }
