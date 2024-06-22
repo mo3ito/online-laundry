@@ -6,9 +6,12 @@ import InformationButton from "./share/buttons/InformationButton";
 import ShowName from "./ShowName";
 import IncreaseCredit from "./share/buttons/IncreaseCredit";
 import useAuthContext from "@/hooks/useAuthContext";
+import Modal from "../Modal";
+import { useState } from "react";
 
 export default function Header() {
   const { infos, logout } = useAuthContext();
+  const [isShowModalExit, setIsShowModalExit] = useState<boolean>(false);
   const router = useRouter();
   console.log(infos);
 
@@ -26,10 +29,16 @@ export default function Header() {
             customerName={infos?.name}
             customerLastName={infos?.last_name}
           />
-          <LogoutButton onClick={logoutHandler} />
+          <LogoutButton onClick={() => setIsShowModalExit(true)} />
         </div>
         <IncreaseCredit />
       </header>
+      <Modal
+        messageContent="آیا از خروج اطمینان دارید؟"
+        isShowModal={isShowModalExit}
+        setIsShowModal={setIsShowModalExit}
+        confirmOnClick={logoutHandler}
+      />
     </>
   );
 }
