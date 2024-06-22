@@ -34,9 +34,9 @@ export default function page() {
       style={{ height: `calc(100vh - 248px)` }}
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500 pb-10 "
     >
-      <HeaderComponent title="سفارشات شما" as="header" />
+      <HeaderComponent title="سفارشات جدید شما" as="header" />
       { orders.length ? <>
-      <ul className="w-full h-max p-6 sm:p-8 ">
+      <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8">
         {orders.map((order) => (
           <li
             key={order.id}
@@ -128,7 +128,7 @@ export default function page() {
         ))}
       </ul>
 
-      <div className=" h-max border border-sky-500 p-2 rounded-lg shadow-xl bg-sky-200 max-[280px]:text-xs text-sm sm:text-base mx-6 sm:mx-8">
+      <div className=" h-max border border-sky-500 p-2 rounded-lg shadow-xl  max-[280px]:text-xs text-sm sm:text-base mx-6 sm:mx-8">
         <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2  w-full  ">
           <p>تعداد کل سفارشات </p>
           <p>{totalNumber} عدد</p>
@@ -137,7 +137,7 @@ export default function page() {
           <p>مبلغ کل</p>
           <p>{totalPrice?.toLocaleString("en-US")} تومان</p>
         </div>
-        <Link href="/application/location" className="bg-green-500 py-2 w-full rounded-lg text-white inline-block text-center">
+        <Link href="/application/location" className="bg-sky-500 py-2 w-full rounded-lg text-white inline-block text-center">
           تایید و ادامه
         </Link>
       </div>
