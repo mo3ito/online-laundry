@@ -2,6 +2,7 @@ import updateData from "@/services/updateData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
+import { DELETE_ORDER } from "@/routeApi/endpoints";
 const deleteHandler = async (
   orderId: string,
   _id: string | undefined,
@@ -13,11 +14,7 @@ const deleteHandler = async (
   };
 
   try {
-    const response = await updateData(
-      "http://localhost:4000/orders/delete-order",
-      body,
-      _id
-    );
+    const response = await updateData(DELETE_ORDER, body, _id);
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       toast.success("سفارش با موفقیت حذف شد");

@@ -101,7 +101,7 @@ export default function page() {
           />
           <DefaultButton
             content="تایید"
-            className="w-full h-12 rounded-lg mt-6"
+            className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white"
             isLoading={isLoadingForEdit}
           />
         </form>

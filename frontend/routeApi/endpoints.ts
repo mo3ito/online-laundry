@@ -20,3 +20,4 @@ export const CUSTOMER_REGISTER = `${BASE_URL_CUSTOMERS}/register`;
 //-- orders
 export const SEND_ORDERS = `${BASE_URL_ORDERS}/send-orders`;
 export const GET_ORDERS_CUSTOER = `${BASE_URL_ORDERS}/get-orders-customer`;
+export const DELETE_ORDER = `${BASE_URL_ORDERS}/delete-order`;
