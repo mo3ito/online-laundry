@@ -1,5 +1,6 @@
 const CustomersModel = require("../../models/customer/CustomerModel");
 const CustomersAwaitingValidation = require("../../models/customer/validatePhoneNumbersModel");
+const OrdersModel = require("../../models/orders/Orders");
 const createToken = require("../../utils/createToken");
 require("dotenv").config();
 const generateRandomCode = require("../../utils/generateRandomCode");
@@ -143,12 +144,65 @@ const customerRegistration = async (req, res) => {
   }
 };
 
+// const editInformation = async (req, res) => {
+//   const customerId = req.headers.authorization;
+
+//   const { name, last_name } = req.body;
+
+//   try {
+//     const customer = await CustomersModel.findById(customerId);
+//     const orders = await OrdersModel.find({ customer_id: customerId });
+
+//     console.log(orders);
+
+//     if (!customer) {
+//       return res.status(400).json({
+//         message: "مشتری با این آیدی وجود ندارد",
+//       });
+//     }
+
+//     if (!name.trim() || !last_name.trim() === 0) {
+//       return res.status(400).json({
+//         message: "مقادیر ورودی خالی هستند",
+//       });
+//     }
+
+//     customer.name = name;
+//     customer.last_name = last_name;
+//     await customer.save();
+
+//     orders.map(order=> ({...order , order.name : name , order.last_name : last_name}))
+//     orders.name = name;
+//     orders.last_name = last_name;
+
+//     await orders.save();
+
+//     const token = await createToken({ infos: customer });
+
+//     return res.status(200).json({
+//       infos: customer,
+//       token,
+//     });
+//   } catch (error) {
+//     console.error("error:", error.message);
+//     return res.status(500).json({
+//       message: "خطایی رخ داد",
+//     });
+//   }
+// };
+
 const editInformation = async (req, res) => {
   const customerId = req.headers.authorization;
-
   const { name, last_name } = req.body;
 
   try {
+    
+    if (!name.trim() || !last_name.trim()) {
+      return res.status(400).json({
+        message: "مقادیر ورودی خالی هستند",
+      });
+    }
+
     const customer = await CustomersModel.findById(customerId);
 
     if (!customer) {
@@ -157,15 +211,19 @@ const editInformation = async (req, res) => {
       });
     }
 
-    if (!name.trim() || !last_name.trim() === 0) {
-      return res.status(400).json({
-        message: "مقادیر ورودی خالی هستند",
-      });
-    }
-
     customer.name = name;
     customer.last_name = last_name;
-    customer.save();
+    await customer.save();
+
+    const orders = await OrdersModel.find({ customer_id: customerId });
+
+    await Promise.all(
+      orders.map(async (order) => {
+        order.name = name;
+        order.last_name = last_name;
+        await order.save();
+      })
+    );
 
     const token = await createToken({ infos: customer });
 
