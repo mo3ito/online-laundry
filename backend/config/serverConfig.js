@@ -10,6 +10,7 @@ const startServer = require("../routes/index");
 const ClothingCategory = require("../routes/laundry-clothing/laundry-clothing-category");
 const ClothingTypes = require("../routes/laundry-clothing/clothing-type");
 const Orders = require("../routes/orders/orders");
+const Driver = require("../routes/driver/registration");
 
 const configureServer = (app) => {
   app.use(express.json());
@@ -22,6 +23,7 @@ const configureServer = (app) => {
   app.use("/", ClothingCategory);
   app.use("/", ClothingTypes);
   app.use("/", Orders);
+  app.use("/", Driver);
   connectToDatabase();
 };
 

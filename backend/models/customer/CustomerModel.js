@@ -1,73 +1,27 @@
-const mongoose = require("mongoose")
-const {Schema} = mongoose;
-
-
-// const OrderSchema = new Schema({
-//     id: {
-//         type: String,
-//         required: true,
-//     },
-//     type_of_clothing: {
-//         type: String,
-//         required: true,
-//     },
-//     number: {
-//         type: String,
-//         required: true,
-//     }
-// });
-
-//  const OrderSchema = new Schema({
-//     id:{
-//       type : String,
-//       required: true
-//     },
-//     service_type: {
-//       type : String,
-//       required: true
-//     },
-//     type_clothing: {
-//       type : String,
-//       required: true
-//     },
-//     count: {
-//       type : Number,
-//       required: true
-//     },
-//     cost: {
-//       type : Number,
-//       required: true
-//     },
-//     totalCost: {
-//       type : Number,
-//       required: true
-//     }
-//   })
-  
-
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const CustomersSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    last_name: {
-        type: String,
-        required: true,
-    },
-    phone_number: {
-        type: String,
-        required: true,
-    },
-    orders:{
-        type: [],
-        default: []
-
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
+  name: {
+    type: String,
+    required: true,
+  },
+  last_name: {
+    type: String,
+    required: true,
+  },
+  phone_number: {
+    type: String,
+    required: true,
+  },
+  orders: {
+    type: [],
+    default: [],
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Customers = mongoose.model("customers", CustomersSchema);
