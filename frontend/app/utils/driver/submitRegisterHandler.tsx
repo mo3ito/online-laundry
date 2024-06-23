@@ -2,13 +2,15 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import sendData from "@/services/sendData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
-import { CUSTOMER_EDIT_INFORMATION } from "@/routeApi/endpoints";
+import { DRIVER_REGISTER } from "@/routeApi/endpoints";
 
 const submitRegisterHandler = async (
   event: FormEvent,
   nameValue: string,
   lastNameValue: string,
   phoneNumberValue: string,
+  passwordValue: string,
+  repeatPasswordValue: string,
   setIsLoadingForRegister: Dispatch<SetStateAction<boolean>>,
   login: (infos: InitialInfosType, token: string) => void
 ) => {
@@ -19,6 +21,7 @@ const submitRegisterHandler = async (
       name: nameValue,
       last_name: lastNameValue,
       phone_number: phoneNumberValue,
+      password: passwordValue,
     };
 
     if (!nameValue?.trim()) {
@@ -27,15 +30,22 @@ const submitRegisterHandler = async (
     if (!lastNameValue?.trim()) {
       return toast.warn("مقدار ورودی نام خانوادگی خالی است");
     }
-    if(!phoneNumberValue.trim()){
-        return toast.warn("مقدار ورودی شماره موبایل خالی است")
+    if (!phoneNumberValue.trim()) {
+      return toast.warn("مقدار ورودی شماره موبایل خالی است");
+    }
+    if (!passwordValue) {
+      return toast.warn("مقدار ورودی رمز عبور خالی است");
+    }
+    if (!repeatPasswordValue) {
+      return toast.warn("مقدار ورودی  تکرار رمز عبور خالی است");
+    }
+
+    if (passwordValue !== repeatPasswordValue) {
+      return toast.warn("رمز عبور با تکرار رمز عبور برابر نیست");
     }
 
     setIsLoadingForRegister(true);
-    const response = await sendData(
-      "http://localhost:4000/driver/register",
-      body
-    );
+    const response = await sendData(DRIVER_REGISTER, body);
 
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);

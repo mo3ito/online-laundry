@@ -13,6 +13,8 @@ export default function page() {
   const [lastNameValue, setLastNameValue] = useState<string>("");
   const [isLoadingForRegister, setIsLoadingForRegister] = useState<boolean>(false);
   const [phoneNumberValue , setPhoneNumberValue]=useState<string>("")
+  const [passwordValue , setPasswordValue]=useState<string>("")
+  const [repeatPasswordValue , setRepeatPasswordValue]=useState<string>("")
 
 console.log(infos);
 
@@ -32,6 +34,8 @@ console.log(infos);
               nameValue,
               lastNameValue,
               phoneNumberValue,
+              passwordValue,
+              repeatPasswordValue,
               setIsLoadingForRegister,
               login,
             )
@@ -79,9 +83,37 @@ console.log(infos);
             type="text"
           />
 
+            <label
+            htmlFor="last-name-user"
+            className="my-2 inline-block mr-2 text-sky-500"
+          >
+            رمز
+          </label>
+          <input
+            value={passwordValue}
+            onChange={(event) => setPasswordValue(event?.target.value)}
+            id="last-name-user"
+            className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
+            type="password"
+          />
+
+            <label
+            htmlFor="last-name-user"
+            className="my-2 inline-block mr-2 text-sky-500"
+          >
+            تکرار رمز
+          </label>
+          <input
+            value={repeatPasswordValue}
+            onChange={(event) => setRepeatPasswordValue(event?.target.value)}
+            id="last-name-user"
+            className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
+            type="password"
+          />
+
           <DefaultButton
             content="تایید"
-            className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white"
+            className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white mb-10"
             isLoading={isLoadingForRegister}
           />
         </form>
