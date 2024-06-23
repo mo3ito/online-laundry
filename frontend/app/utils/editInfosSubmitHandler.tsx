@@ -2,6 +2,7 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import updateData from "@/services/updateData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
+import { CUSTOMER_EDIT_INFORMATION } from "@/routeApi/endpoints";
 
 const editInfosSubmitHandler = async (
   event: FormEvent,
@@ -27,11 +28,7 @@ const editInfosSubmitHandler = async (
     }
 
     setIsLoadingForEdit(true);
-    const response = await updateData(
-      "http://localhost:4000/customers/edit-information",
-      body,
-      _id
-    );
+    const response = await updateData(CUSTOMER_EDIT_INFORMATION, body, _id);
 
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);

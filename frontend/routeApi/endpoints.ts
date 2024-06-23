@@ -16,6 +16,7 @@ export const GET_ONE_TYPE = `${BASE_URL_CLOTHING_TYPE}/get-one-type`;
 export const VALIDATION_PHONE_NUMBER = `${BASE_URL_CUSTOMERS}/validation`;
 export const VERIFY_CODE = `${BASE_URL_CUSTOMERS}/vrify-code`;
 export const CUSTOMER_REGISTER = `${BASE_URL_CUSTOMERS}/register`;
+export const CUSTOMER_EDIT_INFORMATION = `${BASE_URL_CUSTOMERS}/edit-information`
 
 //-- orders
 export const SEND_ORDERS = `${BASE_URL_ORDERS}/send-orders`;
