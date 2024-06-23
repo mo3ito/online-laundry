@@ -26,8 +26,8 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   }, [orders]);
 
   useEffect(() => {
-    if (infos) {
-      const totalRegisterd = infos?.orders.reduce(
+    if (infos && !infos.is_driver) {
+      const totalRegisterd = infos?.orders?.reduce(
         (prev, current) => prev + current.count,
         0
       );

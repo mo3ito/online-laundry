@@ -5,19 +5,17 @@ import React, { useEffect, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import NoPersonSvg from "@/components/customerApp/svgs/NoPersonSvg";
-import editInfosSubmitHandler from "@/app/utils/editInfosSubmitHandler";
+import submitRegisterHandler from "@/app/utils/driver/submitRegisterHandler";
 
 export default function page() {
   const { infos, login } = useAuthContext();
-  const [nameValue, setNameValue] = useState<string | undefined>("");
-  const [lastNameValue, setLastNameValue] = useState<string | undefined>("");
+  const [nameValue, setNameValue] = useState<string>("");
+  const [lastNameValue, setLastNameValue] = useState<string>("");
   const [isLoadingForRegister, setIsLoadingForRegister] = useState<boolean>(false);
-  const [phoneNumber , setPhoneNumber]=useState<string>("")
+  const [phoneNumberValue , setPhoneNumberValue]=useState<string>("")
 
-  useEffect(() => {
-    setNameValue(infos?.name);
-    setLastNameValue(infos?.last_name);
-  }, [infos]);
+console.log(infos);
+
 
   return (
     <div
@@ -29,13 +27,13 @@ export default function page() {
         <NoPersonSvg />
         <form
           onSubmit={(event) =>
-            editInfosSubmitHandler(
+            submitRegisterHandler(
               event,
               nameValue,
               lastNameValue,
-              setIsLoadingForEdit,
+              phoneNumberValue,
+              setIsLoadingForRegister,
               login,
-              infos?._id
             )
           }
           className="max-[420px]:w-full  w-96 "
@@ -74,8 +72,8 @@ export default function page() {
             شماره موبایل
           </label>
           <input
-            value={lastNameValue}
-            onChange={(event) => setPhoneNumber(event?.target.value)}
+            value={phoneNumberValue}
+            onChange={(event) => setPhoneNumberValue(event?.target.value)}
             id="last-name-user"
             className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
             type="text"

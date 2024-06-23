@@ -3,8 +3,9 @@ export type InitialInfosType = {
   name: string;
   last_name: string;
   phone_number: string;
-  orders: any[];
+  orders?: any[];
   created_at: string;
+  is_driver?: boolean
 };
 
 export type AuthContextValue = {

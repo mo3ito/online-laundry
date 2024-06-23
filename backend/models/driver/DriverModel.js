@@ -18,9 +18,17 @@ const DriverSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  password: {
+    type: String,
+    require: true,
+  },
   is_register_by_admin: {
     type: Boolean,
     default: false,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
   },
 });
 
