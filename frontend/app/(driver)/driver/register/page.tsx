@@ -7,6 +7,7 @@ import submitRegisterHandler from "@/app/utils/driver/submitRegisterHandler";
 import LogoName from "@/components/customerApp/share/LogoName";
 import InputPassword from "@/components/customerApp/share/inputs/InputPassword";
 import useFocus from "@/hooks/useFocus";
+import Link from "next/link";
 
 export default function page() {
   const { infos, login } = useAuthContext();
@@ -26,7 +27,7 @@ export default function page() {
     <div className=" w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center">
       <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full -translate-y-36">
         <LogoName />
-        <h1 className="w-96 text-center my-6  ">ثبت‌نام رانندگان</h1>
+        <h1 className="w-96 text-center mt-6  text-sky-500 font-bold text-lg">ثبت‌نام رانندگان</h1>
         <form
           onSubmit={(event) =>
             submitRegisterHandler(
@@ -101,9 +102,13 @@ export default function page() {
 
           <DefaultButton
             content="تایید"
-            className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white mb-10"
+            className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white"
             isLoading={isLoadingForRegister}
           />
+          <div className="w-full flex justify-center items-center gap-x-2 my-4">
+            <p>آیا حساب کاربری دارید؟</p>
+            <Link className="text-sky-500 text-lg font-bold" href="/driver/login">ورود</Link>
+          </div>
         </form>
       </section>
     </div>
