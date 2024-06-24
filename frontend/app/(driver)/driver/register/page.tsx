@@ -104,6 +104,7 @@ export default function page() {
             content="تایید"
             className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white"
             isLoading={isLoadingForRegister}
+            svgClassName="fill-white"
           />
           <div className="w-full flex justify-center items-center gap-x-2 my-4">
             <p>آیا حساب کاربری دارید؟</p>

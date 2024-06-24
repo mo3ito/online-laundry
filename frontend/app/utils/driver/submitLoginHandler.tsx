@@ -3,6 +3,7 @@ import { InitialInfosType } from "@/types/context/AuthContextType";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
+import { DRIVER_LOGIN } from "@/routeApi/endpoints";
 
 const submitLoginHandler = async (
   event: FormEvent,
@@ -33,7 +34,8 @@ const submitLoginHandler = async (
       return toast.warn("مقدار ورودی رمز عبور خالی است");
     }
 
-    const response = await sendData("http://localhost:4000/driver/login", body);
+    setIsLoadingForLogin(true)
+    const response = await sendData(DRIVER_LOGIN, body);
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       setIsLoadingForLogin(false);

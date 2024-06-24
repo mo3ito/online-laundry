@@ -57,7 +57,7 @@ const submitRegisterHandler = async (
 
     setIsLoadingForRegister(true);
     const response = await sendData(DRIVER_REGISTER, body);
-
+    
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       setIsLoadingForRegister(false);
