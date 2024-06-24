@@ -1,8 +1,8 @@
 import { MutableRefObject, useEffect } from "react";
 
-const useFocus = (nameRef: MutableRefObject<HTMLElement | null>) => {
+const useFocus = (nameRef: MutableRefObject<HTMLInputElement | null>) => {
   useEffect(() => {
-    nameRef.current.focus();
+    nameRef.current?.focus();
   }, []);
 };
 

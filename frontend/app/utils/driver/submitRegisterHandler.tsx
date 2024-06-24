@@ -33,6 +33,12 @@ const submitRegisterHandler = async (
     if (!phoneNumberValue.trim()) {
       return toast.warn("مقدار ورودی شماره موبایل خالی است");
     }
+    if(phoneNumberValue.length !== 11 ){
+      return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است")
+    }
+    if(!regex.test(phoneNumberValue)){
+      return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید")
+    }
     if (!passwordValue) {
       return toast.warn("مقدار ورودی رمز عبور خالی است");
     }
@@ -46,12 +52,7 @@ const submitRegisterHandler = async (
     if(passwordValue.length < 6){
       return toast.warn("تعداد کاراکترهای رمز عبور باید بیشتر از ۵ کاراکتر باشد")
     }
-    if(phoneNumberValue.length !== 11 ){
-      return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است")
-    }
-    if(!regex.test(phoneNumberValue)){
-      return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید")
-    }
+
     
 
     setIsLoadingForRegister(true);
