@@ -15,7 +15,7 @@ const submitRegisterHandler = async (
   login: (infos: InitialInfosType, token: string) => void
 ) => {
   event.preventDefault();
-
+  const regex = /^[0-9]*$/;
   try {
     const body = {
       name: nameValue,
@@ -43,6 +43,16 @@ const submitRegisterHandler = async (
     if (passwordValue !== repeatPasswordValue) {
       return toast.warn("رمز عبور با تکرار رمز عبور برابر نیست");
     }
+    if(passwordValue.length < 6){
+      return toast.warn("تعداد کاراکترهای رمز عبور باید بیشتر از ۵ کاراکتر باشد")
+    }
+    if(phoneNumberValue.length !== 11 ){
+      return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است")
+    }
+    if(!regex.test(phoneNumberValue)){
+      return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید")
+    }
+    
 
     setIsLoadingForRegister(true);
     const response = await sendData(DRIVER_REGISTER, body);
