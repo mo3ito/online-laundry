@@ -98,6 +98,7 @@ const getOrdersCustomer = async (req, res) => {
       phone_number: customer.phone_number,
       orders: customer.orders,
       created_at: customer.created_at,
+      is_customer: customer.is_customer
     };
 
     const token = await createToken({ infos });

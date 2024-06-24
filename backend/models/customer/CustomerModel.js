@@ -22,6 +22,10 @@ const CustomersSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  is_customer:{
+    type: String,
+    default: true
+  }
 });
 
 const Customers = mongoose.model("customers", CustomersSchema);
