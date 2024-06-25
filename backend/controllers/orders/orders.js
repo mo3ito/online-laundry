@@ -157,6 +157,11 @@ const deleteOrders = async (req, res) => {
       await OrdersModel.deleteMany({ customer_id: customerId });
     }
 
+    await CustomersModel.updateMany(
+      { orders: { $size: 0 } },
+      { $unset: { orders: "" } }
+    );
+
     const token = await createToken({ infos: updatedCustomer });
 
     return res.status(200).json({
