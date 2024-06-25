@@ -98,7 +98,7 @@ const getOrdersCustomer = async (req, res) => {
       phone_number: customer.phone_number,
       orders: customer.orders,
       created_at: customer.created_at,
-      is_customer: customer.is_customer
+      is_customer: customer.is_customer,
     };
 
     const token = await createToken({ infos });
@@ -115,84 +115,19 @@ const getOrdersCustomer = async (req, res) => {
   }
 };
 
-// const deleteOrders = async (req, res) => {
-//   const customerId = req.headers.authorization;
-//   const { orders_id } = req.body;
-
-//   try {
-//     const customer = await CustomersModel.findById(customerId);
-//     const orders = await OrdersModel.findOne({ customer_id: customerId });
-
-//     if (!customer) {
-//       return res.status(400).json({
-//         message: "مشتری با چنین آیدی وجود ندارد",
-//       });
-//     }
-//     if (!orders) {
-//       return res.status(400).json({
-//         message: "سفارشی با چنین آیدی مشتری وجود ندارد ",
-//       });
-//     }
-
-//     const ordersUpdateResult = await OrdersModel.updateOne(
-//       { customer_id: customerId },
-//       { $pull: { orders: { orders_id } } }
-//     );
-
-//     const customerUpdateResult = await CustomersModel.updateOne(
-//       { _id: customerId },
-//       { $pull: { orders: { orders_id } } }
-//     );
-
-//     if (
-//       ordersUpdateResult.modifiedCount === 0 &&
-//       customerUpdateResult.modifiedCount === 0
-//     ) {
-//       return res.status(404).json({
-//         message: "سفارش یافت نشد",
-//       });
-//     }
-
-//     const updatedCustomer = await CustomersModel.findById(customerId);
-
-//     if (updatedCustomer.orders.length === 0) {
-//       await orders.deleteOne({ customer_id: customerId });
-//     }
-
-//     const token = await createToken({ infos: updatedCustomer });
-
-//     return res.status(200).json({
-//       infos: updatedCustomer,
-//       token,
-//     });
-//   } catch (error) {
-//     console.error("error:", error.message);
-//     return res.status(500).json({
-//       message: "خطایی رخ داد",
-//     });
-//   }
-// };
-
 const deleteOrders = async (req, res) => {
   const customerId = req.headers.authorization;
   const { orders_id } = req.body;
 
   try {
     const customer = await CustomersModel.findById(customerId);
-    const orders = await OrdersModel.findOne({ customer_id: customerId });
-
     if (!customer) {
       return res.status(400).json({
         message: "مشتری با چنین آیدی وجود ندارد",
       });
     }
-    if (!orders) {
-      return res.status(400).json({
-        message: "سفارشی با چنین آیدی مشتری وجود ندارد ",
-      });
-    }
 
-    const ordersUpdateResult = await OrdersModel.updateOne(
+    const ordersUpdateResult = await OrdersModel.updateMany(
       { customer_id: customerId },
       { $pull: { orders: { orders_id } } }
     );
@@ -211,13 +146,15 @@ const deleteOrders = async (req, res) => {
       });
     }
 
+    await OrdersModel.deleteMany({
+      customer_id: customerId,
+      orders: { $size: 0 },
+    });
+
     const updatedCustomer = await CustomersModel.findById(customerId);
 
     if (updatedCustomer.orders.length === 0) {
-      let result;
-      do {
-        result = await OrdersModel.deleteOne({ customer_id: customerId });
-      } while (result.deletedCount > 0);
+      await OrdersModel.deleteMany({ customer_id: customerId });
     }
 
     const token = await createToken({ infos: updatedCustomer });
@@ -233,6 +170,5 @@ const deleteOrders = async (req, res) => {
     });
   }
 };
-
 
 module.exports = { sendOrders, getOrdersCustomer, deleteOrders };
