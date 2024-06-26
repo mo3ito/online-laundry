@@ -13,7 +13,32 @@ const getAllOrders = async (req, res) => {
 
     const allOrders = await OrdersModel.find({});
 
-    return res.status(200).json(allOrders);
+    const data = allOrders.map((item) => item._doc);
+
+    const mergedData = Object.values(
+      data.reduce((acc, current) => {
+        const key = current.customer_id + current.address;
+        if (!acc[key]) {
+          acc[key] = { ...current };
+        } else {
+          acc[key].orders = acc[key].orders.concat(current.orders);
+        }
+        return acc;
+      }, {})
+    );
+
+    const updatedData = mergedData.map(customer => {
+        const all_price = customer.orders.reduce((total, order) => total + order.totalCost, 0);
+        const all_count = customer.orders.reduce((total, order) => total + order.count, 0);
+        return {
+            ...customer,
+            all_count,
+            all_price
+            
+        };
+    });
+
+    return res.status(200).json(updatedData);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -22,4 +47,4 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-module.exports = {getAllOrders};
+module.exports = { getAllOrders };

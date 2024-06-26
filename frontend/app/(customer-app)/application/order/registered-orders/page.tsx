@@ -27,7 +27,7 @@ export default function page() {
       >
         <HeaderComponent title="سفارشات ثبت شده" />
 
-        {infos?.orders.length ? (
+        {infos?.orders?.length ? (
           <section className="w-full">
             <ul className="w-full h-max p-6 sm:p-8 ">
               {infos.orders.map((order) => (
@@ -74,7 +74,7 @@ export default function page() {
                     </div>
                     <DefaultButton
                       content="لغو"
-                      className="w-full h-10  bg-pink-400"
+                      className="w-full h-10 text-white !bg-pink-500"
                       onClick={() => deleteHandlerProccess(order.orders_id)}
                     />
                   </article>
