@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import sendData from "@/services/sendData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
 import { DRIVER_REGISTER } from "@/routeApi/endpoints";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const submitRegisterHandler = async (
   event: FormEvent,
@@ -12,7 +13,8 @@ const submitRegisterHandler = async (
   passwordValue: string,
   repeatPasswordValue: string,
   setIsLoadingForRegister: Dispatch<SetStateAction<boolean>>,
-  login: (infos: InitialInfosType, token: string) => void
+  login: (infos: InitialInfosType, token: string) => void,
+  router: AppRouterInstance
 ) => {
   event.preventDefault();
   const regex = /^[0-9]*$/;
@@ -62,6 +64,7 @@ const submitRegisterHandler = async (
       await login(response.data.infos, response.data.token);
       setIsLoadingForRegister(false);
       toast.success("ثبت‌نام با موفقیت انجام شد");
+      router.push("/driver")
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);

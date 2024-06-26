@@ -34,12 +34,13 @@ const submitLoginHandler = async (
       return toast.warn("مقدار ورودی رمز عبور خالی است");
     }
 
+
     setIsLoadingForLogin(true)
     const response = await sendData(DRIVER_LOGIN, body);
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       setIsLoadingForLogin(false);
-      router.push("/");
+      router.push("/driver");
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);

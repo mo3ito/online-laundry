@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 
-export default function InformationButton() {
+export default function EditInfosButton({ hrefPath }: { hrefPath: string }) {
   return (
-    <Link href={"/application/edit-information"} className="size-max">
+    <Link href={hrefPath} className="size-max">
       <svg
         className="feather feather-edit stroke-2 size-5 sm:size-7"
         fill="none"

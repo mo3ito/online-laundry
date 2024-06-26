@@ -8,6 +8,7 @@ import LogoName from "@/components/customerApp/share/LogoName";
 import InputPassword from "@/components/customerApp/share/inputs/InputPassword";
 import useFocus from "@/hooks/useFocus";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const { infos, login } = useAuthContext();
@@ -19,6 +20,7 @@ export default function page() {
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [repeatPasswordValue, setRepeatPasswordValue] = useState<string>("");
   const inputNameRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter()
   useFocus(inputNameRef);
 
   console.log(infos);
@@ -38,7 +40,8 @@ export default function page() {
               passwordValue,
               repeatPasswordValue,
               setIsLoadingForRegister,
-              login
+              login,
+              router
             )
           }
           className="max-[420px]:w-full  w-96 "
@@ -107,8 +110,8 @@ export default function page() {
             svgClassName="fill-white"
           />
           <div className="w-full flex justify-center items-center gap-x-2 my-4">
-            <p>آیا حساب کاربری دارید؟</p>
-            <Link className="text-sky-500 text-lg font-bold" href="/driver/login">ورود</Link>
+            <p className="max-[280px]:text-sm text-base">آیا حساب کاربری دارید؟</p>
+            <Link className="text-sky-500 max-[280px]:text-sm  text-lg font-bold" href="/driver/login">ورود</Link>
           </div>
         </form>
       </section>

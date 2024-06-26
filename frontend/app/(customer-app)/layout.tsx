@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./../globals.css";
-import Header from "@/components/customerApp/Header";
+import Header from "@/components/headers/Header";
 import BottomMenu from "@/components/customerApp/BottomMenu";
 import OrderCardProvider from "@/context/order-card";
 import ToastifyContainer from "@/components/providers/TostifyContainer";

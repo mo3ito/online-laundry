@@ -46,7 +46,7 @@ export default function Neshan() {
             latLong
           )
         }
-        className="absolute top-1 sm:top-2 inset-x-4 z-50 text-sm sm:text-base flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-x-2"
+        className="absolute top-1 sm:top-2 inset-x-4 z-40 text-sm sm:text-base flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-x-2"
         action=""
       >
         <input
@@ -56,7 +56,7 @@ export default function Neshan() {
               setSearchInput(event.target.value),
             []
           )}
-          className=" w-full sm:w-96 h-8 rounded-lg outline-none border border-sky-500 px-2"
+          className=" w-full sm:w-96 h-8 rounded-lg outline-none border border-sky-500 px-2 "
           placeholder="جستجوی آدرس"
           type="text"
         />

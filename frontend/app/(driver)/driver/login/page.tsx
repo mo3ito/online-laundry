@@ -63,9 +63,9 @@ export default function page() {
             isLoading={isLoadingForLogin}
           />
           <div className="w-full flex justify-center items-center gap-x-2 my-4">
-            <p>آیا حساب کاربری ندارید؟</p>
+            <p className="max-[280px]:text-sm text-base">آیا حساب کاربری ندارید؟</p>
             <Link
-              className="text-sky-500 text-lg font-bold"
+              className="text-sky-500 max-[280px]:text-sm  text-lg font-bold"
               href="/driver/register"
             >
               ایجاد حساب
