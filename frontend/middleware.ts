@@ -40,6 +40,6 @@ export async function middleware(request: NextRequest) {
     !pathname.startsWith("/driver/login") &&
     !tokenValue?.infos?.is_driver
   ) {
-    return NextResponse.redirect(new URL("/driver/register", request.url));
+    return NextResponse.redirect(new URL("/driver/login", request.url));
   }
 }

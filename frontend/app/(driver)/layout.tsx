@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./../globals.css";
 import Header from "@/components/headers/Header";
-import BottomMenu from "@/components/customerApp/BottomMenu";
+import BottomMenuDriver from "@/components/driver/BottomMenuDriver";
 import OrderCardProvider from "@/context/order-card";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
@@ -26,7 +26,7 @@ export default function RootLayout({
             <OrderCardProvider>
             <DriverHeader/>
               <main className=" w-full h-screen">{children}</main>
-              <BottomMenu />
+              <BottomMenuDriver />
             </OrderCardProvider>
             <ToastifyContainer />
           </ReactQueryProvider>
