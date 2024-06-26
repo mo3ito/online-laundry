@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 import DefaultButton from "@/components/share/defaultButton";
 import getData from "@/services/getData";
 import { useQuery } from "@tanstack/react-query";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import { OrderCardType } from "@/types/context/OrderCard";
+import { useRouter } from "next/navigation";
 
 type OrdersForDriver = {
   _id: string;
@@ -24,6 +24,7 @@ type OrdersForDriver = {
 
 export default function page() {
   const { infos } = useAuthContext();
+  const router = useRouter()
 
   if (!infos || !infos._id) {
     return <LoadingPage />;
@@ -42,6 +43,11 @@ export default function page() {
       ),
   });
 
+
+    const latLongHandler = (latitude : string , longitude : string)=>{
+         router.push(`/driver/location?latitude=${latitude}&&longitude=${longitude}`)
+    }
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -54,7 +60,7 @@ export default function page() {
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
     >
       <HeaderComponent title="سفارشات ارسالی" />
-      <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8">
+      <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
         {allOrders?.data.map((order: OrdersForDriver) => (
           <li
             key={"ffff"}
@@ -85,14 +91,15 @@ export default function page() {
                 <p>مبلغ کل سفارشات</p>
                 <p>{order.all_price.toLocaleString("en-US")} تومان</p>
               </div>
-              <div className="w-full flex items-center justify-center gap-x-3 ">
+              <div className="w-full flex items-center justify-center max-[280px]:gap-x-2 gap-x-3 ">
                 <DefaultButton
                   content="نمایش آدرس"
-                  className="w-1/2 h-10 !bg-pink-500 rounded-lg text-white"
+                  className="w-1/2 max-[280px]:h-6 h-10 !bg-pink-500 rounded-lg text-white"
+                  onClick={()=>latLongHandler(order.latitude , order.longitude)}
                 />
                 <DefaultButton
                   content="پرداخت"
-                  className="w-1/2 h-10 bg-sky-500 rounded-lg text-white"
+                  className="w-1/2 max-[280px]:h-6  h-10 bg-sky-500 rounded-lg text-white"
                 />
               </div>
             </article>
