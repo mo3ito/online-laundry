@@ -2,6 +2,8 @@
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import LoadingPage from '@/components/Loading/LoadingPage';
+import HeaderComponent from '@/components/customerApp/headerComponent/HeaderComponent';
+import NeshanDriver from '@/components/neshan-map/NeshanDriver';
 
 export default function page() {
     const searchParams = useSearchParams();
@@ -11,7 +13,7 @@ export default function page() {
     if(!latitude && !longitude){
       return <LoadingPage/>
     }
-    console.log(searchParams);
+    console.log( typeof latitude);
     
     // console.log(latitude , longitude);
     
@@ -20,8 +22,8 @@ export default function page() {
     style={{ height: `calc(100vh - 220px)` }}
     className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
   >
-    <p>Latitude: {latitude}</p>
-    <p>Longitude: {longitude}</p>
+    <HeaderComponent title='آدرس مشتری' as="header"/>
+    <NeshanDriver latitude={Number(latitude)} longitude={Number(longitude)}/>
   </div>
   )
 }

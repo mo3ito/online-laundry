@@ -14,7 +14,7 @@ type OrdersForDriver = {
   name: string;
   last_name: string;
   orders: [];
-  phone_number: number;
+  phone_number: string;
   address: string;
   latitude: string;
   longitude: string;
