@@ -41,7 +41,7 @@ export default function Page() {
     const regex = /^[0-9]*$/;
     try {
       if (phoneNumberInput.length !== 11) {
-        return toast.error("تعداد کاراکترهای شماره موبایل اشتباه است");
+        return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است");
       }
       if (!regex.test(phoneNumberInput)) {
         return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید");
