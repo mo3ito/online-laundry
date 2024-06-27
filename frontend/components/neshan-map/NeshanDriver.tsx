@@ -45,7 +45,7 @@ export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps)
         coordinates: [latLong.longitude, latLong.latitude],
         style: new Style({
           image: new Icon({
-            anchor: [0.5, 1],
+            anchor: [0.5, 0.5],
             scale: 0.5,
             src: '/images/location.png'
           })
