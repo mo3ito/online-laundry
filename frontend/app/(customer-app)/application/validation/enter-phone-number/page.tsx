@@ -38,10 +38,13 @@ export default function Page() {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-
+    const regex = /^[0-9]*$/;
     try {
       if (phoneNumberInput.length !== 11) {
         return toast.error("تعداد کاراکترهای شماره موبایل اشتباه است");
+      }
+      if (!regex.test(phoneNumberInput)) {
+        return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید");
       }
       setIsLoading(true);
       const response = await sendData(VALIDATION_PHONE_NUMBER, {
@@ -52,7 +55,7 @@ export default function Page() {
         console.log(response);
         setIsLoading(false);
         router.replace("/application/validation/verify-code");
-      } 
+      }
     } catch (error: any) {
       console.error("خطا در ارتباط با سرور:", error);
       setIsLoading(false);
@@ -70,7 +73,7 @@ export default function Page() {
   return (
     <div className="w-full h-screen inset-0 bg-slate-100 fixed z-50 flex items-center justify-center">
       <div className="mx-6 w-96 h-max border border-sky-500 rounded-lg -translate-y-44 flex flex-col items-center">
-        <Logo as='header'/>
+        <Logo as="header" />
         <section className="w-full p-2 text-sm sm:text-base">
           <form onSubmit={phoneNumberSubmitHandler} className="w-full">
             <label className="my-2 inline-block" htmlFor="phone-number-input">
