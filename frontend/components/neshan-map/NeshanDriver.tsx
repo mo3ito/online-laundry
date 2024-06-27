@@ -1,19 +1,16 @@
-"use client";
-import { useState, useRef, useCallback, ChangeEvent, useEffect } from "react";
-import NeshanMap, {
-  NeshanMapRef,
-} from "@neshan-maps-platform/react-openlayers";
+'use client';
+import { useState, useRef, useEffect } from "react";
+import NeshanMap, { NeshanMapRef } from "@neshan-maps-platform/react-openlayers";
 import LoadingPage from "../Loading/LoadingPage";
-import useOrderCardContext from "@/hooks/useOrderCardContext";
-import useAuthContext from "@/hooks/useAuthContext";
-import { useRouter } from "next/navigation";
-import DefaultButton from "../share/defaultButton";
 import { LatLongType } from "@/types/neshan-map";
-import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler";
-import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
-import submitSearchHandler from "@/app/utils/neshan-map/submitSearchHandler";
-import useMapCenter from "@/hooks/useMapCenter";
-import { toLonLat } from "ol/proj";
+import { fromLonLat } from '@neshan-maps-platform/ol/proj';
+import VectorLayer from '@neshan-maps-platform/ol/layer/Vector';
+import VectorSource from '@neshan-maps-platform/ol/source/Vector';
+import Feature from '@neshan-maps-platform/ol/Feature';
+import Point from '@neshan-maps-platform/ol/geom/Point';
+import { Style, Icon, } from '@neshan-maps-platform/ol/style';
+import '@neshan-maps-platform/ol/css';
+import { Map as NeshanMapType } from '@neshan-maps-platform/ol'; // Import the correct Map type
 
 const defaultCenter: LatLongType = {
   latitude: 34.083774237954756,
@@ -25,10 +22,7 @@ type NeshanDriverProps = {
   longitude: number | null;
 };
 
-export default function NeshanDriver({
-  latitude,
-  longitude,
-}: NeshanDriverProps) {
+export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps) {
   const [latLong, setLatLong] = useState<LatLongType | null>(null);
   const mapRef = useRef<NeshanMapRef | null>(null);
 
@@ -38,9 +32,40 @@ export default function NeshanDriver({
     }
   }, [latitude, longitude]);
 
- 
+  useEffect(() => {
+    if (mapRef.current?.map) {
+      addMarkersToMap(mapRef.current.map, latLong);
+    }
+  }, [mapRef.current, latLong]);
 
+  const addMarkersToMap = (neshanMap: NeshanMapType, latLong: LatLongType | null) => {
+    const markers = [];
+    if (latLong) {
+      markers.push({
+        coordinates: [latLong.longitude, latLong.latitude],
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 1],
+            scale: 0.5,
+            src: '/images/location.png'
+          })
+        })
+      });
+    }
 
+    const features = markers.map(marker => {
+      const feature = new Feature({
+        geometry: new Point(fromLonLat(marker.coordinates)),
+      });
+      feature.setStyle(marker.style);
+      return feature;
+    });
+
+    const vectorSource = new VectorSource({ features });
+    const vectorLayer = new VectorLayer({ source: vectorSource });
+
+    neshanMap.addLayer(vectorLayer);
+  }
 
   if (latLong === null) {
     return <LoadingPage />;
@@ -58,13 +83,6 @@ export default function NeshanDriver({
         traffic={true}
         poi={true}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <img
-          className="h-10 w-10"
-          src="/images/location.png"
-          alt="Location Marker"
-        />
-      </div>
     </div>
   );
 }
