@@ -13,7 +13,7 @@ const confirmAddressHandler = async (
   orders: OrderCardType[],
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>,
   infos: InitialInfosType | null,
-  latLong: LatLongType,
+  latLong: LatLongType | null,
   setTotalNumber: Dispatch<SetStateAction<number>>,
   login: (infos: InitialInfosType, token: string) => void,
   router: AppRouterInstance
@@ -24,7 +24,7 @@ const confirmAddressHandler = async (
     }
     setIsLoading(true);
     const addressResponse = await getData(
-      `https://api.neshan.org/v5/reverse?lat=${latLong.latitude}&lng=${latLong.longitude}`,
+      `https://api.neshan.org/v5/reverse?lat=${latLong?.latitude}&lng=${latLong?.longitude}`,
       true,
       process.env.NEXT_PUBLIC_MAP_API_KEY
     );
@@ -36,8 +36,8 @@ const confirmAddressHandler = async (
         phone_number: infos?.phone_number,
         orders: orders,
         address: addressResponse.data.formatted_address,
-        latitude: latLong.latitude,
-        longitude: latLong.longitude,
+        latitude: latLong?.latitude,
+        longitude: latLong?.longitude,
       };
       const sendOrderResponse = await sendData(SEND_ORDERS, body, infos?._id);
 

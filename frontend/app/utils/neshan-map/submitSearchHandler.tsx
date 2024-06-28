@@ -9,8 +9,8 @@ const submitSearchHandler = async (
   setIsLoadingSearch: Dispatch<SetStateAction<boolean>>,
   searchInput: string,
   mapRef: MutableRefObject<NeshanMapRef | null>,
-  setLatLong: Dispatch<SetStateAction<LatLongType>>,
-  latLong: LatLongType
+  setLatLong: Dispatch<SetStateAction<LatLongType | null>>,
+  latLong: LatLongType | null
 ) => {
   event.preventDefault();
   if (!searchInput.trim()) return;
@@ -18,7 +18,7 @@ const submitSearchHandler = async (
   try {
     setIsLoadingSearch(true);
     const response = await getData(
-      `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong.latitude}&lng=${latLong.longitude}`,
+      `https://api.neshan.org/v1/search?term=${searchInput}&lat=${latLong?.latitude}&lng=${latLong?.longitude}`,
       true,
       process.env.NEXT_PUBLIC_MAP_API_KEY
     );

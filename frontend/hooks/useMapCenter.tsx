@@ -5,7 +5,7 @@ import { LatLongType } from "@/types/neshan-map";
 
 const useMapCenter = (
   mapRef: MutableRefObject<NeshanMapRef | null>,
-  setLatLong: Dispatch<SetStateAction<LatLongType>>
+  setLatLong: Dispatch<SetStateAction<LatLongType | null>>
 ) => {
   useEffect(() => {
     if (

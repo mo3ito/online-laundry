@@ -23,11 +23,8 @@ import {
 import findDestination from "@/app/utils/neshan-map/findDestination";
 import useAddMarkersToMap from "@/hooks/useAddMarkersToMap";
 import useShowRouteOnMap from "@/hooks/useShowRouteOnMap";
+import defaultCenter from "@/help/defaultCenter";
 
-const defaultCenter: LatLongType = {
-  latitude: 34.083774237954756,
-  longitude: 49.6975543016356,
-};
 
 export default function NeshanDriver({
   latitude,
@@ -76,7 +73,7 @@ export default function NeshanDriver({
           </div>
         </h1>
       )}
-      <div className="absolute bottom-4 right-4 flex items-center justify-center gap-x-4">
+      <div className="absolute bottom-8 right-4 flex items-center justify-center gap-x-4">
         <button
           onClick={() => findLocationHandler(setLatLong)}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"

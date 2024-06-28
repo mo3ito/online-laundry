@@ -13,12 +13,11 @@ import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler"
 import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
 import submitSearchHandler from "@/app/utils/neshan-map/submitSearchHandler";
 import useMapCenter from "@/hooks/useMapCenter";
+import defaultCenter from "@/help/defaultCenter";
+
 
 export default function Neshan() {
-  const [latLong, setLatLong] = useState<LatLongType>({
-    latitude: 34.083774237954756,
-    longitude: 49.6975543016356,
-  });
+  const [latLong, setLatLong] = useState<LatLongType | null>(null);
 
   const mapRef = useRef<NeshanMapRef | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -32,7 +31,6 @@ export default function Neshan() {
   console.log(orders);
   console.log(latLong);
   console.log(infos);
-
 
   return (
     <div className="relative w-full h-[94%]">
@@ -72,7 +70,7 @@ export default function Neshan() {
         ref={mapRef}
         mapKey="web.1b9b48ae807d4009b26658e973d92ce1"
         defaultType="neshan"
-        center={latLong}
+        center={latLong ? latLong : defaultCenter}
         style={{ height: "100%", width: "100%" }}
         zoom={15}
         traffic={true}
