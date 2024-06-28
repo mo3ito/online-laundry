@@ -1,53 +1,48 @@
 import { useState, useRef, useEffect } from "react";
-import NeshanMap, { NeshanMapRef } from "@neshan-maps-platform/react-openlayers";
+import NeshanMap, {
+  NeshanMapRef,
+} from "@neshan-maps-platform/react-openlayers";
 import LoadingPage from "../Loading/LoadingPage";
 import { LatLongType } from "@/types/neshan-map";
-import { fromLonLat } from '@neshan-maps-platform/ol/proj';
-import VectorLayer from '@neshan-maps-platform/ol/layer/Vector';
-import VectorSource from '@neshan-maps-platform/ol/source/Vector';
-import Feature from '@neshan-maps-platform/ol/Feature';
-import Point from '@neshan-maps-platform/ol/geom/Point';
-import { Style, Icon, Stroke, Circle, Fill } from '@neshan-maps-platform/ol/style';
-import '@neshan-maps-platform/ol/css';
-import { Map as NeshanMapType } from '@neshan-maps-platform/ol';
+import { fromLonLat } from "@neshan-maps-platform/ol/proj";
+import VectorLayer from "@neshan-maps-platform/ol/layer/Vector";
+import VectorSource from "@neshan-maps-platform/ol/source/Vector";
+import Feature from "@neshan-maps-platform/ol/Feature";
+import Point from "@neshan-maps-platform/ol/geom/Point";
+import {
+  Style,
+  Stroke,
+  Circle,
+  Fill,
+} from "@neshan-maps-platform/ol/style";
+import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
+import "@neshan-maps-platform/ol/css";
 import DefaultButton from "../share/defaultButton";
-import getData from "@/services/getData";
-import Polyline from '@neshan-maps-platform/ol/format/Polyline';
+import Polyline from "@neshan-maps-platform/ol/format/Polyline";
 import { toast } from "react-toastify";
+import {
+  NeshanDriverProps,
+  DistanceTimeType,
+  RouteType,
+} from "@/types/neshan-map";
+import findDestination from "@/app/utils/neshan-map/findDestination";
+import useAddMarkersToMap from "@/hooks/useAddMarkersToMap";
 
 const defaultCenter: LatLongType = {
   latitude: 34.083774237954756,
   longitude: 49.6975543016356,
 };
 
-type NeshanDriverProps = {
-  latitude: number | null;
-  longitude: number | null;
-};
-
-type distanceTimeType = {
-  distance: string;
-  duration: string;
-};
-
-type StepType = {
-  polyline: string;
-  start_location: [number, number];
-};
-
-type LegType = {
-  steps: StepType[];
-};
-
-type RouteType = {
-  legs: LegType[];
-};
-
-export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps) {
+export default function NeshanDriver({
+  latitude,
+  longitude,
+}: NeshanDriverProps) {
   const [latLong, setLatLong] = useState<LatLongType | null>(null);
-  const [distanceTime, setDistanceTime] = useState<distanceTimeType | null>(null);
+  const [distanceTime, setDistanceTime] = useState<DistanceTimeType | null>(
+    null
+  );
   const [routes, setRoutes] = useState<RouteType[]>([]);
-  const [isLoadingForRoutes , setIsLoadingForRoutes]=useState<boolean>(false)
+  const [isLoadingForRoutes, setIsLoadingForRoutes] = useState<boolean>(false);
   const mapRef = useRef<NeshanMapRef | null>(null);
 
   useEffect(() => {
@@ -56,74 +51,8 @@ export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps)
     }
   }, [latitude, longitude]);
 
-  useEffect(() => {
-    if (mapRef.current?.map && latLong) {
-      addMarkersToMap(mapRef.current.map, latLong);
-    }
-  }, [mapRef.current, latLong]);
+  useAddMarkersToMap(mapRef , latLong)
 
-  const addMarkersToMap = (neshanMap: NeshanMapType, latLong: LatLongType | null) => {
-    const markers = [];
-    if (latLong) {
-      markers.push({
-        coordinates: [latLong.longitude, latLong.latitude],
-        style: new Style({
-          image: new Icon({
-            anchor: [0.5, 0.5],
-            scale: 0.4,
-            src: '/images/location.png'
-          })
-        })
-      });
-    }
-
-    const features = markers.map(marker => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat(marker.coordinates)),
-      });
-      feature.setStyle(marker.style);
-      return feature;
-    });
-
-    const vectorSource = new VectorSource({ features });
-    const vectorLayer = new VectorLayer({ source: vectorSource });
-
-    neshanMap.addLayer(vectorLayer);
-  };
-
-  const findDestinate = async () => {
-    try {
-      setIsLoadingForRoutes(true)
-      const type = "car";
-      const origin = "34.083774237954756,49.6975543016356";
-      const destination = `${latLong?.latitude},${latLong?.longitude}`;
-      const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY;
-      const url = `https://api.neshan.org/v4/direction/no-traffic?type=${type}&origin=${origin}&destination=${destination}`;
-      const response = await getData(url, true, apiKey);
-      if(response?.status ===200){
-        setDistanceTime({
-          distance: response?.data?.routes[0]?.legs[0]?.distance?.text,
-          duration: response?.data?.routes[0]?.legs[0]?.duration?.text
-        });
-        setRoutes(response?.data?.routes);
-        setIsLoadingForRoutes(false)
-      }
-
-    }catch (error: any) {
-      console.error("خطا در ارتباط با سرور:", error);
-  
-      if (error.response && error.response.status === 400) {
-        setIsLoadingForRoutes(false);
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        toast.error(errorMessage);
-      } else {
-        setIsLoadingForRoutes(false);
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    }
-  };
 
   useEffect(() => {
     if (routes.length > 0 && mapRef.current?.map) {
@@ -139,11 +68,11 @@ export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps)
       let pointStyle = new Style({
         image: new Circle({
           fill: new Fill({
-            color: '#0077FF',
+            color: "#0077FF",
           }),
           stroke: new Stroke({
-            color: '#FFFFFF',
-            width: 2
+            color: "#FFFFFF",
+            width: 2,
           }),
           radius: 5,
         }),
@@ -151,41 +80,39 @@ export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps)
 
       for (let k = 0; k < routes.length; k++) {
         for (let j = 0; j < routes[k].legs.length; j++) {
-            for (let i = 0; i < routes[k].legs[j].steps.length; i++) {
+          for (let i = 0; i < routes[k].legs[j].steps.length; i++) {
+            let step = routes[k].legs[j].steps[i];
 
-                let step = routes[k].legs[j].steps[i];
+            let route = new Polyline().readGeometry(step["polyline"], {
+              dataProjection: "EPSG:4326",
+              featureProjection: "EPSG:3857",
+            });
 
-                let route = new Polyline().readGeometry(step["polyline"], {
-                    dataProjection: 'EPSG:4326',
-                    featureProjection: 'EPSG:3857',
-                });
+            let point = new Feature({
+              geometry: new Point(fromLonLat(step["start_location"])),
+            });
 
-                let point = new Feature({
-                    geometry: new Point(fromLonLat(step["start_location"]))
-                });
+            point.setStyle(pointStyle);
 
-                point.setStyle(pointStyle);
+            let feature = new Feature({
+              type: "route",
+              geometry: route,
+            });
 
-                let feature = new Feature({
-                    type: 'route',
-                    geometry: route,
-                });
+            feature.setStyle(trackStyle);
 
-                feature.setStyle(trackStyle);
+            let routeVectorSource = new VectorSource({
+              features: [feature, point],
+            });
 
-                let routeVectorSource = new VectorSource({
-                    features: [feature, point]
-                });
+            let routeVectorLayer = new VectorLayer({
+              source: routeVectorSource,
+            });
 
-                let routeVectorLayer = new VectorLayer({
-                    source: routeVectorSource
-                });
-
-                neshanMap.addLayer(routeVectorLayer);
-
-            }
+            neshanMap.addLayer(routeVectorLayer);
+          }
         }
-    }
+      }
     }
   }, [routes]);
 
@@ -207,11 +134,39 @@ export default function NeshanDriver({ latitude, longitude }: NeshanDriverProps)
       />
       {distanceTime && (
         <h1 className="w-max h-max p-1 bg-sky-200 absolute top-2 inset-0 max-[280px]:text-xs text-sm">
-          <div className="mb-2">فاصله تا مقصد: <span className="text-sky-500">{distanceTime?.distance}</span></div>
-          <div className="mb-2">زمان تقریبی تا مقصد: <span className="text-sky-500">{distanceTime?.duration}</span></div>
+          <div className="mb-2">
+            فاصله تا مقصد:{" "}
+            <span className="text-sky-500">{distanceTime?.distance}</span>
+          </div>
+          <div className="mb-2">
+            زمان تقریبی تا مقصد:{" "}
+            <span className="text-sky-500">{distanceTime?.duration}</span>
+          </div>
         </h1>
       )}
-      <DefaultButton svgClassName="fill-white" isLoading={isLoadingForRoutes} onClick={findDestinate} content="مسیریابی" className="bg-sky-500 rounded-lg text-white text-sm h-9 w-32 sm:h-12 sm:text-base absolute bottom-16 right-4" />
+      <div className="absolute bottom-4 right-4 flex items-center justify-center gap-x-4">
+        <button
+          onClick={() => findLocationHandler(setLatLong)}
+          className="size-max bg-white rounded-full  p-2 border border-sky-500"
+        >
+          <svg
+            className="size-6 fill-sky-500"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 20.8995L16.9497 15.9497C19.6834 13.2161 19.6834 8.78392 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.31658 8.78392 4.31658 13.2161 7.05025 15.9497L12 20.8995ZM12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13ZM12 15C9.79086 15 8 13.2091 8 11C8 8.79086 9.79086 7 12 7C14.2091 7 16 8.79086 16 11C16 13.2091 14.2091 15 12 15Z"></path>
+          </svg>
+        </button>
+
+        <DefaultButton
+          svgClassName="fill-white"
+          isLoading={isLoadingForRoutes}
+          onClick={()=>findDestination(setIsLoadingForRoutes , latLong , setDistanceTime , setRoutes , undefined)}
+          content="مسیریابی"
+          className="bg-sky-500 rounded-lg text-white text-sm h-9 w-32 sm:h-12 sm:text-base "
+        />
+      </div>
     </div>
   );
 }

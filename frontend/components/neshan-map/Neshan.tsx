@@ -33,6 +33,7 @@ export default function Neshan() {
   console.log(latLong);
   console.log(infos);
 
+
   return (
     <div className="relative w-full h-[94%]">
       <form
