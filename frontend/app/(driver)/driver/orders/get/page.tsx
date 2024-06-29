@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { useRouter } from "next/navigation";
-import { DRIVER_GET_ALL_ORDERS } from "@/routeApi/endpoints";
+import { DRIVER_GET_ALL_ORDERS_IS_NOT_DONE } from "@/routeApi/endpoints";
 
 type OrdersForDriver = {
   _id: string;
@@ -35,7 +35,7 @@ export default function page() {
 
   const { data: allOrders, isLoading } = useQuery({
     queryKey: infos._id ? queryKey : [],
-    queryFn: () => getData(DRIVER_GET_ALL_ORDERS, true, undefined, infos._id),
+    queryFn: () => getData(DRIVER_GET_ALL_ORDERS_IS_NOT_DONE, true, undefined, infos._id),
   });
 
   const latLongHandler = (latitude: string, longitude: string) => {
