@@ -9,7 +9,7 @@ const registerDryer = async (req, res) => {
     const isExistAdmin = await DryerModel.findOne({ phone_number });
     if (isExistAdmin) {
       return res.status(400).json({
-        message: "خشکشویی با همچنین شماره موبایل وجود دارد",
+        message: "خشکشویی با این شماره موبایل وجود دارد",
       });
     }
 

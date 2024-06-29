@@ -11,7 +11,7 @@ const ClothingCategory = require("../routes/laundry-clothing/laundry-clothing-ca
 const ClothingTypes = require("../routes/laundry-clothing/clothing-type");
 const Orders = require("../routes/orders/orders");
 const Driver = require("../routes/driver/registration");
-const Dryer = require("../routes/dryer/registeration");
+const Dryer = require("../routes/dryer");
 
 const configureServer = (app) => {
   app.use(express.json());

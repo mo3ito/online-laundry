@@ -34,7 +34,7 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
-  done_cleaning: {
+  is_done_order: {
     type: Boolean,
     default: false,
   },
@@ -70,7 +70,7 @@ const OrdersSchema = new Schema({
     type: String,
     required: true,
   },
-  done_cleaning_all: {
+  is_done_all_order: {
     type: Boolean,
     default: false,
   },
