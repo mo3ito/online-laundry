@@ -55,7 +55,7 @@ export default function page() {
       style={{ height: `calc(100vh - 220px)` }}
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
     >
-      <HeaderComponent title="سفارشات ارسالی" />
+      <HeaderComponent title="سفارشات دریافتی" />
       <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
         {allOrders?.data.map((order: OrdersForDriver) => (
           <li
