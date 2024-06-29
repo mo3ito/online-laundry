@@ -5,7 +5,7 @@ const {
   validationCustomers,
   verifyCode,
   editInformation,
-} = require("../../controllers/customers/registration");
+} = require("../controllers/customers/registration");
 
 router.post("/customers/validation", validationCustomers);
 router.post("/customers/vrify-code", verifyCode);

@@ -3,8 +3,8 @@ const router = express.Router();
 const {
   driverRegister,
   driverLogin,
-} = require("../../controllers/driver/registration");
-const { getAllOrdersIsNotDone , getAlOrdersIsDone } = require("../../controllers/driver/orders");
+} = require("../controllers/driver/registration");
+const { getAllOrdersIsNotDone , getAlOrdersIsDone } = require("../controllers/driver/orders");
 
 router.post("/driver/register", driverRegister);
 router.post("/driver/login", driverLogin);

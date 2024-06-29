@@ -4,13 +4,12 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("../middlewares/corsConfig");
 const connectToDatabase = require("./database");
-const adminRegistration = require("../routes/admin/registration");
-const customerRegistration = require("../routes/customers/registration");
-const startServer = require("../routes/index");
-const ClothingCategory = require("../routes/laundry-clothing/laundry-clothing-category");
-const ClothingTypes = require("../routes/laundry-clothing/clothing-type");
-const Orders = require("../routes/orders/orders");
-const Driver = require("../routes/driver/registration");
+const Admin = require("../routes/admin");
+const Customers = require("../routes/customers");
+const StartServer = require("../routes/index");
+const LaundryClothing = require("../routes/laundry-clothing");
+const Orders = require("../routes/orders");
+const Driver = require("../routes/driver");
 const Dryer = require("../routes/dryer");
 
 const configureServer = (app) => {
@@ -18,11 +17,10 @@ const configureServer = (app) => {
   app.use(bodyParser.json());
   app.use(cors);
   app.use(express.static(path.join(__dirname, "../public")));
-  app.use("/", startServer);
-  app.use("/", adminRegistration);
-  app.use("/", customerRegistration);
-  app.use("/", ClothingCategory);
-  app.use("/", ClothingTypes);
+  app.use("/", StartServer);
+  app.use("/", Admin);
+  app.use("/", Customers);
+  app.use("/", LaundryClothing);
   app.use("/", Orders);
   app.use("/", Driver);
   app.use("/", Dryer);
