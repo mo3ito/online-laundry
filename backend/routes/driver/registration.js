@@ -4,10 +4,11 @@ const {
   driverRegister,
   driverLogin,
 } = require("../../controllers/driver/registration");
-const { getAllOrders } = require("../../controllers/driver/orders");
+const { getAllOrdersIsNotDone , getAlOrdersIsDone } = require("../../controllers/driver/orders");
 
 router.post("/driver/register", driverRegister);
 router.post("/driver/login", driverLogin);
-router.get("/driver/get-all-orders", getAllOrders);
+router.get("/driver/get-all-orders-is-not-done", getAllOrdersIsNotDone);
+router.get("/driver/get-all-orders-is-done", getAlOrdersIsDone);
 
 module.exports = router;
