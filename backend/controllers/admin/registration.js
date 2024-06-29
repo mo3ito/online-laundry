@@ -30,7 +30,6 @@ const adminRegister = async (req, res) => {
       !last_name ||
       !password ||
       !username.trim() ||
-      !password.trim() ||
       !name.trim() ||
       !last_name.trim()
     ) {
