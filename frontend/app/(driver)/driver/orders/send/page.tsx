@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
+import DriverOrdersShow from "@/components/DriverOrdersShow";
+import { DRIVER_GET_ALL_ORDERS_IS_DONE } from "@/routeApi/endpoints";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <DriverOrdersShow
+      apiAddress={DRIVER_GET_ALL_ORDERS_IS_DONE}
+      header="سفارشات ارسالی"
+    />
+  );
 }

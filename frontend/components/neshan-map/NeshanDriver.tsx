@@ -65,11 +65,11 @@ export default function NeshanDriver({
         <h1 className="w-max h-max p-1 bg-sky-200 absolute top-2 inset-0 max-[280px]:text-xs text-sm">
           <div className="mb-2">
             فاصله تا مقصد:{" "}
-            <span className="text-sky-500">{distanceTime?.distance}</span>
+            <span className="text-sky-500">{distanceTime?.distance || '۰ کیلومتر'}</span>
           </div>
           <div className="mb-2">
             زمان تقریبی تا مقصد:{" "}
-            <span className="text-sky-500">{distanceTime?.duration}</span>
+            <span className="text-sky-500">{distanceTime?.duration || `۰ دقیقه` }</span>
           </div>
         </h1>
       )}
