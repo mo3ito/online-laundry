@@ -3,7 +3,7 @@ import { InitialInfosType } from "@/types/context/AuthContextType";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
-import { DRIVER_LOGIN } from "@/routeApi/endpoints";
+
 
 const submitLoginHandler = async (
   event: FormEvent,
@@ -11,7 +11,9 @@ const submitLoginHandler = async (
   passwordValue: string,
   login: (infos: InitialInfosType, token: string) => void,
   setIsLoadingForLogin: Dispatch<SetStateAction<boolean>>,
-  router: AppRouterInstance
+  router: AppRouterInstance,
+  apiAddress: string,
+  pathRoute: string
 ) => {
   event.preventDefault();
   const regex = /^[0-9]*$/;
@@ -36,11 +38,11 @@ const submitLoginHandler = async (
 
 
     setIsLoadingForLogin(true)
-    const response = await sendData(DRIVER_LOGIN, body);
+    const response = await sendData(apiAddress, body);
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       setIsLoadingForLogin(false);
-      router.push("/driver");
+      router.push(pathRoute);
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);
