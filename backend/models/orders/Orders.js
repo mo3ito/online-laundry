@@ -30,10 +30,14 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
-  address:{
+  address: {
     type: String,
     required: true,
-  }
+  },
+  done_cleaning: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const OrdersSchema = new Schema({
@@ -65,6 +69,10 @@ const OrdersSchema = new Schema({
   longitude: {
     type: String,
     required: true,
+  },
+  done_cleaning_all: {
+    type: Boolean,
+    default: false,
   },
 });
 
