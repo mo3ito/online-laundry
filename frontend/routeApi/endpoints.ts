@@ -28,3 +28,4 @@ export const DELETE_ORDER = `${BASE_URL_ORDERS}/delete-order`;
 //-- driver
 export const DRIVER_REGISTER = `${BASE_URL_DRIVER}/register`
 export const DRIVER_LOGIN = `${BASE_URL_DRIVER}/login`
+export const DRIVER_GET_ALL_ORDERS = `${BASE_URL_DRIVER}/get-all-orders`

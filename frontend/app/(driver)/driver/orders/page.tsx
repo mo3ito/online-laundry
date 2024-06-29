@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { useRouter } from "next/navigation";
+import { DRIVER_GET_ALL_ORDERS } from "@/routeApi/endpoints";
 
 type OrdersForDriver = {
   _id: string;
@@ -24,7 +25,7 @@ type OrdersForDriver = {
 
 export default function page() {
   const { infos } = useAuthContext();
-  const router = useRouter()
+  const router = useRouter();
 
   if (!infos || !infos._id) {
     return <LoadingPage />;
@@ -34,19 +35,14 @@ export default function page() {
 
   const { data: allOrders, isLoading } = useQuery({
     queryKey: infos._id ? queryKey : [],
-    queryFn: () =>
-      getData(
-        "http://localhost:4000/driver/get-all-orders",
-        true,
-        undefined,
-        infos._id
-      ),
+    queryFn: () => getData(DRIVER_GET_ALL_ORDERS, true, undefined, infos._id),
   });
 
-
-    const latLongHandler = (latitude : string , longitude : string)=>{
-         router.push(`/driver/location?latitude=${latitude}&&longitude=${longitude}`)
-    }
+  const latLongHandler = (latitude: string, longitude: string) => {
+    router.push(
+      `/driver/location?latitude=${latitude}&&longitude=${longitude}`
+    );
+  };
 
   if (isLoading) {
     return <LoadingPage />;
@@ -95,7 +91,9 @@ export default function page() {
                 <DefaultButton
                   content="نمایش آدرس"
                   className="w-1/2 max-[280px]:h-6 h-10 !bg-pink-500 rounded-lg text-white"
-                  onClick={()=>latLongHandler(order.latitude , order.longitude)}
+                  onClick={() =>
+                    latLongHandler(order.latitude, order.longitude)
+                  }
                 />
                 <DefaultButton
                   content="پرداخت"
