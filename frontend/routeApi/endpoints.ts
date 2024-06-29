@@ -3,7 +3,8 @@ import {
   BASE_URL_CUSTOMERS,
   BASE_URL_CLOTHING_TYPE,
   BASE_URL_ORDERS,
-  BASE_URL_DRIVER
+  BASE_URL_DRIVER,
+  BASE_URL_DRYER
 } from "./baseUrlNextApi";
 
 //-- clothing category
@@ -29,3 +30,9 @@ export const DELETE_ORDER = `${BASE_URL_ORDERS}/delete-order`;
 export const DRIVER_REGISTER = `${BASE_URL_DRIVER}/register`
 export const DRIVER_LOGIN = `${BASE_URL_DRIVER}/login`
 export const DRIVER_GET_ALL_ORDERS = `${BASE_URL_DRIVER}/get-all-orders`
+
+
+//-- dryer
+export const DRYER_REGISTER = `${BASE_URL_DRYER}/register`
+export const DRYER_LOGIN = `${BASE_URL_DRYER}/login`
+
