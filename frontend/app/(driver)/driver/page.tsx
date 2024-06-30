@@ -1,4 +1,6 @@
+'use client'
 import React from "react";
+import useGetReactQuery from "@/hooks/useGetReactQuery";
 
 export default function page() {
   return (
