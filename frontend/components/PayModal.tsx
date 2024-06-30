@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction, useRef } from "react";
+'use client'
+import React, { useRef } from "react";
 import DefaultButton from "./share/defaultButton";
 import { OrdersType, DefaultModalProps } from "@/types/driver";
 import useDropDown from "@/hooks/useDropDown";
@@ -20,7 +21,7 @@ export default function PayModal({
       <div className="container flex items-center justify-center ">
         <div
           ref={containerRefModal}
-          className="   bg-white overflow-auto py-4 px-6  sm:px-8 rounded-lg relative max-[420px]:px-2 w-full sm:w-10/12 md:w-9/12 lg:w-8/12 2xl:w-7/12 h-max max-h-[700px]"
+          className="bg-white overflow-auto py-4 px-6  sm:px-8 rounded-lg relative max-[420px]:px-2 w-full sm:w-10/12 md:w-9/12 lg:w-8/12 2xl:w-7/12 h-max max-h-[700px]"
         >
           <h1 className="text-center">فاکتور مشتری</h1>
           <button

@@ -1,5 +1,6 @@
 const OrdersModel = require("../../models/orders/Orders");
 const DriverModel = require("../../models/driver/DriverModel");
+const CustomerModel = require("../../models/customer/CustomerModel")
 
 const getAllOrdersIsNotDone = async (req, res) => {
   const driverId = req.headers.authorization;
@@ -107,4 +108,61 @@ const getAlOrdersIsDone = async (req, res) => {
   }
 };
 
-module.exports = { getAllOrdersIsNotDone, getAlOrdersIsDone };
+const payOrdersMoney = async (req, res) => {
+  const driverId = req.headers.authorization;
+  const { customer_id, orders_id } = req.body;
+
+  try {
+    const driver = await DriverModel.findById(driverId);
+    const customer = await CustomerModel.findById(customer_id)
+    if (!driver) {
+      return res.status(400).json({
+        message: "مامور تحویل و راننده‌ای با این آیدی یافت نشد",
+      });
+    }
+
+    customer.orders = customer.orders.filter(order => !orders_id.includes(order.orders_id));
+    await customer.save();
+
+
+    console.log("orders_id:", orders_id);
+
+    const allOrders = await OrdersModel.find({ customer_id });
+
+    let targetOrders = [];
+    for (const listOrders of allOrders) {
+      const filteredOrders = listOrders.orders.filter((order) =>
+        orders_id.includes(order.orders_id)
+      );
+
+      if (filteredOrders.length > 0) {
+        targetOrders.push(...filteredOrders);
+      }
+    }
+
+    for (const targetOrder of targetOrders) {
+      await OrdersModel.updateMany(
+        { customer_id },
+        { $pull: { orders: { orders_id: targetOrder.orders_id } } }
+      );
+    }
+
+    const updatedOrders = await OrdersModel.find({ customer_id });
+    for (const orderDoc of updatedOrders) {
+      if (orderDoc.orders.length === 0) {
+        await OrdersModel.deleteOne({ _id: orderDoc._id });
+      }
+    }
+
+    return res.status(200).json({
+      message: "پرداخت با موفقیت صورت گرفت",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "خطایی در سرور رخ داد",
+    });
+  }
+};
+
+module.exports = { getAllOrdersIsNotDone, getAlOrdersIsDone, payOrdersMoney };
