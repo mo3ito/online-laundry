@@ -7,20 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { useRouter } from "next/navigation";
+import PayModal from "./PayModal";
+import { OrdersForDriver } from "@/types/driver";
+import { OrdersType , DataType } from "@/types/driver";
 
-type OrdersForDriver = {
-  _id: string;
-  customer_id: string;
-  name: string;
-  last_name: string;
-  orders: [];
-  phone_number: string;
-  address: string;
-  latitude: string;
-  longitude: string;
-  all_count: number;
-  all_price: number;
-};
+
 
 type DriverOrdersShowProps = {
   apiAddress: string;
@@ -38,8 +29,9 @@ export default function DriverOrdersShow({
     return <LoadingPage />;
   }
 
+  const [OrdersInfo , setOrdersInfo]=useState<DataType | null>(null)
+  const [isShowModal , setIsShowModal]=useState<boolean>(false)
   const queryKey = ["all-orders"];
-
   const { data: allOrders, isLoading } = useQuery({
     queryKey: infos._id ? queryKey : [],
     queryFn: () => getData(apiAddress, true, undefined, infos._id),
@@ -51,11 +43,17 @@ export default function DriverOrdersShow({
     );
   };
 
+  const showOrdersAndPay = async (orders : OrdersType[] , allCount : number ,allPrice: number)=>{
+   await setOrdersInfo({ orders , allCount ,allPrice})
+    setIsShowModal(true)
+  }
+
+
   if (isLoading) {
     return <LoadingPage />;
   }
 
-  console.log(allOrders);
+  console.log(OrdersInfo);
 
   return (
     <div
@@ -66,7 +64,7 @@ export default function DriverOrdersShow({
       <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
         {allOrders?.data.map((order: OrdersForDriver) => (
           <li
-            key={"ffff"}
+            key={order._id}
             className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-4 shadow-xl max-[280px]:text-xs text-sm sm:text-base"
           >
             <article>
@@ -105,12 +103,14 @@ export default function DriverOrdersShow({
                 <DefaultButton
                   content="پرداخت"
                   className="w-1/2 max-[280px]:h-6  h-10 bg-sky-500 rounded-lg text-white"
+                  onClick={()=>showOrdersAndPay(order.orders , order.all_count ,order.all_price)}
                 />
               </div>
             </article>
           </li>
         ))}
       </ul>
-    </div>
+      <PayModal data={OrdersInfo} setIsShowModal={setIsShowModal} isShowModal={isShowModal}/>
+      </div>
   );
 }
