@@ -23,7 +23,7 @@ export default function Neshan() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
   const { infos, login } = useAuthContext();
-  const { orders, setTotalNumber, setOrders } = useOrderCardContext();
+  const { orders, setTotalNumber, setOrders , setRegisteredOrders } = useOrderCardContext();
   const router = useRouter();
   useMapCenter(mapRef, setLatLong);
 
@@ -109,7 +109,7 @@ export default function Neshan() {
               infos,
               latLong,
               setTotalNumber,
-              login,
+              setRegisteredOrders,
               router
             )
           }

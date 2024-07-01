@@ -1,15 +1,15 @@
 import updateData from "@/services/updateData";
-import { InitialInfosType } from "@/types/context/AuthContextType";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
-import { DELETE_ORDER } from "@/routeApi/endpoints";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { DELETE_ORDER, GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
+import { OrdersRegistered } from "@/types/context/OrderCard";
+import getData from "@/services/getData";
 
 const deleteHandler = async (
   orderId: string,
   _id: string | undefined,
-  router: AppRouterInstance,
-  setIsShowDeleteModal: Dispatch<SetStateAction<boolean>>
+  setIsShowDeleteModal: Dispatch<SetStateAction<boolean>>,
+  setRegisteredOrders: Dispatch<SetStateAction<OrdersRegistered[] | null>>
 ) => {
   const body = {
     orders_id: orderId,
@@ -18,9 +18,18 @@ const deleteHandler = async (
   try {
     const response = await updateData(DELETE_ORDER, body, _id);
     if (response.status === 200) {
-      router.refresh()
-      toast.success("سفارش با موفقیت حذف شد");
-      setIsShowDeleteModal(false);
+      const getOrdersResponse = await getData(
+        GET_ORDERS_CUSTOER,
+        true,
+        undefined,
+        _id
+      );
+      if (getOrdersResponse?.status === 200) {
+       await setRegisteredOrders(getOrdersResponse?.data);
+        toast.success("سفارش با موفقیت حذف شد");
+        setIsShowDeleteModal(false);
+      }
+    
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);

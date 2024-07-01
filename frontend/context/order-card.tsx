@@ -3,9 +3,12 @@ import { createContext, useState, useEffect } from "react";
 import {
   OrderCardType,
   OrderCardContextType,
+  OrdersRegistered,
 } from "@/types/context/OrderCard";
 import getData from "@/services/getData";
 import useAuthContext from "@/hooks/useAuthContext";
+import useGetReactQuery from "@/hooks/useGetReactQuery";
+import { GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
 
 export const OrderCardContext = createContext<OrderCardContextType | null>(
   null
@@ -13,9 +16,18 @@ export const OrderCardContext = createContext<OrderCardContextType | null>(
 
 const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<OrderCardType[]>([]);
-
+  const [registeredOrders , setRegisteredOrders]=useState<OrdersRegistered[] | null>(null)
   const [totalNumber, setTotalNumber] = useState(0);
+  const [totalNumberRegisterdOrders, setTotalNumberRegisterdOrders] =useState(0);
   const {infos , login} = useAuthContext()
+
+  const {data , isLoading} = useGetReactQuery(infos?._id , GET_ORDERS_CUSTOER , ["all registered orders"] )
+
+  useEffect(()=>{
+    if(data){
+      setRegisteredOrders(data.data)
+    }
+  },[data])
 
   useEffect(() => {
     if (orders) {
@@ -24,8 +36,16 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [orders]);
 
-
-console.log(infos);
+  useEffect(() => {
+    if ( registeredOrders && !infos?.is_driver) {
+      const totalRegisterd = registeredOrders.reduce(
+        (prev, current) => prev + current.count,
+        0
+      );
+      setTotalNumberRegisterdOrders(totalRegisterd);
+    }
+  }, [registeredOrders , infos]);
+console.log(totalNumberRegisterdOrders);
 
 
   console.log(totalNumber);
@@ -37,6 +57,10 @@ console.log(infos);
         setOrders,
         totalNumber,
         setTotalNumber,
+        setTotalNumberRegisterdOrders,
+        totalNumberRegisterdOrders,
+        setRegisteredOrders,
+        registeredOrders
       }}
     >
       {children}

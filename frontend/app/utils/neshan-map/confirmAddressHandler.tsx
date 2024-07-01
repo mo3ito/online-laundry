@@ -2,7 +2,7 @@ import { GET_ORDERS_CUSTOER, SEND_ORDERS } from "@/routeApi/endpoints";
 import getData from "@/services/getData";
 import sendData from "@/services/sendData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
-import { OrderCardType } from "@/types/context/OrderCard";
+import { OrderCardType, OrdersRegistered } from "@/types/context/OrderCard";
 import { LatLongType } from "@/types/neshan-map";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Dispatch, SetStateAction } from "react";
@@ -15,7 +15,7 @@ const confirmAddressHandler = async (
   infos: InitialInfosType | null,
   latLong: LatLongType | null,
   setTotalNumber: Dispatch<SetStateAction<number>>,
-  login: (infos: InitialInfosType, token: string) => void,
+  setRegisteredOrders : Dispatch<SetStateAction<OrdersRegistered[] | null>>,
   router: AppRouterInstance
 ) => {
   try {
@@ -49,7 +49,7 @@ const confirmAddressHandler = async (
           infos?._id
         );
         if (getRegisteredOrdersResponse?.status === 200) {
-          
+          setRegisteredOrders(getRegisteredOrdersResponse.data)
           setIsLoading(false);
           await setTotalNumber(0);
           setOrders([]);
