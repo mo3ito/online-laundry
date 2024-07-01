@@ -38,6 +38,9 @@ export default function page() {
     }
   };
 
+  console.log(registeredOrders);
+  
+
 
   if(isLoading){
     return <LoadingPage/>
@@ -95,7 +98,7 @@ export default function page() {
                     </div>
                     <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                       <p>وضعیت:</p>
-                      <p className="text-zinc-400">در انتظار تحویل</p>
+                      <p className="text-zinc-400">{order.situation}</p>
                     </div>
                     <DefaultButton
                       content="لغو"
