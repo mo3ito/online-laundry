@@ -131,9 +131,10 @@ export default function DriverOrdersShow({
         data={OrdersInfo}
         setIsShowModal={setIsShowModal}
         isShowModal={isShowModal}
+        payOnclick={()=>console.log("hello")}
       />
       <Modal
-        messageContent="آیا سفارشات را از مشتری دریافت کردید؟"
+        messageContent="آیا سفارشات را از مشتری دریافت کرده‌اید؟"
         isShowModal={isShowModalGetOrders}
         setIsShowModal={setIsShowModalGetOrders}
         confirmOnClick={() => console.log("f")}

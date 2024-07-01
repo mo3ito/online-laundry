@@ -37,6 +37,7 @@ export type OrdersForDriver = {
     isShowModal: boolean;
     setIsShowModal: Dispatch<SetStateAction<boolean>>;
     data: DataType | null;
+    payOnclick: ()=> void
   };
   
  export type DriverOrdersShowProps = {
