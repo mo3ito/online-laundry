@@ -15,7 +15,6 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<OrderCardType[]>([]);
 
   const [totalNumber, setTotalNumber] = useState(0);
-  const [totalNumberRegisterdOrders, setTotalNumberRegisterdOrders] =useState(0);
   const {infos , login} = useAuthContext()
 
   useEffect(() => {
@@ -25,15 +24,7 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [orders]);
 
-  useEffect(() => {
-    if (infos && !infos.is_driver) {
-      const totalRegisterd = infos?.orders?.reduce(
-        (prev, current) => prev + current.count,
-        0
-      );
-      setTotalNumberRegisterdOrders(totalRegisterd);
-    }
-  }, [infos]);
+
 console.log(infos);
 
 
@@ -46,8 +37,6 @@ console.log(infos);
         setOrders,
         totalNumber,
         setTotalNumber,
-        setTotalNumberRegisterdOrders,
-        totalNumberRegisterdOrders,
       }}
     >
       {children}

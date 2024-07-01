@@ -26,8 +26,6 @@ export type OrderCardContextType = {
   setOrders: Dispatch<SetStateAction<OrderCardType[]>>;
   totalNumber: number;
   setTotalNumber: Dispatch<SetStateAction<number>>;
-  totalNumberRegisterdOrders: number;
-  setTotalNumberRegisterdOrders: Dispatch<SetStateAction<number>>;
 };
 
 export type InformationForDelete = {
