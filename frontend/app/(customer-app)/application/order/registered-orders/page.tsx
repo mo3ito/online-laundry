@@ -6,11 +6,22 @@ import LoadingPage from "@/components/Loading/LoadingPage";
 import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
 import deleteHandler from "@/app/utils/orders/deleteHandler";
+import useGetReactQuery from "@/hooks/useGetReactQuery";
+import { useRouter } from "next/navigation";
+import { GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
+import { Orders } from "@/types/orders";
 
 export default function page() {
   const { infos, login } = useAuthContext();
   const [isShowDelteModal, setIsShowDeleteModal] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string>("");
+  const router = useRouter();
+
+  const { data: allOrders, isLoading } = useGetReactQuery(
+    infos?._id,
+    GET_ORDERS_CUSTOER,
+    ["get registerd orders"]
+  );
 
   const deleteHandlerProccess = (orderId: string) => {
     if (orderId) {
@@ -18,6 +29,10 @@ export default function page() {
       setIsShowDeleteModal(true);
     }
   };
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>
@@ -27,10 +42,10 @@ export default function page() {
       >
         <HeaderComponent title="سفارشات ثبت شده" />
 
-        {infos?.orders?.length ? (
+        {allOrders?.data?.length ? (
           <section className="w-full">
             <ul className="w-full h-max p-6 sm:p-8 ">
-              {infos.orders.map((order) => (
+              {allOrders?.data?.map((order: Orders) => (
                 <li
                   key={order.orders_id}
                   className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-4 shadow-xl max-[280px]:text-xs text-sm sm:text-base"
@@ -92,7 +107,7 @@ export default function page() {
         isShowModal={isShowDelteModal}
         setIsShowModal={setIsShowDeleteModal}
         confirmOnClick={() =>
-          deleteHandler(orderId, infos?._id, login, setIsShowDeleteModal)
+          deleteHandler(orderId, infos?._id, router, setIsShowDeleteModal)
         }
       />
     </>

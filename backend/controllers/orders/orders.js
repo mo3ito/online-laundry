@@ -63,12 +63,8 @@ const sendOrders = async (req, res) => {
 
     await newOrdersModel.save();
 
-    customer.orders.push(...ordersInfos.orders);
-    await customer.save();
-
     res.status(200).json({
       message: "سفارش با موفقیت ثبت شد",
-      ordersInfo: newOrdersModel,
     });
   } catch (error) {
     console.error("error:", error.message);
@@ -90,23 +86,17 @@ const getOrdersCustomer = async (req, res) => {
 
     const customer = await CustomersModel.findById(customerId);
 
-    console.log(customer);
-    const infos = {
-      _id: customerId,
-      name: customer.name,
-      last_name: customer.last_name,
-      phone_number: customer.phone_number,
-      orders: customer.orders,
-      created_at: customer.created_at,
-      is_customer: customer.is_customer,
-    };
+    if (!customer) {
+      return res.status(400).json({
+        message: "مشتری با این آیدی وجود ندارد",
+      });
+    }
 
-    const token = await createToken({ infos });
+    const orders = await OrdersModel.find({ customer_id: customerId });
 
-    return res.status(200).json({
-      infos,
-      token,
-    });
+    const allOrders = orders.flatMap(order => order.orders);
+
+    return res.status(200).json(allOrders);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -114,6 +104,7 @@ const getOrdersCustomer = async (req, res) => {
     });
   }
 };
+
 
 const deleteOrders = async (req, res) => {
   const customerId = req.headers.authorization;
@@ -132,15 +123,7 @@ const deleteOrders = async (req, res) => {
       { $pull: { orders: { orders_id } } }
     );
 
-    const customerUpdateResult = await CustomersModel.updateOne(
-      { _id: customerId },
-      { $pull: { orders: { orders_id } } }
-    );
-
-    if (
-      ordersUpdateResult.modifiedCount === 0 &&
-      customerUpdateResult.modifiedCount === 0
-    ) {
+    if (ordersUpdateResult.modifiedCount === 0) {
       return res.status(404).json({
         message: "سفارش یافت نشد",
       });
@@ -151,22 +134,8 @@ const deleteOrders = async (req, res) => {
       orders: { $size: 0 },
     });
 
-    const updatedCustomer = await CustomersModel.findById(customerId);
-
-    if (updatedCustomer.orders.length === 0) {
-      await OrdersModel.deleteMany({ customer_id: customerId });
-    }
-
-    await CustomersModel.updateMany(
-      { orders: { $size: 0 } },
-      { $unset: { orders: "" } }
-    );
-
-    const token = await createToken({ infos: updatedCustomer });
-
     return res.status(200).json({
-      infos: updatedCustomer,
-      token,
+      message: "سفارش با موفقیت حذف شد",
     });
   } catch (error) {
     console.error("error:", error.message);

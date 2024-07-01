@@ -3,10 +3,12 @@ import { InitialInfosType } from "@/types/context/AuthContextType";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { DELETE_ORDER } from "@/routeApi/endpoints";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 const deleteHandler = async (
   orderId: string,
   _id: string | undefined,
-  login: (infos: InitialInfosType, token: string) => void,
+  router: AppRouterInstance,
   setIsShowDeleteModal: Dispatch<SetStateAction<boolean>>
 ) => {
   const body = {
@@ -16,7 +18,7 @@ const deleteHandler = async (
   try {
     const response = await updateData(DELETE_ORDER, body, _id);
     if (response.status === 200) {
-      await login(response.data.infos, response.data.token);
+      router.refresh()
       toast.success("سفارش با موفقیت حذف شد");
       setIsShowDeleteModal(false);
     }

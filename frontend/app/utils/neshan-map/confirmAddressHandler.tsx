@@ -49,10 +49,7 @@ const confirmAddressHandler = async (
           infos?._id
         );
         if (getRegisteredOrdersResponse?.status === 200) {
-          await login(
-            getRegisteredOrdersResponse.data.infos,
-            getRegisteredOrdersResponse.data.token
-          );
+          
           setIsLoading(false);
           await setTotalNumber(0);
           setOrders([]);
