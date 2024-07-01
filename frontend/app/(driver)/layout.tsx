@@ -23,11 +23,9 @@ export default function RootLayout({
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <AuthContextProvider>
           <ReactQueryProvider>
-            <OrderCardProvider>
-            <DriverHeader/>
-              <main className=" w-full h-screen">{children}</main>
-              <BottomMenuDriver />
-            </OrderCardProvider>
+            <DriverHeader />
+            <main className=" w-full h-screen">{children}</main>
+            <BottomMenuDriver />
             <ToastifyContainer />
           </ReactQueryProvider>
         </AuthContextProvider>

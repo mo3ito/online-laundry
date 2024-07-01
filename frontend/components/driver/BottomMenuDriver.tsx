@@ -35,7 +35,7 @@ export default function BottomMenuDriver() {
     }
   }, [allIsNotDoneOrders, allIsDoneOrders]);
 
-  if (isLoading && isLoadingForIsDoneOrders) {
+  if (isLoading && isLoadingForIsDoneOrders && !infos?._id) {
     return <LoadingPage />;
   }
 

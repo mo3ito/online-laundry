@@ -8,19 +8,16 @@ import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { useRouter } from "next/navigation";
 import PayModal from "./PayModal";
-import { OrdersForDriver } from "@/types/driver";
-import { OrdersType , DataType } from "@/types/driver";
+import { OrdersForDriver , DriverOrdersShowProps } from "@/types/driver";
+import { OrdersType, DataType } from "@/types/driver";
+import Modal from "./Modal";
 
 
-
-type DriverOrdersShowProps = {
-  apiAddress: string;
-  header: string;
-};
 
 export default function DriverOrdersShow({
   apiAddress,
   header,
+  isGet,
 }: DriverOrdersShowProps) {
   const { infos } = useAuthContext();
   const router = useRouter();
@@ -29,8 +26,10 @@ export default function DriverOrdersShow({
     return <LoadingPage />;
   }
 
-  const [OrdersInfo , setOrdersInfo]=useState<DataType | null>(null)
-  const [isShowModal , setIsShowModal]=useState<boolean>(false)
+  const [OrdersInfo, setOrdersInfo] = useState<DataType | null>(null);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isShowModalGetOrders, setIsShowModalGetOrders] =
+    useState<boolean>(false);
   const queryKey = ["all-orders"];
   const { data: allOrders, isLoading } = useQuery({
     queryKey: infos._id ? queryKey : [],
@@ -43,11 +42,14 @@ export default function DriverOrdersShow({
     );
   };
 
-  const showOrdersAndPay = async (orders : OrdersType[] , allCount : number ,allPrice: number)=>{
-   await setOrdersInfo({ orders , allCount ,allPrice})
-    setIsShowModal(true)
-  }
-
+  const showOrdersAndPay = async (
+    orders: OrdersType[],
+    allCount: number,
+    allPrice: number
+  ) => {
+    await setOrdersInfo({ orders, allCount, allPrice });
+    setIsShowModal(true);
+  };
 
   if (isLoading) {
     return <LoadingPage />;
@@ -100,17 +102,42 @@ export default function DriverOrdersShow({
                     latLongHandler(order.latitude, order.longitude)
                   }
                 />
-                <DefaultButton
-                  content="پرداخت"
-                  className="w-1/2 max-[280px]:h-6  h-10 bg-sky-500 rounded-lg text-white"
-                  onClick={()=>showOrdersAndPay(order.orders , order.all_count ,order.all_price)}
-                />
+
+                {!isGet ? (
+                  <DefaultButton
+                    content="پرداخت"
+                    className="w-1/2 max-[280px]:h-6  h-10 bg-sky-500 rounded-lg text-white"
+                    onClick={() =>
+                      showOrdersAndPay(
+                        order.orders,
+                        order.all_count,
+                        order.all_price
+                      )
+                    }
+                  />
+                ) : (
+                  <DefaultButton
+                    content="دریافت"
+                    className="w-1/2 max-[280px]:h-6  h-10 bg-sky-500 rounded-lg text-white"
+                    onClick={() => setIsShowModalGetOrders(true)}
+                  />
+                )}
               </div>
             </article>
           </li>
         ))}
       </ul>
-      <PayModal data={OrdersInfo} setIsShowModal={setIsShowModal} isShowModal={isShowModal}/>
-      </div>
+      <PayModal
+        data={OrdersInfo}
+        setIsShowModal={setIsShowModal}
+        isShowModal={isShowModal}
+      />
+      <Modal
+        messageContent="آیا سفارشات را از مشتری دریافت کردید؟"
+        isShowModal={isShowModalGetOrders}
+        setIsShowModal={setIsShowModalGetOrders}
+        confirmOnClick={() => console.log("f")}
+      />
+    </div>
   );
 }

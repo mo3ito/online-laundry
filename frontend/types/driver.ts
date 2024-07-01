@@ -39,3 +39,8 @@ export type OrdersForDriver = {
     data: DataType | null;
   };
   
+ export type DriverOrdersShowProps = {
+    apiAddress: string;
+    header: string;
+    isGet: boolean;
+  };

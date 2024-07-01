@@ -7,6 +7,7 @@ export default function page() {
     <DriverOrdersShow
       apiAddress={DRIVER_GET_ALL_ORDERS_IS_NOT_DONE}
       header="سفارشات دریافتی"
+      isGet={true}
     />
   );
 }
