@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./../globals.css";
-import Header from "@/components/headers/Header";
 import BottomMenuDriver from "@/components/driver/BottomMenuDriver";
 import DriverContexProvider from "@/context/driverContext";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthContextProvider from "@/context/authContext";
+import DriverHeader from "@/components/headers/DriverHeader";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین",
@@ -23,7 +23,7 @@ export default function RootLayout({
         <AuthContextProvider>
           <ReactQueryProvider>
             <DriverContexProvider>
-              <Header />
+              <DriverHeader />
               <main className=" w-full h-screen">{children}</main>
               <BottomMenuDriver />
             </DriverContexProvider>

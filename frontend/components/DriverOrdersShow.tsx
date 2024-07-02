@@ -14,7 +14,10 @@ import Modal from "./Modal";
 import updateData from "@/services/updateData";
 import { toast } from "react-toastify";
 import useDriverContext from "@/hooks/useDriverContext";
-import { OrdersForGetAndSendDriver , OrdersInForGetAndSendDriver } from "@/types/driver"
+import {
+  OrdersForGetAndSendDriver,
+  OrdersInForGetAndSendDriver,
+} from "@/types/driver";
 import getOrdersHandler from "@/app/utils/driver/getOrdersHandler";
 
 type DriverOrdersShowProps = {
@@ -39,7 +42,9 @@ export default function DriverOrdersShow({
 
   const [ordersInfo, setOrdersInfo] = useState<DataType | null>(null);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [ordersForDriver, setOrdersForDriver] = useState<OrdersForGetAndSendDriver[] | []>([]);
+  const [ordersForDriver, setOrdersForDriver] = useState<
+    OrdersForGetAndSendDriver[] | []
+  >([]);
   const { setTotalIsNotDoneOrders } = useDriverContext();
   const [ishowModalGetOrders, setIsShowModalGetOrders] =
     useState<boolean>(false);
@@ -75,8 +80,6 @@ export default function DriverOrdersShow({
 
   console.log(ordersForDriver);
 
-
-
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -90,7 +93,7 @@ export default function DriverOrdersShow({
     >
       <HeaderComponent title={header} />
       <>
-        {  ordersForDriver.length > 0 ? (
+        {ordersForDriver.length > 0 ? (
           <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
             {ordersForDriver.map((order: OrdersForGetAndSendDriver) => (
               <li
@@ -168,7 +171,17 @@ export default function DriverOrdersShow({
         data={ordersInfo}
         isShowModal={ishowModalGetOrders}
         setIsShowModal={setIsShowModalGetOrders}
-        payOnclick={()=>getOrdersHandler(ordersInfo , setIsLoadingForApiResponse , apiAddress , infos._id , setOrdersForDriver ,setTotalIsNotDoneOrders,setIsShowModalGetOrders )}
+        payOnclick={() =>
+          getOrdersHandler(
+            ordersInfo,
+            setIsLoadingForApiResponse,
+            apiAddress,
+            infos._id,
+            setOrdersForDriver,
+            setTotalIsNotDoneOrders,
+            setIsShowModalGetOrders
+          )
+        }
       />
     </div>
   );
