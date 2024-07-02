@@ -12,24 +12,21 @@ import { GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
 import { OrdersRegistered } from "@/types/context/OrderCard";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
 
-
 export default function page() {
   const { infos, login } = useAuthContext();
   const [isShowDelteModal, setIsShowDeleteModal] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string>("");
   const router = useRouter();
-  const { setRegisteredOrders , registeredOrders} = useOrderCardContext()
-  const { data, isLoading } = useGetReactQuery(
-    infos?._id,
-    GET_ORDERS_CUSTOER,
-    ["get registerd orders"]
-  );
+  const { setRegisteredOrders, registeredOrders } = useOrderCardContext();
+  const { data, isLoading } = useGetReactQuery(infos?._id, GET_ORDERS_CUSTOER, [
+    "get registerd orders",
+  ]);
 
-  useEffect(()=>{
-    if(data){
-    setRegisteredOrders(data.data)
+  useEffect(() => {
+    if (data) {
+      setRegisteredOrders(data.data);
     }
-  },[data])
+  }, [data]);
 
   const deleteHandlerProccess = (orderId: string) => {
     if (orderId) {
@@ -39,11 +36,9 @@ export default function page() {
   };
 
   console.log(registeredOrders);
-  
 
-
-  if(isLoading){
-    return <LoadingPage/>
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
   return (
@@ -57,8 +52,7 @@ export default function page() {
         {registeredOrders?.length ? (
           <section className="w-full">
             <ul className="w-full h-max p-6 sm:p-8 ">
-              
-              {registeredOrders?.map((order : OrdersRegistered) => (
+              {registeredOrders?.map((order: OrdersRegistered) => (
                 <li
                   key={order.orders_id}
                   className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-4 shadow-xl max-[280px]:text-xs text-sm sm:text-base"
@@ -101,14 +95,20 @@ export default function page() {
                       <p className="text-zinc-400">{order.situation}</p>
                     </div>
                     <DefaultButton
+                      disabled={
+                        order.situation === "در انتظار تحویل" ? false : true
+                      }
                       content="لغو"
-                      className="w-full h-10 text-white !bg-pink-500"
+                      className={`${
+                        order.situation === "در انتظار تحویل"
+                          ? "!bg-pink-500"
+                          : "bg-zinc-400"
+                      } w-full h-10 text-white `}
                       onClick={() => deleteHandlerProccess(order?.orders_id)}
                     />
                   </article>
                 </li>
               ))}
-            
             </ul>
           </section>
         ) : (
@@ -121,7 +121,12 @@ export default function page() {
         isShowModal={isShowDelteModal}
         setIsShowModal={setIsShowDeleteModal}
         confirmOnClick={() =>
-          deleteHandler(orderId, infos?._id, setIsShowDeleteModal , setRegisteredOrders)
+          deleteHandler(
+            orderId,
+            infos?._id,
+            setIsShowDeleteModal,
+            setRegisteredOrders
+          )
         }
       />
     </>
