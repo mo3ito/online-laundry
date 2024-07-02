@@ -58,12 +58,14 @@ export default function Page() {
       }
     } catch (error: any) {
       console.error("خطا در ارتباط با سرور:", error);
-      setIsLoading(false);
+      
       if (error.response && error.response.status === 400) {
+        setIsLoading(false);
         const errorMessage: string =
           error.response.data?.message || "خطایی رخ داده است.";
         toast.error(errorMessage);
       } else {
+        setIsLoading(false);
         console.log("خطا:", error);
         toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
       }

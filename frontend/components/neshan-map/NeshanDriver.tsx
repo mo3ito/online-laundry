@@ -4,17 +4,10 @@ import NeshanMap, {
 } from "@neshan-maps-platform/react-openlayers";
 import LoadingPage from "../Loading/LoadingPage";
 import { LatLongType } from "@/types/neshan-map";
-import { fromLonLat } from "@neshan-maps-platform/ol/proj";
-import VectorLayer from "@neshan-maps-platform/ol/layer/Vector";
-import VectorSource from "@neshan-maps-platform/ol/source/Vector";
-import Feature from "@neshan-maps-platform/ol/Feature";
-import Point from "@neshan-maps-platform/ol/geom/Point";
-import { Style, Stroke, Circle, Fill } from "@neshan-maps-platform/ol/style";
 import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
 import "@neshan-maps-platform/ol/css";
 import DefaultButton from "../share/defaultButton";
-import Polyline from "@neshan-maps-platform/ol/format/Polyline";
-import { toast } from "react-toastify";
+
 import {
   NeshanDriverProps,
   DistanceTimeType,

@@ -14,6 +14,8 @@ import Modal from "./Modal";
 import updateData from "@/services/updateData";
 import { toast } from "react-toastify";
 import useDriverContext from "@/hooks/useDriverContext";
+import { OrdersForGetAndSendDriver , OrdersInForGetAndSendDriver } from "@/types/driver"
+import getOrdersHandler from "@/app/utils/driver/getOrdersHandler";
 
 type DriverOrdersShowProps = {
   apiAddress: string;
@@ -35,9 +37,9 @@ export default function DriverOrdersShow({
     return <LoadingPage />;
   }
 
-  const [OrdersInfo, setOrdersInfo] = useState<DataType | null>(null);
+  const [ordersInfo, setOrdersInfo] = useState<DataType | null>(null);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [ordersForDriver, setOrdersForDriver] = useState([]);
+  const [ordersForDriver, setOrdersForDriver] = useState<OrdersForGetAndSendDriver[] | []>([]);
   const { setTotalIsNotDoneOrders } = useDriverContext();
   const [ishowModalGetOrders, setIsShowModalGetOrders] =
     useState<boolean>(false);
@@ -62,7 +64,7 @@ export default function DriverOrdersShow({
   }, [allOrders]);
 
   const showOrdersAndPay = async (
-    orders: OrdersType[],
+    orders: OrdersInForGetAndSendDriver[],
     allCount: number,
     allPrice: number,
     customer_id: string
@@ -71,54 +73,15 @@ export default function DriverOrdersShow({
     isGet ? setIsShowModalGetOrders(true) : setIsShowModal(true);
   };
 
-  console.log(OrdersInfo?.orders.map((item) => item.orders_id));
+  console.log(ordersForDriver);
 
-  const getOrdersHandler = async () => {
-    const ordersIdList = await OrdersInfo?.orders.map((item) => item.orders_id);
-    const body = {
-      customer_id: OrdersInfo?.customer_id,
-      orders_id_list: ordersIdList,
-    };
-    try {
-      setIsLoadingForApiResponse(true);
-      const response = await updateData(
-        "http://localhost:4000/driver/get-orders-from-customer",
-        body,
-        infos._id
-      );
-      if (response.status === 200) {
-        const newData = await getData(apiAddress, true, undefined, infos._id);
-        if (newData?.status === 200) {
-          await setOrdersForDriver(newData.data);
-          await setTotalIsNotDoneOrders(newData?.data?.length);
-          setIsLoadingForApiResponse(false);
-          setIsShowModalGetOrders(false);
-          toast.success("تحویل محصول با موفقیت ثبت شد");
-        }
-      }
-    } catch (error: any) {
-      console.error("خطا در ارتباط با سرور:", error);
 
-      if (error.response && error.response.status === 400) {
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        setIsLoadingForApiResponse(false);
-        setIsShowModalGetOrders(false);
-        toast.error(errorMessage);
-      } else {
-        setIsLoadingForApiResponse(false);
-        setIsShowModalGetOrders(false);
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    }
-  };
 
   if (isLoading) {
     return <LoadingPage />;
   }
 
-  console.log(OrdersInfo);
+  console.log(ordersInfo);
 
   return (
     <div
@@ -127,9 +90,9 @@ export default function DriverOrdersShow({
     >
       <HeaderComponent title={header} />
       <>
-        {ordersForDriver.length > 0 ? (
+        {  ordersForDriver.length > 0 ? (
           <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
-            {ordersForDriver.map((order: OrdersForDriver) => (
+            {ordersForDriver.map((order: OrdersForGetAndSendDriver) => (
               <li
                 key={order._id}
                 className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-4 shadow-xl max-[280px]:text-xs text-sm sm:text-base"
@@ -195,17 +158,17 @@ export default function DriverOrdersShow({
       </>
       <PayModal
         buttonName="پرداخت"
-        data={OrdersInfo}
+        data={ordersInfo}
         setIsShowModal={setIsShowModal}
         isShowModal={isShowModal}
         payOnclick={() => console.log("ff")}
       />
       <PayModal
         buttonName="دریافت"
-        data={OrdersInfo}
+        data={ordersInfo}
         isShowModal={ishowModalGetOrders}
         setIsShowModal={setIsShowModalGetOrders}
-        payOnclick={getOrdersHandler}
+        payOnclick={()=>getOrdersHandler(ordersInfo , setIsLoadingForApiResponse , apiAddress , infos._id , setOrdersForDriver ,setTotalIsNotDoneOrders,setIsShowModalGetOrders )}
       />
     </div>
   );
