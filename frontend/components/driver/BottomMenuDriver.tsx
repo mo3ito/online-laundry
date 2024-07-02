@@ -8,10 +8,12 @@ import {
   DRIVER_GET_ALL_ORDERS_IS_DONE,
 } from "@/routeApi/endpoints";
 import LoadingPage from "../Loading/LoadingPage";
+import useDriverContext from "@/hooks/useDriverContext";
 
 export default function BottomMenuDriver() {
-  const [totalIsNotDoneOrders, setTotalIsNotDoneOrders] = useState<number>(0);
-  const [totalIsDoneOrders, setTotalIsDoneOrders] = useState<number>(0);
+
+
+  const {totalIsNotDoneOrders , setTotalIsNotDoneOrders , totalIsDoneOrders , setTotalIsDoneOrders }= useDriverContext()
   const { infos } = useAuthContext();
   const { data: allIsNotDoneOrders, isLoading } = useGetReactQuery(
     infos?._id,

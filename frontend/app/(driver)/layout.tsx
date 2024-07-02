@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import "./../globals.css";
 import Header from "@/components/headers/Header";
 import BottomMenuDriver from "@/components/driver/BottomMenuDriver";
-import OrderCardProvider from "@/context/order-card";
+import DriverContexProvider from "@/context/driverContext";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthContextProvider from "@/context/authContext";
-import DriverHeader from "@/components/headers/DriverHeader";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین",
@@ -23,9 +22,11 @@ export default function RootLayout({
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <AuthContextProvider>
           <ReactQueryProvider>
-            <DriverHeader />
-            <main className=" w-full h-screen">{children}</main>
-            <BottomMenuDriver />
+            <DriverContexProvider>
+              <Header />
+              <main className=" w-full h-screen">{children}</main>
+              <BottomMenuDriver />
+            </DriverContexProvider>
             <ToastifyContainer />
           </ReactQueryProvider>
         </AuthContextProvider>

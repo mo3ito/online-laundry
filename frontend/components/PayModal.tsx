@@ -8,7 +8,8 @@ export default function PayModal({
   isShowModal = false,
   setIsShowModal,
   data,
-  payOnclick
+  payOnclick,
+  buttonName
 }: DefaultModalProps) {
   const containerRefModal = useRef<HTMLDivElement | null>(null);
   useDropDown(containerRefModal, isShowModal, setIsShowModal);
@@ -78,7 +79,7 @@ export default function PayModal({
             </section>
             <DefaultButton
               onClick={payOnclick}
-              content="پرداخت"
+              content={buttonName}
               className="w-full max-[280px]:h-6  h-10 bg-sky-500 rounded-lg text-white mt-3 max-[280px]:text-sm "
             />
           </section>

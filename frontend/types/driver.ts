@@ -31,13 +31,15 @@ export type OrdersForDriver = {
     allCount: number;
     allPrice: number;
     orders: OrdersType[] ;
+    customer_id: string
   };
   
  export type DefaultModalProps = {
     isShowModal: boolean;
     setIsShowModal: Dispatch<SetStateAction<boolean>>;
     data: DataType | null;
-    payOnclick: ()=> void
+    payOnclick: ()=> void;
+    buttonName:string
   };
   
  export type DriverOrdersShowProps = {

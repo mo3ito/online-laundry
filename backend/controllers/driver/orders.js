@@ -16,7 +16,7 @@ const getAllOrdersIsNotDone = async (req, res) => {
     const allOrders = await OrdersModel.find({});
 
     const data = allOrders
-      .filter((item) => item.is_done_all_order === false)
+      .filter((item) => item.is_done_all_order === false && item.orders.every(item=> item.situation === "در انتظار تحویل"))
       .map((item) => item._doc);
 
     const mergedData = Object.values(
