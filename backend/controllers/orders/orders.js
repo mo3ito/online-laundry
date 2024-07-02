@@ -94,9 +94,9 @@ const getOrdersCustomer = async (req, res) => {
 
     const orders = await OrdersModel.find({ customer_id: customerId });
 
-    const allOrders = orders.flatMap(order => order.orders);
-
-    return res.status(200).json(allOrders);
+    const allOrders = orders.flatMap((order) => order.orders);
+    const sortedAllOrders = allOrders.toReversed();
+    return res.status(200).json(sortedAllOrders);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -104,7 +104,6 @@ const getOrdersCustomer = async (req, res) => {
     });
   }
 };
-
 
 const deleteOrders = async (req, res) => {
   const customerId = req.headers.authorization;

@@ -154,8 +154,6 @@ const payOrdersMoney = async (req, res) => {
       }
     }
 
-    
-
     return res.status(200).json({
       message: "پرداخت با موفقیت صورت گرفت",
     });
@@ -167,4 +165,76 @@ const payOrdersMoney = async (req, res) => {
   }
 };
 
-module.exports = { getAllOrdersIsNotDone, getAlOrdersIsDone, payOrdersMoney };
+
+
+
+const getOrdersFromCustomer = async (req, res) => {
+  const driverId = req.headers.authorization;
+  const { customer_id, orders_id_list } = req.body;
+
+  try {
+    const driver = await DriverModel.findById(driverId);
+    const customer = await CustomerModel.findById(customer_id);
+    const ordersList = await OrdersModel.find({ customer_id });
+
+    if (!driver) {
+      return res.status(400).json({
+        message: "مامور تحویل و راننده‌ای با این آیدی یافت نشد",
+      });
+    }
+
+    if (!customer) {
+      return res.status(400).json({
+        message: "مشتری‌ای با این آیدی یافت نشد",
+      });
+    }
+
+    if (ordersList.length === 0) {
+      return res.status(404).json({
+        message: "هیچ سفارشی برای این مشتری یافت نشد",
+      });
+    }
+
+    for (const id of orders_id_list) {
+      let found = false;
+      for (const orderDoc of ordersList) {
+        for (const order of orderDoc.orders) {
+          if (order.orders_id === id) {
+            found = true;
+            break;
+          }
+        }
+        if (found) break;
+      }
+      if (!found) {
+        return res.status(400).json({
+          message: "آیدی‌های سفارش‌ها درست نیستند"
+        });
+      }
+    }
+
+    for (const orderDoc of ordersList) {
+      for (const order of orderDoc.orders) {
+        if (orders_id_list.includes(order.orders_id)) {
+          order.situation = "تحویل گرفته شده";
+        }
+      }
+      await orderDoc.save();
+    }
+
+    res.status(200).json({
+      message: "وضعیت سفارش‌ها با موفقیت به‌روزرسانی شد",
+    });
+
+  } catch (error) {
+    console.error("Error updating orders: ", error);
+    res.status(500).json({
+      message: "خطایی در سرور رخ داده است",
+    });
+  }
+};
+
+
+
+
+module.exports = { getAllOrdersIsNotDone, getAlOrdersIsDone, payOrdersMoney , getOrdersFromCustomer };
