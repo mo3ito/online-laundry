@@ -26,11 +26,11 @@ const getOrdersHandler = async (
       body,
       _id
     );
-    if (response.status === 200) {
+    if (response.status === 200 ) {
       const newData = await getData(apiAddress, true, undefined, _id);
       if (newData?.status === 200) {
         await setOrdersForDriver(newData.data);
-        await setTotalIsNotDoneOrders(newData?.data?.length);
+        await setTotalIsNotDoneOrders(newData.data.length);
         setIsLoadingForApiResponse(false);
         setIsShowModalGetOrders(false);
         toast.success("تحویل محصول با موفقیت ثبت شد");

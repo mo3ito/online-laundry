@@ -11,38 +11,39 @@ import LoadingPage from "../Loading/LoadingPage";
 import useDriverContext from "@/hooks/useDriverContext";
 
 export default function BottomMenuDriver() {
-  const {
-    totalIsNotDoneOrders,
-    setTotalIsNotDoneOrders,
-    totalIsDoneOrders,
-    setTotalIsDoneOrders,
-  } = useDriverContext();
-  const { infos } = useAuthContext();
-  const { data: allIsNotDoneOrders, isLoading } = useGetReactQuery(
-    infos?._id,
-    DRIVER_GET_ALL_ORDERS_IS_NOT_DONE,
-    ["all is not done orders"]
-  );
-  const { data: allIsDoneOrders, isLoading: isLoadingForIsDoneOrders } =
-    useGetReactQuery(infos?._id, DRIVER_GET_ALL_ORDERS_IS_DONE, [
-      "all is done orders",
-    ]);
+  // const {
+  //   totalIsNotDoneOrders,
+  //   setTotalIsNotDoneOrders,
+  //   totalIsDoneOrders,
+  //   setTotalIsDoneOrders,
+  // } = useDriverContext();
+  // const { infos } = useAuthContext();
+  // const { data: allIsNotDoneOrders, isLoading } = useGetReactQuery(
+  //   infos?._id,
+  //   DRIVER_GET_ALL_ORDERS_IS_NOT_DONE,
+  //   ["all is not done orders"]
+  // );
+  // const { data: allIsDoneOrders, isLoading: isLoadingForIsDoneOrders } =
+  //   useGetReactQuery(infos?._id, DRIVER_GET_ALL_ORDERS_IS_DONE, [
+  //     "all is done orders",
+  //   ]);
 
-  console.log(allIsNotDoneOrders);
-  console.log(allIsDoneOrders);
+  // console.log(allIsNotDoneOrders);
+  // console.log(allIsDoneOrders);
 
-  useEffect(() => {
-    if (allIsNotDoneOrders) {
-      setTotalIsNotDoneOrders(allIsNotDoneOrders?.data?.length);
-    }
-    if (allIsDoneOrders) {
-      setTotalIsDoneOrders(allIsDoneOrders?.data?.length);
-    }
-  }, [allIsNotDoneOrders, allIsDoneOrders]);
+  // useEffect(() => {
+  //   if (allIsNotDoneOrders) {
+  //     setTotalIsNotDoneOrders(allIsNotDoneOrders?.data?.length);
+  //   }
+  //   if (allIsDoneOrders) {
+  //     setTotalIsDoneOrders(allIsDoneOrders?.data?.length);
+  //   }
+  // }, [allIsNotDoneOrders, allIsDoneOrders]);
 
-  if (isLoading && isLoadingForIsDoneOrders && !infos?._id) {
-    return <LoadingPage />;
-  }
+  // if (isLoading && isLoadingForIsDoneOrders && !infos?._id) {
+  //   return <LoadingPage />;
+  // }
+  const {totalIsDoneOrders , totalIsNotDoneOrders} = useDriverContext()
 
   return (
     <div className=" pt-3 h-20 bg-sky-500 border-t sticky bottom-0 flex items-center justify-between sm:justify-around px-8  mx-auto border border-sky-500  shadow-xl sm:w-5/6 md:w-5/6 lg:w-4/6  ">
