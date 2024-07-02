@@ -1,6 +1,7 @@
 const OrdersModel = require("../../models/orders/Orders");
 const DriverModel = require("../../models/driver/DriverModel");
-const CustomerModel = require("../../models/customer/CustomerModel")
+const CustomerModel = require("../../models/customer/CustomerModel");
+const GotOrders = require("../../models/orders/GotOrders");
 
 const getAllOrdersIsNotDone = async (req, res) => {
   const driverId = req.headers.authorization;
@@ -222,7 +223,14 @@ const getOrdersFromCustomer = async (req, res) => {
       await orderDoc.save();
     }
 
-    res.status(200).json({
+  //   const gotOrders = await ordersList.filter(item=> item.orders.map(item=> item.situation === "تحویل گرفته شده"))
+
+  //   console.log(gotOrders);
+  //  const newGotOrders = await new GotOrders(gotOrders)
+  //   await newGotOrders.save()
+
+
+   return res.status(200).json({
       message: "وضعیت سفارش‌ها با موفقیت به‌روزرسانی شد",
     });
 
