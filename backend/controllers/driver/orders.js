@@ -223,13 +223,6 @@ const getOrdersFromCustomer = async (req, res) => {
       await orderDoc.save();
     }
 
-  //   const gotOrders = await ordersList.filter(item=> item.orders.map(item=> item.situation === "تحویل گرفته شده"))
-
-  //   console.log(gotOrders);
-  //  const newGotOrders = await new GotOrders(gotOrders)
-  //   await newGotOrders.save()
-
-
    return res.status(200).json({
       message: "وضعیت سفارش‌ها با موفقیت به‌روزرسانی شد",
     });
