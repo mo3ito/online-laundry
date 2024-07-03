@@ -78,6 +78,10 @@ const OrdersSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  is_pay_money:{
+    type: Boolean,
+    default: false,
+  }
 });
 
 const Orders = mongoose.model("orders", OrdersSchema);
