@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   driverRegister,
   driverLogin,
+  editInformation,
 } = require("../controllers/driver/registration");
 const {
   getAllOrdersIsNotDone,
@@ -13,6 +14,7 @@ const {
 
 router.post("/driver/register", driverRegister);
 router.post("/driver/login", driverLogin);
+router.put("/driver/edit-information", editInformation);
 router.get("/driver/get-all-orders-is-not-done", getAllOrdersIsNotDone);
 router.get("/driver/get-all-orders-is-done", getAlOrdersIsDone);
 router.put("/driver/pay-orders-money", payOrdersMoney);

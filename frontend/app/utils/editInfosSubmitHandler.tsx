@@ -2,33 +2,20 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import updateData from "@/services/updateData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
-import { CUSTOMER_EDIT_INFORMATION } from "@/routeApi/endpoints";
 
 const editInfosSubmitHandler = async (
   event: FormEvent,
-  nameValue: string | undefined,
-  lastNameValue: string | undefined,
+  body: Object,
   setIsLoadingForEdit: Dispatch<SetStateAction<boolean>>,
   login: (infos: InitialInfosType, token: string) => void,
-  _id: string | undefined
+  _id: string | undefined,
+  apiAddress: string
 ) => {
   event.preventDefault();
 
   try {
-    const body = {
-      name: nameValue,
-      last_name: lastNameValue,
-    };
-
-    if (!nameValue?.trim()) {
-      return toast.warn("مقدار ورودی نام خالی است");
-    }
-    if (!lastNameValue?.trim()) {
-      return toast.warn("مقدار ورودی نام خانوادگی خالی است");
-    }
-
     setIsLoadingForEdit(true);
-    const response = await updateData(CUSTOMER_EDIT_INFORMATION, body, _id);
+    const response = await updateData(apiAddress, body, _id);
 
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);

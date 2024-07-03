@@ -3,6 +3,7 @@ import updateData from "@/services/updateData";
 import { DataType, OrdersForGetAndSendDriver } from "@/types/driver";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
+import { DRIVER_PAY_ORDERS_MONEY } from "@/routeApi/endpoints";
 
 const payOrderMoneyHandler = async (
   ordersInfo: DataType | null,
@@ -21,7 +22,7 @@ const payOrderMoneyHandler = async (
 
   try {
     const responsePayMoney = await updateData(
-      "http://localhost:4000/driver/pay-orders-money",
+      DRIVER_PAY_ORDERS_MONEY,
       body,
       _id
     );

@@ -1,11 +1,13 @@
 "use client";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 import DefaultButton from "@/components/share/defaultButton";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import NoPersonSvg from "@/components/customerApp/svgs/NoPersonSvg";
 import editInfosSubmitHandler from "@/app/utils/editInfosSubmitHandler";
+import { toast } from "react-toastify";
+import { CUSTOMER_EDIT_INFORMATION } from "@/routeApi/endpoints";
 
 export default function page() {
   const { infos, login } = useAuthContext();
@@ -18,6 +20,30 @@ export default function page() {
     setLastNameValue(infos?.last_name);
   }, [infos]);
 
+  const submitForm = (event: FormEvent) => {
+    const body = {
+      name: nameValue,
+      last_name: lastNameValue,
+    };
+
+    if (!nameValue?.trim()) {
+      return toast.warn("مقدار ورودی نام خالی است");
+    }
+    if (!lastNameValue?.trim()) {
+      return toast.warn("مقدار ورودی نام خانوادگی خالی است");
+    }
+
+
+    editInfosSubmitHandler(
+      event,
+      body,
+      setIsLoadingForEdit,
+      login,
+      infos?._id,
+      CUSTOMER_EDIT_INFORMATION
+    );
+  };
+
   return (
     <div
       style={{ height: `calc(100vh - 248px)` }}
@@ -27,16 +53,7 @@ export default function page() {
       <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full">
         <NoPersonSvg />
         <form
-          onSubmit={(event) =>
-            editInfosSubmitHandler(
-              event,
-              nameValue,
-              lastNameValue,
-              setIsLoadingForEdit,
-              login,
-              infos?._id
-            )
-          }
+          onSubmit={submitForm}
           className="max-[420px]:w-full  w-96 "
         >
           <label
@@ -69,6 +86,7 @@ export default function page() {
             content="تایید"
             className="w-full h-12 rounded-lg mt-6 bg-sky-500 text-white"
             isLoading={isLoadingForEdit}
+            svgClassName="fill-white"
           />
         </form>
       </section>

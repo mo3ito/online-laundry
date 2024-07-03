@@ -28,8 +28,11 @@ export const DELETE_ORDER = `${BASE_URL_ORDERS}/delete-order`;
 //-- driver
 export const DRIVER_REGISTER = `${BASE_URL_DRIVER}/register`;
 export const DRIVER_LOGIN = `${BASE_URL_DRIVER}/login`;
+export const DRIVER_EDIT_INFORMATION = `${BASE_URL_DRIVER}/edit-information`;
 export const DRIVER_GET_ALL_ORDERS_IS_NOT_DONE = `${BASE_URL_DRIVER}/get-all-orders-is-not-done`;
 export const DRIVER_GET_ALL_ORDERS_IS_DONE = `${BASE_URL_DRIVER}/get-all-orders-is-done`;
+export const DRIVER_GET_ALL_ORDERS_FROM_CUSTOMER = `${BASE_URL_DRIVER}/get-orders-from-customer`;
+export const DRIVER_PAY_ORDERS_MONEY= `${BASE_URL_DRIVER}/pay-orders-money`;
 
 //-- dryer
 export const DRYER_REGISTER = `${BASE_URL_DRYER}/register`;

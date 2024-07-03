@@ -4,6 +4,7 @@ import { DataType, OrdersForDriver } from "@/types/driver";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { OrdersForGetAndSendDriver } from "@/types/driver";
+import { DRIVER_GET_ALL_ORDERS_FROM_CUSTOMER } from "@/routeApi/endpoints";
 
 const getOrdersHandler = async (
   ordersInfo: DataType | null,
@@ -22,7 +23,7 @@ const getOrdersHandler = async (
   try {
     setIsLoadingForApiResponse(true);
     const response = await updateData(
-      "http://localhost:4000/driver/get-orders-from-customer",
+      DRIVER_GET_ALL_ORDERS_FROM_CUSTOMER,
       body,
       _id
     );

@@ -88,4 +88,42 @@ const driverLogin = async (req, res) => {
   }
 };
 
-module.exports = { driverRegister, driverLogin };
+const editInformation = async (req, res) => {
+  const driverId = req.headers.authorization;
+  const { name, last_name, phone_number } = req.body;
+
+  try {
+    if (!name.trim() || !last_name.trim() || !phone_number.trim()) {
+      return res.status(400).json({
+        message: "مقادیر ورودی خالی هستند",
+      });
+    }
+
+    const driver = await DriverModel.findById(driverId);
+
+    if (!driver) {
+      return res.status(400).json({
+        message: "راننده‌ای با این آیدی وجود ندارد",
+      });
+    }
+
+    driver.name = name;
+    driver.last_name = last_name;
+    driver.phone_number = phone_number;
+    await driver.save();
+
+    const token = await createToken({ infos: driver });
+
+    return res.status(200).json({
+      infos: driver,
+      token,
+    });
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
+
+module.exports = { driverRegister, driverLogin, editInformation };
