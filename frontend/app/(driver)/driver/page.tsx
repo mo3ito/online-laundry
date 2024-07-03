@@ -52,7 +52,7 @@ export default function page() {
           سفارشات ارسالی
         </Link>
         <Link
-          href="/driver/"
+          href="/driver/edit-information"
           className="w-full h-1/3 bg-pink-300 rounded-lg flex flex-col items-center justify-center mb-3"
         >
           <svg

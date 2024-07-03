@@ -23,7 +23,7 @@ export default function DriverHeader() {
     <>
       <header className="bg-sky-500 pb-2 max-[280px]:px-3 px-6  sm:px-8 text-white w-full mx-auto  sm:w-5/6 md:w-5/6 lg:w-4/6 ">
         <div className="flex  justify-between pt-5 ">
-          <EditInfosButton hrefPath="/"/>
+          <EditInfosButton hrefPath="/driver/edit-information"/>
           <ShowName
             customerName={infos?.name}
             customerLastName={infos?.last_name}
