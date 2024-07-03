@@ -8,24 +8,12 @@ import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { useRouter } from "next/navigation";
 import PayModal from "./PayModal";
-import { OrdersForDriver } from "@/types/driver";
-import { OrdersType, DataType } from "@/types/driver";
-import Modal from "./Modal";
-import updateData from "@/services/updateData";
-import { toast } from "react-toastify";
+import { DataType } from "@/types/driver";
 import useDriverContext from "@/hooks/useDriverContext";
-import {
-  OrdersForGetAndSendDriver,
-  OrdersInForGetAndSendDriver,
-} from "@/types/driver";
+import { DriverOrdersShowProps } from "@/types/driver";
+import {OrdersForGetAndSendDriver,OrdersInForGetAndSendDriver} from "@/types/driver";
 import getOrdersHandler from "@/app/utils/driver/getOrdersHandler";
-
-type DriverOrdersShowProps = {
-  apiAddress: string;
-  header: string;
-  buttonName: string;
-  isGet: boolean;
-};
+import payOrderMoneyHandler from "@/app/utils/driver/payOrderMoneyHandler";
 
 export default function DriverOrdersShow({
   apiAddress,
@@ -40,8 +28,10 @@ export default function DriverOrdersShow({
     return <LoadingPage />;
   }
 
+  const { setTotalIsDoneOrders } = useDriverContext();
   const [ordersInfo, setOrdersInfo] = useState<DataType | null>(null);
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isShowModalSendOrder, setIsShowModalSendOrder] =
+    useState<boolean>(false);
   const [ordersForDriver, setOrdersForDriver] = useState<
     OrdersForGetAndSendDriver[] | []
   >([]);
@@ -75,17 +65,12 @@ export default function DriverOrdersShow({
     customer_id: string
   ) => {
     await setOrdersInfo({ orders, allCount, allPrice, customer_id });
-    isGet ? setIsShowModalGetOrders(true) : setIsShowModal(true);
+    isGet ? setIsShowModalGetOrders(true) : setIsShowModalSendOrder(true);
   };
-
-  console.log(ordersForDriver);
 
   if (isLoading) {
     return <LoadingPage />;
   }
-
-  console.log(ordersInfo);
-
   return (
     <div
       style={{ height: `calc(100vh - 220px)` }}
@@ -162,9 +147,19 @@ export default function DriverOrdersShow({
       <PayModal
         buttonName="پرداخت"
         data={ordersInfo}
-        setIsShowModal={setIsShowModal}
-        isShowModal={isShowModal}
-        payOnclick={() => console.log("ff")}
+        setIsShowModal={setIsShowModalSendOrder}
+        isShowModal={isShowModalSendOrder}
+        payOnclick={() =>
+          payOrderMoneyHandler(
+            ordersInfo,
+            setIsLoadingForApiResponse,
+            apiAddress,
+            infos._id,
+            setOrdersForDriver,
+            setTotalIsDoneOrders,
+            setIsShowModalSendOrder
+          )
+        }
       />
       <PayModal
         buttonName="دریافت"

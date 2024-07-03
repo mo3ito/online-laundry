@@ -42,9 +42,11 @@ export type DefaultModalProps = {
   buttonName: string;
 };
 
+
 export type DriverOrdersShowProps = {
   apiAddress: string;
   header: string;
+  buttonName: string;
   isGet: boolean;
 };
 
@@ -76,3 +78,4 @@ export type OrdersForGetAndSendDriver = {
   all_price: number;
   is_done_all_order: boolean;
 };
+

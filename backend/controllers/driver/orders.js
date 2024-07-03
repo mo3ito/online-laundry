@@ -73,7 +73,7 @@ const getAlOrdersIsDone = async (req, res) => {
     const allOrders = await OrdersModel.find({});
 
     const data = allOrders
-      .filter((item) => item.is_done_all_order === true)
+      .filter((item) => item.is_done_all_order === true && !item.is_pay_money)
       .map((item) => item._doc);
 
     const mergedData = Object.values(
