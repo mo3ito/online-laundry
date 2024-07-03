@@ -1,7 +1,7 @@
 import getData from "@/services/getData";
 import { LatLongType } from "@/types/neshan-map";
 import { NeshanMapRef } from "@neshan-maps-platform/react-openlayers";
-import { fromLonLat } from "ol/proj";
+import { fromLonLat } from "@neshan-maps-platform/ol/proj";
 import { Dispatch, FormEvent, MutableRefObject, SetStateAction } from "react";
 
 const submitSearchHandler = async (
@@ -31,6 +31,7 @@ const submitSearchHandler = async (
         const newCenter = fromLonLat([location.x, location.y]);
 
         if (mapRef.current && mapRef.current.map) {
+          setIsLoadingSearch(false)
           const view = mapRef.current.map.getView();
           view.setCenter(newCenter);
           setLatLong({ latitude: location.y, longitude: location.x });

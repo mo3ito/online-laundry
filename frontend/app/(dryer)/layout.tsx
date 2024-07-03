@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./../globals.css";
 import Header from "@/components/headers/Header";
-import BottomMenuDriver from "@/components/driver/BottomMenuDriver";
+import BottomMenuDryer from "@/components/dryer/BottomMenuDryer";
 import OrderCardProvider from "@/context/order-card";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthContextProvider from "@/context/authContext";
-import DriverHeader from "@/components/headers/DriverHeader";
+import DryerHeader from "@/components/headers/DryerHeader";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین",
@@ -24,9 +24,9 @@ export default function RootLayout({
         <AuthContextProvider>
           <ReactQueryProvider>
             <OrderCardProvider>
-            <DriverHeader/>
+              <DryerHeader />
               <main className=" w-full h-screen">{children}</main>
-              <BottomMenuDriver />
+              <BottomMenuDryer />
             </OrderCardProvider>
             <ToastifyContainer />
           </ReactQueryProvider>
