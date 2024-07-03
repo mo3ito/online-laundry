@@ -1,6 +1,33 @@
 const OrdersModel = require("../../models/orders/Orders");
 const DryerModel = require("../../models/dryer/DryerModel");
 
+ordersForDryer = async (req, res) => {
+  const dryerId = req.headers.authorization;
+
+  try {
+    const Dryer = await DryerModel.findById(dryerId);
+    if (!Dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی وجود ندارد",
+      });
+    }
+
+    const orders = await OrdersModel.find({});
+    const filteredCollections = await orders.filter((item) =>
+      item.orders.every((item) => item.situation === "تحویل گرفته شده")
+    );
+
+    return res.status(200).json(filteredCollections);
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+
+
 const doneOrder = async (req, res) => {
   const dryerId = req.headers.authorization;
   const { customerId, orders_id } = req.body;
@@ -62,4 +89,4 @@ const doneOrder = async (req, res) => {
   }
 };
 
-module.exports = { doneOrder };
+module.exports = { doneOrder, ordersForDryer };

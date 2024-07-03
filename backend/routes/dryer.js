@@ -4,10 +4,11 @@ const {
   registerDryer,
   loginDryer,
 } = require("../controllers/dryer/registration");
-const { doneOrder } = require("../controllers/dryer/orders");
+const { doneOrder, ordersForDryer } = require("../controllers/dryer/orders");
 
 router.post("/dryer/register", registerDryer);
 router.post("/dryer/login", loginDryer);
 router.put("/dryer/done-order", doneOrder);
+router.get("/dryer/orders-for-dryer", ordersForDryer);
 
 module.exports = router;
