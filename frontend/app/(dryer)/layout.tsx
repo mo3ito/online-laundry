@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./../globals.css";
-import Header from "@/components/headers/Header";
 import BottomMenuDryer from "@/components/dryer/BottomMenuDryer";
 import OrderCardProvider from "@/context/order-card";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
@@ -23,11 +22,9 @@ export default function RootLayout({
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <AuthContextProvider>
           <ReactQueryProvider>
-            <OrderCardProvider>
-              <DryerHeader />
-              <main className=" w-full h-screen">{children}</main>
-              <BottomMenuDryer />
-            </OrderCardProvider>
+            <DryerHeader />
+            <main className=" w-full h-screen">{children}</main>
+            <BottomMenuDryer />
             <ToastifyContainer />
           </ReactQueryProvider>
         </AuthContextProvider>
