@@ -3,7 +3,7 @@ import updateData from "@/services/updateData";
 import { DataType, OrdersForDriver } from "@/types/driver";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
-import { OrdersForGetAndSendDriver } from "@/types/driver";
+import { OrdersTemplate } from "@/types/driver";
 import { DRIVER_GET_ALL_ORDERS_FROM_CUSTOMER } from "@/routeApi/endpoints";
 
 const getOrdersHandler = async (
@@ -11,7 +11,7 @@ const getOrdersHandler = async (
   setIsLoadingForApiResponse: Dispatch<SetStateAction<boolean>>,
   apiAddress: string,
   _id: string,
-  setOrdersForDriver: Dispatch<SetStateAction<OrdersForGetAndSendDriver[]>> ,
+  setOrdersForDriver: Dispatch<SetStateAction<OrdersTemplate[]>> ,
   setTotalIsNotDoneOrders: Dispatch<SetStateAction<number>>,
   setIsShowModalGetOrders: Dispatch<SetStateAction<boolean>>
 ) => {

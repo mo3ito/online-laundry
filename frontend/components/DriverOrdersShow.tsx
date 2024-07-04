@@ -11,7 +11,7 @@ import PayModal from "./PayModal";
 import { DataType } from "@/types/driver";
 import useDriverContext from "@/hooks/useDriverContext";
 import { DriverOrdersShowProps } from "@/types/driver";
-import {OrdersForGetAndSendDriver,OrdersInForGetAndSendDriver} from "@/types/driver";
+import {OrdersTemplate,OrdersInTemplate} from "@/types/driver";
 import getOrdersHandler from "@/app/utils/driver/getOrdersHandler";
 import payOrderMoneyHandler from "@/app/utils/driver/payOrderMoneyHandler";
 
@@ -33,7 +33,7 @@ export default function DriverOrdersShow({
   const [isShowModalSendOrder, setIsShowModalSendOrder] =
     useState<boolean>(false);
   const [ordersForDriver, setOrdersForDriver] = useState<
-    OrdersForGetAndSendDriver[] | []
+    OrdersTemplate[] | []
   >([]);
   const { setTotalIsNotDoneOrders } = useDriverContext();
   const [ishowModalGetOrders, setIsShowModalGetOrders] =
@@ -59,7 +59,7 @@ export default function DriverOrdersShow({
   }, [allOrders]);
 
   const showOrdersAndPay = async (
-    orders: OrdersInForGetAndSendDriver[],
+    orders: OrdersInTemplate[],
     allCount: number,
     allPrice: number,
     customer_id: string
@@ -80,7 +80,7 @@ export default function DriverOrdersShow({
       <>
         {ordersForDriver.length > 0 ? (
           <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
-            {ordersForDriver.map((order: OrdersForGetAndSendDriver) => (
+            {ordersForDriver.map((order: OrdersTemplate) => (
               <li
                 key={order._id}
                 className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-4 shadow-xl max-[280px]:text-xs text-sm sm:text-base"

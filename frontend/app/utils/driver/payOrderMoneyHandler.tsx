@@ -1,6 +1,6 @@
 import getData from "@/services/getData";
 import updateData from "@/services/updateData";
-import { DataType, OrdersForGetAndSendDriver } from "@/types/driver";
+import { DataType, OrdersTemplate } from "@/types/driver";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { DRIVER_PAY_ORDERS_MONEY } from "@/routeApi/endpoints";
@@ -10,7 +10,7 @@ const payOrderMoneyHandler = async (
   setIsLoadingForApiResponse: Dispatch<SetStateAction<boolean>>,
   apiAddress: string,
   _id: string,
-  setOrdersForDriver: Dispatch<SetStateAction<OrdersForGetAndSendDriver[]>>,
+  setOrdersForDriver: Dispatch<SetStateAction<OrdersTemplate[]>>,
   setTotalIsDoneOrders: Dispatch<SetStateAction<number>>,
   setIsShowModalSendOrder: Dispatch<SetStateAction<boolean>>
 ) => {
