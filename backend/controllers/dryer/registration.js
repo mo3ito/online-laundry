@@ -88,4 +88,43 @@ const loginDryer = async (req, res) => {
     });
   }
 };
-module.exports = { registerDryer , loginDryer };
+
+const editInformation = async (req, res) => {
+  const dryerId = req.headers.authorization;
+  const { name, last_name, phone_number } = req.body;
+
+  try {
+    if (!name.trim() || !last_name.trim() || !phone_number.trim()) {
+      return res.status(400).json({
+        message: "مقادیر ورودی خالی هستند",
+      });
+    }
+
+    const dryer = await DryerModel.findById(dryerId);
+
+    if (!dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی وجود ندارد",
+      });
+    }
+
+    dryer.name = name;
+    dryer.last_name = last_name;
+    dryer.phone_number = phone_number;
+    await dryer.save();
+
+    const token = await createToken({ infos: dryer });
+
+    return res.status(200).json({
+      infos: dryer,
+      token,
+    });
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
+
+module.exports = { registerDryer, loginDryer , editInformation };

@@ -58,7 +58,7 @@ export default function page() {
           تاریخچه سفارشات
         </Link>
         <Link
-          href="/driver/edit-information"
+          href="/dryer/edit-information"
           className="w-full h-1/3 bg-pink-300 rounded-lg flex flex-col items-center justify-center mb-3"
         >
           <svg

@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   registerDryer,
   loginDryer,
+  editInformation,
 } = require("../controllers/dryer/registration");
 const {
   doneOrder,
@@ -12,6 +13,7 @@ const {
 
 router.post("/dryer/register", registerDryer);
 router.post("/dryer/login", loginDryer);
+router.put("/dryer/edit-information", editInformation);
 router.put("/dryer/done-order", doneOrder);
 router.get("/dryer/orders-for-dryer", ordersForDryer);
 router.get("/dryer/done-orders-by-dryer", doneOrdersByDryer);
