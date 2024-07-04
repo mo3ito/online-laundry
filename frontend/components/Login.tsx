@@ -6,7 +6,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import submitLoginHandler from "@/app/utils/driver/submitLoginHandler";
+import submitLoginHandler from "@/utils/driver/submitLoginHandler";
 
 type LoginProps = {
   header: string;

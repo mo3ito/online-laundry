@@ -5,7 +5,7 @@ import React, { FormEvent, useEffect, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import NoPersonSvg from "@/components/customerApp/svgs/NoPersonSvg";
-import editInfosSubmitHandler from "@/app/utils/editInfosSubmitHandler";
+import editInfosSubmitHandler from "@/utils/editInfosSubmitHandler";
 import { toast } from "react-toastify";
 import { CUSTOMER_EDIT_INFORMATION } from "@/routeApi/endpoints";
 

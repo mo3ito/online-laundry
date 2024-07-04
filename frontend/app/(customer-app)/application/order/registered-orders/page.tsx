@@ -5,7 +5,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
-import deleteHandler from "@/app/utils/orders/deleteHandler";
+import deleteHandler from "@/utils/orders/deleteHandler";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import { useRouter } from "next/navigation";
 import { GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";

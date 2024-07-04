@@ -6,7 +6,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import { OrdersTemplate } from "@/types/context/Orders";
 import { DRYER_ORDERS } from "@/routeApi/endpoints";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import orderDoneHandler from "@/app/utils/dryer/orderDoneHandler";
+import orderDoneHandler from "@/utils/dryer/orderDoneHandler";
 import Modal from "@/components/Modal";
 import { InfosForDoneType } from "@/types/dryer";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";

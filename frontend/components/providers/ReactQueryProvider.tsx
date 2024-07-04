@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactNode, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { queryClientOptions } from "@/app/utils/constance";
+import { queryClientOptions } from "@/utils/constance";
 
 
 

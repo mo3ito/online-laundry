@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import showPasswordHandler from "@/app/utils/showPasswordHandler";
+import showPasswordHandler from "@/utils/showPasswordHandler";
 import useDropDown from "@/hooks/useDropDown";
 
 import { ChangeEvent } from "react";

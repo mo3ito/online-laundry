@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import addClothingHandler from "@/app/utils/addClothingHandler";
-import minesClothingHandler from "@/app/utils/minesClothingHandler";
+import addClothingHandler from "@/utils/addClothingHandler";
+import minesClothingHandler from "@/utils/minesClothingHandler";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
 import { useQuery } from "@tanstack/react-query";
@@ -11,8 +11,8 @@ import LoadingPage from "@/components/Loading/LoadingPage";
 import Modal from "@/components/Modal";
 import { GET_ONE_TYPE } from "@/routeApi/endpoints";
 import useInformation from "@/hooks/useInformation";
-import delteHandler from "@/app/utils/deleteHandler";
-import confirmDeleteHandler from "@/app/utils/confirmDeleteHandler";
+import delteHandler from "@/utils/deleteHandler";
+import confirmDeleteHandler from "@/utils/confirmDeleteHandler";
 import { ServicesInformationclothing } from "@/types/category";
 
 export default function Page() {

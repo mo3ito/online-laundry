@@ -1,6 +1,7 @@
 import getData from "@/services/getData";
 import updateData from "@/services/updateData";
-import { DataType, OrdersTemplate } from "@/types/driver";
+import { DataType} from "@/types/driver";
+import { OrdersTemplate } from "@/types/context/Orders";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { DRIVER_PAY_ORDERS_MONEY } from "@/routeApi/endpoints";

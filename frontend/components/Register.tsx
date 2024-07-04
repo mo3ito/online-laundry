@@ -3,7 +3,7 @@ import DefaultButton from "@/components/share/defaultButton";
 import React, { useRef, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import submitRegisterHandler from "@/app/utils/driver/submitRegisterHandler";
+import submitRegisterHandler from "@/utils/driver/submitRegisterHandler";
 import LogoName from "@/components/customerApp/share/LogoName";
 import InputPassword from "@/components/customerApp/share/inputs/InputPassword";
 import useFocus from "@/hooks/useFocus";

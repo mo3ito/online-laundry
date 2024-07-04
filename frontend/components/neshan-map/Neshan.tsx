@@ -9,9 +9,9 @@ import useAuthContext from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
 import DefaultButton from "../share/defaultButton";
 import { LatLongType } from "@/types/neshan-map";
-import confirmAddressHandler from "@/app/utils/neshan-map/confirmAddressHandler";
-import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
-import submitSearchHandler from "@/app/utils/neshan-map/submitSearchHandler";
+import confirmAddressHandler from "@/utils/neshan-map/confirmAddressHandler";
+import findLocationHandler from "@/utils/neshan-map/findLocationHandler";
+import submitSearchHandler from "@/utils/neshan-map/submitSearchHandler";
 import useMapCenter from "@/hooks/useMapCenter";
 import defaultCenter from "@/help/defaultCenter";
 

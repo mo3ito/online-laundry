@@ -1,12 +1,12 @@
 "use client";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
-import minesClothingHandler from "@/app/utils/minesClothingHandler";
-import addClothingHandler from "@/app/utils/addClothingHandler";
+import minesClothingHandler from "@/utils/minesClothingHandler";
+import addClothingHandler from "@/utils/addClothingHandler";
 import Modal from "@/components/Modal";
 import { useState, useEffect } from "react";
-import confirmDeleteHandler from "@/app/utils/confirmDeleteHandler";
-import delteHandler from "@/app/utils/deleteHandler";
+import confirmDeleteHandler from "@/utils/confirmDeleteHandler";
+import delteHandler from "@/utils/deleteHandler";
 import useInformation from "@/hooks/useInformation";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import Link from "next/link";

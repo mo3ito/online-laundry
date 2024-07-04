@@ -4,7 +4,7 @@ import NeshanMap, {
 } from "@neshan-maps-platform/react-openlayers";
 import LoadingPage from "../Loading/LoadingPage";
 import { LatLongType } from "@/types/neshan-map";
-import findLocationHandler from "@/app/utils/neshan-map/findLocationHandler";
+import findLocationHandler from "@/utils/neshan-map/findLocationHandler";
 import "@neshan-maps-platform/ol/css";
 import DefaultButton from "../share/defaultButton";
 
@@ -13,7 +13,7 @@ import {
   DistanceTimeType,
   RouteType,
 } from "@/types/neshan-map";
-import findDestination from "@/app/utils/neshan-map/findDestination";
+import findDestination from "@/utils/neshan-map/findDestination";
 import useAddMarkersToMap from "@/hooks/useAddMarkersToMap";
 import useShowRouteOnMap from "@/hooks/useShowRouteOnMap";
 import defaultCenter from "@/help/defaultCenter";

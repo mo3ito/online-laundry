@@ -3,7 +3,7 @@ import updateData from "@/services/updateData";
 import { DataType, OrdersForDriver } from "@/types/driver";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
-import { OrdersTemplate } from "@/types/driver";
+import { OrdersTemplate } from "@/types/context/Orders";
 import { DRIVER_GET_ALL_ORDERS_FROM_CUSTOMER } from "@/routeApi/endpoints";
 
 const getOrdersHandler = async (
