@@ -7,6 +7,7 @@ type CustomJwtPayload = JwtPayload & {
   infos?: {
     is_customer?: boolean;
     is_driver?: boolean;
+    is_dryer?: boolean;
   };
 };
 
@@ -41,5 +42,14 @@ export async function middleware(request: NextRequest) {
     !tokenValue?.infos?.is_driver
   ) {
     return NextResponse.redirect(new URL("/driver/login", request.url));
+  }
+
+  if (
+    pathname.startsWith("/dryer") &&
+    !pathname.startsWith("/dryer/register") &&
+    !pathname.startsWith("/dryer/login") &&
+    !tokenValue?.infos?.is_dryer
+  ) {
+    return NextResponse.redirect(new URL("/dryer/login", request.url));
   }
 }

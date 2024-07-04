@@ -5,7 +5,8 @@ export type InitialInfosType = {
   phone_number: string;
   orders?: any[];
   created_at: string;
-  is_driver?: boolean
+  is_driver?: boolean;
+  is_dryer?:boolean
 };
 
 export type AuthContextValue = {
