@@ -62,6 +62,7 @@ export type OrdersInForGetAndSendDriver = {
   address: string;
   situation: string;
   is_done_order: boolean;
+  is_pay_money: boolean
 };
 
 export type OrdersForGetAndSendDriver = {
