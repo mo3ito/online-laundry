@@ -12,13 +12,15 @@ ordersForDryer = async (req, res) => {
       });
     }
 
-    const orders = await OrdersModel.find({is_done_all_order : false});
+    const orders = await OrdersModel.find({ is_done_all_order: false });
 
     const filteredCollections = await orders.filter((item) =>
-      item.orders.every((item) => item.situation === "تحویل گرفته شده" ) 
+      item.orders.every((item) => item.situation === "تحویل گرفته شده")
     );
 
-    return res.status(200).json(filteredCollections);
+    const reverseFilterCollection = await filteredCollections.toReversed();
+
+    return res.status(200).json(reverseFilterCollection);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -113,6 +115,9 @@ const doneOrder = async (req, res) => {
     const order = await OrdersModel.findOne({ customer_id, _id });
 
     order.is_done_all_order = true;
+    await order.orders.map(
+      (item) => (item.situation = "انجام سفارش در انتظار تحویل")
+    );
     await order.save();
 
     return res.status(200).json({

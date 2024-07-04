@@ -1,19 +1,31 @@
 "use client";
 import DefaultButton from "@/components/share/defaultButton";
 import React, { useEffect, useState } from "react";
-import getData from "@/services/getData";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import useAuthContext from "@/hooks/useAuthContext";
 import { OrdersTemplate } from "@/types/context/Orders";
+import {  DRYER_ORDERS } from "@/routeApi/endpoints";
+import LoadingPage from "@/components/Loading/LoadingPage";
+import orderDoneHandler from "@/app/utils/dryer/orderDoneHandler";
+import Modal from "@/components/Modal";
+import { InfosForDoneType } from "@/types/dryer";
+import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
 
 export default function page() {
   const { infos } = useAuthContext();
-  const [allOrders, setAllOrders] = useState([]);
-  const { data, isLoading } = useGetReactQuery(
-    infos?._id,
-    "http://localhost:4000/dryer/orders-for-dryer",
-    ["get recived orders"]
-  );
+  const [allOrders, setAllOrders] = useState<OrdersTemplate[] | []>([]);
+  const [isShowIsDoneModal, setIsShowIsDoneModal] = useState<boolean>(false);
+  const [infosForDone, setInfosForDone] = useState<InfosForDoneType>({
+    orderId: "",
+    customerId: "",
+  });
+  const [isLoadingForApiResponse, setIsLoadingForApiResponse] =
+    useState<boolean>(false);
+  const { data, isLoading } = useGetReactQuery(infos?._id, DRYER_ORDERS, [
+    "get recived orders",
+  ]);
+
+  console.log(infos?._id);
 
   useEffect(() => {
     if (data) {
@@ -21,13 +33,27 @@ export default function page() {
     }
   }, [data]);
 
-  console.log(allOrders);
+  const handleOrderDone = async (orderId: string, customerId: string) => {
+    await setInfosForDone({
+      orderId,
+      customerId,
+    });
+
+    setIsShowIsDoneModal(true);
+  };
+
+  
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <main
       style={{ height: `calc(100vh - 248px)` }}
       className="w-full  bg-slate-100 border border-sky-500  mx-auto sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto pb-10"
     >
+        <HeaderComponent as="header" title="سفارشات"/>
       <section className="w-full">
         <ul className="w-full h-max p-6 sm:p-8 ">
           {allOrders?.map((order: OrdersTemplate) => (
@@ -93,14 +119,31 @@ export default function page() {
 
                 <DefaultButton
                   className="w-full h-12 !bg-sky-500 text-white rounded-lg"
-                  content="انجام شده "
+                  content="انجام شد"
+                  svgClassName="fill-white"
+                  onClick={() => handleOrderDone(order._id, order.customer_id)}
+                  isLoading={isLoadingForApiResponse}
                 />
               </article>
             </li>
           ))}
         </ul>
       </section>
+      <Modal
+        messageContent="آیا تمامی سرویس‌ها انجام شده است؟"
+        setIsShowModal={setIsShowIsDoneModal}
+        isShowModal={isShowIsDoneModal}
+        confirmOnClick={() =>
+          orderDoneHandler(
+            infosForDone.orderId,
+            infosForDone.customerId,
+            setIsLoadingForApiResponse,
+            infos?._id,
+            setAllOrders,
+            setIsShowIsDoneModal
+          )
+        }
+      />
     </main>
   );
 }
-
