@@ -41,8 +41,9 @@ const doneOrdersByDryer = async (req, res) => {
     }
 
     const orders = await OrdersModel.find({ is_done_all_order: true });
+    const reverseOrders = await orders.toReversed()
 
-    return res.status(200).json(orders);
+    return res.status(200).json(reverseOrders);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
