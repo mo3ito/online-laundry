@@ -4,16 +4,18 @@ import React, { useEffect, useState } from "react";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import useAuthContext from "@/hooks/useAuthContext";
 import { OrdersTemplate } from "@/types/context/Orders";
-import {  DRYER_ORDERS } from "@/routeApi/endpoints";
+import { DRYER_ORDERS } from "@/routeApi/endpoints";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import orderDoneHandler from "@/app/utils/dryer/orderDoneHandler";
 import Modal from "@/components/Modal";
 import { InfosForDoneType } from "@/types/dryer";
 import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComponent";
+import useDryerContext from "@/hooks/useDryerContext";
 
 export default function page() {
   const { infos } = useAuthContext();
   const [allOrders, setAllOrders] = useState<OrdersTemplate[] | []>([]);
+  const { setTotalOrders } = useDryerContext();
   const [isShowIsDoneModal, setIsShowIsDoneModal] = useState<boolean>(false);
   const [infosForDone, setInfosForDone] = useState<InfosForDoneType>({
     orderId: "",
@@ -33,6 +35,12 @@ export default function page() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (allOrders) {
+      setTotalOrders(allOrders.length);
+    }
+  }, [allOrders]);
+
   const handleOrderDone = async (orderId: string, customerId: string) => {
     await setInfosForDone({
       orderId,
@@ -41,8 +49,6 @@ export default function page() {
 
     setIsShowIsDoneModal(true);
   };
-
-  
 
   if (isLoading) {
     return <LoadingPage />;
@@ -53,7 +59,7 @@ export default function page() {
       style={{ height: `calc(100vh - 248px)` }}
       className="w-full  bg-slate-100 border border-sky-500  mx-auto sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto pb-10"
     >
-        <HeaderComponent as="header" title="سفارشات"/>
+      <HeaderComponent as="header" title="سفارشات" />
       <section className="w-full">
         <ul className="w-full h-max p-6 sm:p-8 ">
           {allOrders?.map((order: OrdersTemplate) => (

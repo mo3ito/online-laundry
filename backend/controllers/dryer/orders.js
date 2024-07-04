@@ -1,7 +1,7 @@
 const OrdersModel = require("../../models/orders/Orders");
 const DryerModel = require("../../models/dryer/DryerModel");
 
-ordersForDryer = async (req, res) => {
+const ordersForDryer = async (req, res) => {
   const dryerId = req.headers.authorization;
 
   try {
@@ -21,6 +21,28 @@ ordersForDryer = async (req, res) => {
     const reverseFilterCollection = await filteredCollections.toReversed();
 
     return res.status(200).json(reverseFilterCollection);
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+const doneOrdersByDryer = async (req, res) => {
+  const dryerId = req.headers.authorization;
+
+  try {
+    const Dryer = await DryerModel.findById(dryerId);
+    if (!Dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی وجود ندارد",
+      });
+    }
+
+    const orders = await OrdersModel.find({ is_done_all_order: true });
+
+    return res.status(200).json(orders);
   } catch (error) {
     console.error("error:", error.message);
     return res.status(500).json({
@@ -131,4 +153,4 @@ const doneOrder = async (req, res) => {
   }
 };
 
-module.exports = { doneOrder, ordersForDryer };
+module.exports = { doneOrder, ordersForDryer, doneOrdersByDryer };

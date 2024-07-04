@@ -1,13 +1,28 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
-import {
-  DRIVER_GET_ALL_ORDERS_IS_DONE,
-  DRIVER_GET_ALL_ORDERS_IS_NOT_DONE,
-} from "@/routeApi/endpoints";
 import LoadingPage from "@/components/Loading/LoadingPage";
+import useGetReactQuery from "@/hooks/useGetReactQuery";
+import useAuthContext from "@/hooks/useAuthContext";
+import { DRYER_ORDERS } from "@/routeApi/endpoints";
+import useDryerContext from "@/hooks/useDryerContext";
 
 export default function page() {
+  const { infos } = useAuthContext();
+  const { setTotalOrders } = useDryerContext();
+  const { data, isLoading } = useGetReactQuery(infos?._id, DRYER_ORDERS, [
+    "get recived orders",
+  ]);
+
+  useEffect(() => {
+    if (data) {
+      setTotalOrders(data.data.length);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
   return (
     <main
       style={{ height: `calc(100vh - 220px)` }}

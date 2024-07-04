@@ -6,6 +6,7 @@ import ToastifyContainer from "@/components/providers/TostifyContainer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthContextProvider from "@/context/authContext";
 import DryerHeader from "@/components/headers/DryerHeader";
+import DryerContexProvider from "@/context/dryerContext";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین",
@@ -22,10 +23,12 @@ export default function RootLayout({
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <AuthContextProvider>
           <ReactQueryProvider>
-            <DryerHeader />
-            <main className=" w-full h-screen">{children}</main>
-            <BottomMenuDryer />
-            <ToastifyContainer />
+            <DryerContexProvider>
+              <DryerHeader />
+              <main className=" w-full h-screen">{children}</main>
+              <BottomMenuDryer />
+              <ToastifyContainer />
+            </DryerContexProvider>
           </ReactQueryProvider>
         </AuthContextProvider>
       </body>
