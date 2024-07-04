@@ -11,7 +11,7 @@ import PayModal from "./PayModal";
 import { DataType } from "@/types/driver";
 import useDriverContext from "@/hooks/useDriverContext";
 import { DriverOrdersShowProps } from "@/types/driver";
-import {OrdersTemplate,OrdersInTemplate} from "@/types/driver";
+import { OrdersTemplate , OrdersInTemplate } from "@/types/context/Orders";
 import getOrdersHandler from "@/utils/driver/getOrdersHandler";
 import payOrderMoneyHandler from "@/utils/driver/payOrderMoneyHandler";
 
