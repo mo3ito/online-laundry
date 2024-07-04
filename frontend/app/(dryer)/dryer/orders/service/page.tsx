@@ -44,7 +44,7 @@ export default function page() {
                   <p>شماره موبایل</p>
                   <p className="">{order.phone_number}</p>
                 </div>
-                <h1 className="text-center my-3">سفارشات</h1>
+                <header className="text-center my-3">سفارشات</header>
                 {order.orders.map((order) => (
                   <ul>
                     <li
@@ -103,3 +103,4 @@ export default function page() {
     </main>
   );
 }
+
