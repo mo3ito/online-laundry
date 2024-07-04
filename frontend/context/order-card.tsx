@@ -16,18 +16,23 @@ export const OrderCardContext = createContext<OrderCardContextType | null>(
 
 const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<OrderCardType[]>([]);
-  const [registeredOrders , setRegisteredOrders]=useState<OrdersRegistered[] | null>(null)
+  const [registeredOrders, setRegisteredOrders] = useState<
+    OrdersRegistered[] | null
+  >(null);
   const [totalNumber, setTotalNumber] = useState(0);
-  const [totalNumberRegisterdOrders, setTotalNumberRegisterdOrders] =useState(0);
-  const {infos , login} = useAuthContext()
+  const [totalNumberRegisterdOrders, setTotalNumberRegisterdOrders] =
+    useState(0);
+  const { infos } = useAuthContext();
 
-  const {data , isLoading} = useGetReactQuery(infos?._id , GET_ORDERS_CUSTOER , ["all registered orders"] )
+  const { data } = useGetReactQuery(infos?._id, GET_ORDERS_CUSTOER, [
+    "all registered orders",
+  ]);
 
-  useEffect(()=>{
-    if(data){
-      setRegisteredOrders(data.data)
+  useEffect(() => {
+    if (data) {
+      setRegisteredOrders(data.data);
     }
-  },[data])
+  }, [data]);
 
   useEffect(() => {
     if (orders) {
@@ -37,16 +42,15 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   }, [orders]);
 
   useEffect(() => {
-    if ( registeredOrders && !infos?.is_driver) {
+    if (registeredOrders && !infos?.is_driver) {
       const totalRegisterd = registeredOrders.reduce(
         (prev, current) => prev + current.count,
         0
       );
       setTotalNumberRegisterdOrders(totalRegisterd);
     }
-  }, [registeredOrders , infos]);
-console.log(totalNumberRegisterdOrders);
-
+  }, [registeredOrders, infos]);
+  console.log(totalNumberRegisterdOrders);
 
   console.log(totalNumber);
 
@@ -60,7 +64,7 @@ console.log(totalNumberRegisterdOrders);
         setTotalNumberRegisterdOrders,
         totalNumberRegisterdOrders,
         setRegisteredOrders,
-        registeredOrders
+        registeredOrders,
       }}
     >
       {children}
