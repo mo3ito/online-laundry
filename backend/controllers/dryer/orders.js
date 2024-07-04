@@ -116,7 +116,7 @@ const doneOrder = async (req, res) => {
 
     order.is_done_all_order = true;
     await order.orders.map(
-      (item) => (item.situation = "انجام سفارش در انتظار تحویل")
+      (item) => (item.situation = "انجام سفارش، در انتظار ارسال")
     );
     await order.save();
 
