@@ -96,10 +96,15 @@ const adminLogin = async (req, res) => {
 
     if (!admin) {
       return res.status(400).json({
-        message: "ادمینی با این شماره موبایل ثبت‌نام نکرده است",
+        message: "ادمینی با این شماره موبایل یا نام کاربری ثبت‌نام نکرده است",
       });
     }
-
+    const compareAdminKey = await bcrypt.compare(admin_key, admin.admin_key);
+    if (!compareAdminKey) {
+      return res.status(400).json({
+        message: " کلید ادمین شما صحیح نمی‌باشد",
+      });
+    }
     const comparePassword = await bcrypt.compare(password, admin.password);
 
     if (!comparePassword) {

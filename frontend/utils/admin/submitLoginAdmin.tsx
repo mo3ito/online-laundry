@@ -4,11 +4,12 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
-
-const submitLoginHandler = async (
+const submitLoginAdmin = async (
   event: FormEvent,
   phoneNumberValue: string,
   passwordValue: string,
+  usernameValue: string,
+  adminKeyValue: string,
   login: (infos: InitialInfosType, token: string) => void,
   setIsLoadingForLogin: Dispatch<SetStateAction<boolean>>,
   router: AppRouterInstance,
@@ -21,6 +22,8 @@ const submitLoginHandler = async (
     const body = {
       phone_number: phoneNumberValue,
       password: passwordValue,
+      admin_key: adminKeyValue,
+      username: usernameValue,
     };
 
     if (!phoneNumberValue.trim()) {
@@ -35,15 +38,20 @@ const submitLoginHandler = async (
     if (!passwordValue) {
       return toast.warn("مقدار ورودی رمز عبور خالی است");
     }
+    if (!usernameValue.trim()) {
+      return toast.warn("مقدار ورودی نام‌ کاربری خالی است");
+    }
+    if (!adminKeyValue) {
+      return toast.warn("مقدار ورودی کلید ادمین خالی است");
+    }
 
-
-    setIsLoadingForLogin(true)
+    setIsLoadingForLogin(true);
     const response = await sendData(apiAddress, body);
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       setIsLoadingForLogin(false);
       router.push(pathRoute);
-    } else{
+    } else {
       setIsLoadingForLogin(false);
     }
   } catch (error: any) {
@@ -62,4 +70,4 @@ const submitLoginHandler = async (
   }
 };
 
-export default submitLoginHandler;
+export default submitLoginAdmin;

@@ -4,13 +4,15 @@ import sendData from "@/services/sendData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-const submitRegisterHandler = async (
+const submitRegisterAdmin = async (
   event: FormEvent,
   nameValue: string,
   lastNameValue: string,
   phoneNumberValue: string,
   passwordValue: string,
   repeatPasswordValue: string,
+  usernameValue: string,
+  adminKeyValue: string,
   setIsLoadingForRegister: Dispatch<SetStateAction<boolean>>,
   login: (infos: InitialInfosType, token: string) => void,
   router: AppRouterInstance,
@@ -25,6 +27,8 @@ const submitRegisterHandler = async (
       last_name: lastNameValue,
       phone_number: phoneNumberValue,
       password: passwordValue,
+      username: usernameValue,
+      admin_key: adminKeyValue,
     };
 
     if (!nameValue?.trim()) {
@@ -36,11 +40,11 @@ const submitRegisterHandler = async (
     if (!phoneNumberValue.trim()) {
       return toast.warn("مقدار ورودی شماره موبایل خالی است");
     }
-    if(phoneNumberValue.length !== 11 ){
-      return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است")
+    if (phoneNumberValue.length !== 11) {
+      return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است");
     }
-    if(!regex.test(phoneNumberValue)){
-      return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید")
+    if (!regex.test(phoneNumberValue)) {
+      return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید");
     }
     if (!passwordValue) {
       return toast.warn("مقدار ورودی رمز عبور خالی است");
@@ -52,21 +56,27 @@ const submitRegisterHandler = async (
     if (passwordValue !== repeatPasswordValue) {
       return toast.warn("رمز عبور با تکرار رمز عبور برابر نیست");
     }
-    if(passwordValue.length < 6){
-      return toast.warn("تعداد کاراکترهای رمز عبور باید بیشتر از ۵ کاراکتر باشد")
+    if (passwordValue.length < 6) {
+      return toast.warn(
+        "تعداد کاراکترهای رمز عبور باید بیشتر از ۵ کاراکتر باشد"
+      );
     }
-
-    
+    if (!usernameValue.trim()) {
+      return toast.warn("مقدار ورودی نام‌ کاربری خالی است");
+    }
+    if (!adminKeyValue) {
+      return toast.warn("مقدار ورودی کلید ادمین خالی است");
+    }
 
     setIsLoadingForRegister(true);
     const response = await sendData(apiAddress, body);
-    
+
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
       setIsLoadingForRegister(false);
       toast.success("ثبت‌نام با موفقیت انجام شد");
-      router.push(pathRoute)
-    } else{
+      router.push(pathRoute);
+    } else {
       setIsLoadingForRegister(false);
     }
   } catch (error: any) {
@@ -85,4 +95,4 @@ const submitRegisterHandler = async (
   }
 };
 
-export default submitRegisterHandler;
+export default submitRegisterAdmin;

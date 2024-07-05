@@ -49,7 +49,7 @@ const InputPassword = ({
     <div className={className}>
       <label
         htmlFor={id}
-        className={`${labelClassName} my-2 inline-block mr-2 text-sky-500`}
+        className={`${labelClassName} my-3 inline-block mr-2 text-sky-500`}
       >
         {label}
       </label>
