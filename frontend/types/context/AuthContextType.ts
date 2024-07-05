@@ -6,7 +6,8 @@ export type InitialInfosType = {
   orders?: any[];
   created_at: string;
   is_driver?: boolean;
-  is_dryer?:boolean
+  is_dryer?:boolean;
+  is_register_by_admin?:boolean
 };
 
 export type AuthContextValue = {
