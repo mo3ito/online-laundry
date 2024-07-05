@@ -14,6 +14,10 @@ const AdminSchema = new Schema({
     type: String,
     required: true,
   },
+  phone_number: {
+    type: String,
+    required: true,
+  },
   password: {
     type: String,
     required: true,
@@ -21,6 +25,10 @@ const AdminSchema = new Schema({
   admin_key: {
     type: String,
     require: true,
+  },
+  is_admin: {
+    type: Boolean,
+    default: true,
   },
   created_at: {
     type: Date,
