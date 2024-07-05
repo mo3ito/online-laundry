@@ -8,6 +8,7 @@ type CustomJwtPayload = JwtPayload & {
     is_customer?: boolean;
     is_driver?: boolean;
     is_dryer?: boolean;
+    is_register_by_admin?: boolean;
   };
 };
 
@@ -42,6 +43,15 @@ export async function middleware(request: NextRequest) {
     !tokenValue?.infos?.is_driver
   ) {
     return NextResponse.redirect(new URL("/driver/login", request.url));
+  }
+
+  if (
+    pathname === "/driver/orders/send" ||
+    (pathname === "/driver/orders/get" &&
+      tokenValue?.infos?.is_driver &&
+      !tokenValue.infos.is_register_by_admin)
+  ) {
+    return NextResponse.redirect(new URL("/driver", request.url));
   }
 
   if (

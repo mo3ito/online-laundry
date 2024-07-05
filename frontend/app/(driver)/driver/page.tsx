@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   DRIVER_GET_ALL_ORDERS_IS_DONE,
@@ -18,8 +18,6 @@ export default function page() {
     DRIVER_GET_ALL_ORDERS_IS_NOT_DONE,
     DRIVER_GET_ALL_ORDERS_IS_DONE
   );
-
-  console.log(infos);
 
   const sendToHrefHandler = (href: string) => {
     if (!infos?.is_register_by_admin) {
