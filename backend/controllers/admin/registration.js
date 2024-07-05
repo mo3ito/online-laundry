@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const AdminModel = require("../../models/admin/AdminModel");
+const DriverModel = require("../../models/driver/DriverModel")
 const createToken = require("../../utils/createToken");
 
 const adminRegister = async (req, res) => {
@@ -57,5 +58,7 @@ const adminRegister = async (req, res) => {
     });
   }
 };
+
+
 
 module.exports = { adminRegister };
