@@ -31,14 +31,20 @@ export default function Header() {
         </div>
         <nav>
           <ul className="bg-gray-500 w-full h-16 flex items-center justify-between rounded-md">
-            <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white  ">
+          <li className=" w-1/4 h-full ">
+              <Link className="w-full h-full hover:bg-sky-500 text-white  flex items-center justify-center" href="/">
               خانه
+              </Link>
+             
             </li>
             <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">
               خدمات خشکشویی
             </li>
-            <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">
-              قیمت خشکشویی
+            <li className=" w-1/4 h-full ">
+              <Link className="w-full h-full hover:bg-sky-500 text-white  flex items-center justify-center" href="/price-list">
+              لیست قیمت‌ها
+              </Link>
+             
             </li>
             <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">
               تماس با ما
