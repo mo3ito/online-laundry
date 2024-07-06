@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./../globals.css";
 import Header from "@/components/customerSite/Header";
+import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html dir="rtl" lang="en">
       <body className="bg-slate-100 text-zinc-600">
-        <Header />
-        <main>{children}</main>
+        <ReactQueryProvider>
+          <Header />
+          <main>{children}</main>
+        </ReactQueryProvider>
       </body>
     </html>
   );

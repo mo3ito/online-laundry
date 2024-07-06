@@ -25,7 +25,7 @@ export default function MenuItem({
         <figure className="size-full ">
           <img
             src={srcImage ? srcImage : "/images/no-image.jpg"}
-            className=" rounded-xl aspect-square "
+            className=" rounded-xl size-32 sm:size-44"
             alt={`عکس لباس ${imageCaption}`}
           />
           <figcaption className="text-center my-5">{imageCaption}</figcaption>
