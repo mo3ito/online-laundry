@@ -21,8 +21,8 @@ export default function MoblieHeader() {
               alt="T-shirt icon"
             />
             <div>
-              <h1 className="font-bold text-lg text-sky-600">مسیتو پاک</h1>
-              <p className="text-sm">خشکشویی آنلاین</p>
+              <h1 className="font-bold text-base sm:text-lg text-sky-600">مسیتو پاک</h1>
+              <p className=" text-xs sm:text-sm">خشکشویی آنلاین</p>
             </div>
           </div>
         </div>
