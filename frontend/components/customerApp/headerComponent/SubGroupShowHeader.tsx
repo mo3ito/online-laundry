@@ -6,14 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import getData from "@/services/getData";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import { allCategoryType } from "@/types/category";
+import { AllCategoryType } from "@/types/category";
 import { GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
 
 export default function SubgroupShowHeader() {
   const [allCategoryWithoutCurrent, setAllCategoryWithoutCurrent] = useState<
-    allCategoryType[] | null
+    AllCategoryType[] | null
   >(null);
-  const [currentCategory, setCurrentCategory] = useState<allCategoryType | null>(null);
+  const [currentCategory, setCurrentCategory] = useState<AllCategoryType | null>(null);
 
   const params = useParams();
   console.log(params);
@@ -29,7 +29,7 @@ export default function SubgroupShowHeader() {
     const dataWithoutCurrent = async () => {
       if (allCategory && allCategory.data && params) {
         const dataWithoutCurrentCategory = await allCategory?.data.filter(
-          (category: allCategoryType) =>
+          (category: AllCategoryType) =>
             category.english_name !== params["group-type"]
         );
         setAllCategoryWithoutCurrent(dataWithoutCurrentCategory);
@@ -39,7 +39,7 @@ export default function SubgroupShowHeader() {
     const currentCategory = async () => {
       if (allCategory && allCategory.data && params) {
         const dataWithCurrentCategory = await allCategory?.data.find(
-          (category: allCategoryType) =>
+          (category: AllCategoryType) =>
             category.english_name === params["group-type"]
         );
         setCurrentCategory(dataWithCurrentCategory);

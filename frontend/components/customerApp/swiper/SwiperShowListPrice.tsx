@@ -1,15 +1,11 @@
 "use client";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import getData from "@/services/getData";
+import React, { Dispatch, SetStateAction } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { GET_CLOTHING_CATEGORY, GET_ALL_TYPE } from "@/routeApi/endpoints";
 import "swiper/css";
 import {
-  allCategoryType,
+  AllCategoryType,
   InformationClothingsItemProps,
 } from "@/types/category";
-import { toast } from "react-toastify";
 import Loading from "@/components/Loading/Loading";
 import getTypeHandler from "@/utils/site/getTypeHandler";
 import { AxiosResponse } from "axios";
@@ -21,16 +17,16 @@ type SwiperShowListPriceProps = {
   setTypeCategory: Dispatch<
     SetStateAction<InformationClothingsItemProps[] | null>
   >;
-  setShowDetail: Dispatch<SetStateAction<boolean[]>>;
+  setShowDetails: Dispatch<SetStateAction<boolean[]>>;
 };
 
 export default function SwiperShowListPrice(props: SwiperShowListPriceProps) {
   return (
     <>
       {props.allGroupTypeData ? (
-        <div className="w-full h-40 px-8 flex items-center justify-center bg-white">
+        <section className="w-full h-40 px-8 flex items-center justify-center bg-white">
           <Swiper
-            pagination={{ clickable: true, type: "fraction" }}
+            pagination={{ clickable: true }}
             navigation={true}
             slidesPerView={1}
             spaceBetween={5}
@@ -44,7 +40,7 @@ export default function SwiperShowListPrice(props: SwiperShowListPriceProps) {
             }}
             className="mySwiper h-40 w-full"
           >
-            {props?.allGroupTypeData?.data?.map((category: allCategoryType) => (
+            {props?.allGroupTypeData?.data?.map((category: AllCategoryType) => (
               <SwiperSlide key={category._id} className="rounded-lg !w-max">
                 <button
                   className="w-full h-full"
@@ -53,7 +49,7 @@ export default function SwiperShowListPrice(props: SwiperShowListPriceProps) {
                       category.english_name,
                       props?.setTypeCategory,
                       props.setCurrentCategory,
-                      props.setShowDetail
+                      props.setShowDetails
                     )
                   }
                 >
@@ -79,7 +75,7 @@ export default function SwiperShowListPrice(props: SwiperShowListPriceProps) {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </section>
       ) : (
         <Loading className="block mx-auto size-20 " />
       )}

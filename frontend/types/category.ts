@@ -1,4 +1,4 @@
-export type allCategoryType = {
+export type AllCategoryType = {
   _id: string;
   name: string;
   english_name: string;
@@ -6,7 +6,7 @@ export type allCategoryType = {
 };
 
 export type SwiperMenuPropsType = {
-  allCategoryWithoutCurrent: allCategoryType[];
+  allCategoryWithoutCurrent: AllCategoryType[];
 };
 
 export type ServicesInformationclothing = {
