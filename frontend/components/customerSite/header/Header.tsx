@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import ScreenHeader from "./header/ScreenHeader";
-import MoblieHeader from "./header/MoblieHeader";
+import ScreenHeader from "./ScreenHeader";
+import MoblieHeader from "./MoblieHeader";
 
 export default function Header() {
   return (

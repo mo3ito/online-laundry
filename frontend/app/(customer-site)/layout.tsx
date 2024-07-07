@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./../globals.css";
-import Header from "@/components/customerSite/Header";
+import Header from "@/components/customerSite/header/Header";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
 
