@@ -24,7 +24,7 @@ export default function SwiperShowListPrice(props: SwiperShowListPriceProps) {
   return (
     <>
       {props.allGroupTypeData ? (
-        <section className="w-full h-40 px-8 flex items-center justify-center bg-white">
+        <section className="w-full h-40 px-8 flex items-center justify-center bg-white rounded-lg">
           <Swiper
             pagination={{ clickable: true }}
             navigation={true}

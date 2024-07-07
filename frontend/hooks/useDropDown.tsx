@@ -2,7 +2,7 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react";
 
 const useDropDown = (
-  refName: MutableRefObject<HTMLDivElement | null>,
+  refName: MutableRefObject<HTMLDivElement | HTMLElement | null>,
   stateName: boolean,
   setStateName: Dispatch<SetStateAction<boolean>>
 ) => {
