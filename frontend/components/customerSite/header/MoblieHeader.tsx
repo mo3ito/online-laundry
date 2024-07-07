@@ -10,7 +10,6 @@ export default function MoblieHeader() {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const navRef = useRef<HTMLElement | null>(null);
   const router = useRouter();
-  useDropDown(navRef, isShowMenu, setIsShowMenu);
 
   return (
     <div className="sm:hidden h-16 container flex items-center justify-between w-full bg-sky-200 py-2 px-4 fixed top-0 z-50">
@@ -29,7 +28,7 @@ export default function MoblieHeader() {
         ref={navRef}
         className={`${
           isShowMenu ? "absolute " : "hidden"
-        } w-44 h-44 bg-sky-400 top-10 border border-sky-500 `}
+        } w-44 h-max bg-sky-400 top-10 border border-sky-500 `}
       >
         <ul className="w-full  text-white">
           <li
@@ -38,9 +37,13 @@ export default function MoblieHeader() {
           >
             خانه
           </li>
-          <li className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b">
-            دریافت اپلیکیشن
+          <li
+            onClick={() => linkHandler("/application", setIsShowMenu, router)}
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
+          >
+            ثبت سفارش
           </li>
+
           <li
             onClick={() => linkHandler("/price-list", setIsShowMenu, router)}
             className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
@@ -49,6 +52,9 @@ export default function MoblieHeader() {
           </li>
           <li className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b">
             تماس با ما
+          </li>
+          <li className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b">
+            دریافت اپلیکیشن
           </li>
         </ul>
       </nav>

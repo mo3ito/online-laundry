@@ -17,11 +17,11 @@ export default function Loading({ className }: { className: string }) {
     >
       <g>
         <circle
-          stroke-linecap="round"
+          strokeLinecap="round"
           fill="none"
-          stroke-dasharray="50.26548245743669 50.26548245743669"
+          strokeDasharray="50.26548245743669 50.26548245743669"
           stroke="#a1a1aa"
-          stroke-width="8"
+          strokeWidth="8"
           r="32"
           cy="50"
           cx="50"
