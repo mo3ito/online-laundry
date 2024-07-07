@@ -6,6 +6,7 @@ import OrderCardProvider from "@/context/order-card";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthContextProvider from "@/context/authContext";
+import AdminScreenHeader from "@/components/admin/header/AdminScreenHeader";
 
 export const metadata: Metadata = {
   title:"مدیریت خشکشویی آنلاین",
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
         <AuthContextProvider>
           <ReactQueryProvider>
+            <AdminScreenHeader/>
             <main className=" w-full h-screen">{children}</main>
             <ToastifyContainer />
           </ReactQueryProvider>
