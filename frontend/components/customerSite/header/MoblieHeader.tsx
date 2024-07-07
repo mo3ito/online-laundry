@@ -1,23 +1,17 @@
 "use client";
-import { Dispatch, SetStateAction, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
 import useDropDown from "@/hooks/useDropDown";
+import linkHandler from "@/utils/linkHandler";
 
 export default function MoblieHeader() {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const navRef = useRef<HTMLElement | null>(null);
   const router = useRouter();
-  useDropDown(navRef , isShowMenu , setIsShowMenu)
+  useDropDown(navRef, isShowMenu, setIsShowMenu);
 
-  const linkHandler = (
-    path: string,
-    setState: Dispatch<SetStateAction<boolean>>
-  ) => {
-    router.push(path);
-    setState(false);
-  };
   return (
     <div className="sm:hidden h-16 container flex items-center justify-between w-full bg-sky-200 py-2 px-4 fixed top-0 z-50">
       <button onClick={() => setIsShowMenu((prev) => !prev)}>
@@ -39,7 +33,7 @@ export default function MoblieHeader() {
       >
         <ul className="w-full  text-white">
           <li
-            onClick={() => linkHandler("/", setIsShowMenu)}
+            onClick={() => linkHandler("/", setIsShowMenu, router)}
             className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
           >
             خانه
@@ -48,7 +42,7 @@ export default function MoblieHeader() {
             دریافت اپلیکیشن
           </li>
           <li
-            onClick={() => linkHandler("/price-list", setIsShowMenu)}
+            onClick={() => linkHandler("/price-list", setIsShowMenu, router)}
             className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
           >
             لیست قیمت‌ها
