@@ -50,7 +50,10 @@ export default function MoblieHeader() {
           >
             لیست قیمت‌ها
           </li>
-          <li className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b">
+          <li
+            onClick={() => linkHandler("/contact-us", setIsShowMenu, router)}
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b"
+          >
             تماس با ما
           </li>
           <li className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b">

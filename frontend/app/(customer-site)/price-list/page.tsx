@@ -8,6 +8,7 @@ import { InformationClothingsItemProps } from "@/types/category";
 import SwiperShowListPrice from "@/components/customerApp/swiper/SwiperShowListPrice";
 import ShowCategoryGroup from "@/components/customerSite/ShowCategoryGroup";
 import getTypeHandler from "@/utils/site/getTypeHandler";
+import ShowHeaderTitle from "@/components/customerSite/ShowHeaderTitle";
 
 export default function Page() {
   const [showDetails, setShowDetails] = useState<boolean[]>([]);
@@ -34,10 +35,7 @@ export default function Page() {
 
   return (
     <div className="container mx-auto px-6 py-3 mt-20 pb-10 sm:mt-0">
-      <header className="w-full h-20 bg-sky-200 flex items-center justify-center rounded-lg">
-        <h1 className="  sm:text-lg md:text-xl  font-bold">لیست قیمت‌ها</h1>
-      </header>
-
+      <ShowHeaderTitle content="لیست قیمت‌ها"/>
       <section className="my-5 bg-gray-200 p-3 rounded-lg text-sm sm:text-base">
         <h2 className="font-bold text-lg pb-3">اطلاعیه</h2>
         <p>

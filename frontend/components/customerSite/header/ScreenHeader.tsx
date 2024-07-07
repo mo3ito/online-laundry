@@ -50,8 +50,13 @@ export default function ScreenHeader() {
                 لیست قیمت‌ها
               </Link>
             </li>
-            <li className=" hover:bg-sky-500 w-1/4 h-full flex items-center justify-center cursor-pointer text-white ">
-              تماس با ما
+            <li className=" w-1/4 h-full ">
+              <Link
+                className="w-full h-full hover:bg-sky-500 text-white  flex items-center justify-center"
+                href="/contact-us"
+              >
+                تماس با ما
+              </Link>
             </li>
           </ul>
         </nav>
