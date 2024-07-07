@@ -1,20 +1,45 @@
 "use client";
 import LogoName from "@/components/customerApp/share/LogoName";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { adminMnuItems } from "@/data/data";
 
 export default function AdminScreenHeader() {
   const [showMenu, setShowMenu] = useState<boolean[]>(
     new Array(adminMnuItems.length).fill(false)
   );
-  console.log(showMenu);
+  const menuRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   const showItemHandler = (index: number) => {
-    setShowMenu((prevShowMenu) =>
-      prevShowMenu.map((item, idx) => (idx === index ? !item : false))
-    );
+    setShowMenu((prev) => {
+      const newShowMenu = new Array(adminMnuItems.length).fill(false);
+      if (!prev[index]) {
+        newShowMenu[index] = true;
+      }
+      return newShowMenu;
+    });
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      let isOutside = true;
+      menuRefs.current.forEach((ref) => {
+        if (ref && ref.contains(event.target as Node)) {
+          isOutside = false;
+        }
+      });
+
+      if (isOutside) {
+        setShowMenu(new Array(adminMnuItems.length).fill(false));
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <section className="w-full h-max bg-sky-500 fixed top-0 left-0 flex flex-col items-center justify-between">
@@ -44,18 +69,33 @@ export default function AdminScreenHeader() {
           {adminMnuItems.map((item, index) => (
             <li
               key={index}
-              onClick={() => showItemHandler(index)}
-              className="p-4 rounded-full bg-sky-50 cursor-pointer hover:bg-sky-200 hover:border hover:border-sky-500 transition-all duration-150 ease-out relative shadow-lg"
+              ref={(element) => {
+                menuRefs.current[index] = element;
+              }}
+              onClick={(event) => {
+                event.stopPropagation();
+                showItemHandler(index);
+              }}
+              className={`${
+                showMenu[index]
+                  ? "border border-sky-500 bg-sky-200"
+                  : "bg-sky-50  "
+              } p-4 rounded-full  cursor-pointer hover:bg-sky-200 hover:border hover:border-sky-500 transition-all duration-150 ease-out relative shadow-lg`}
             >
               {item.name}
               <nav
                 className={`${
                   showMenu[index] ? "absolute" : "hidden"
-                } w-44 h-44 bg-sky-50 -bottom-44 inset-x-0 border border-sky-500`}
+                } w-44 h-max bg-sky-50 top-[57px] inset-x-0 border border-sky-500`}
               >
                 <ul className="w-full">
-                  <li className="w-full h-10 hover:bg-sky-200 flex items-center px-2 border-b border-sky-200">
-                    افزودن نوع لباس
+                  <li className="w-full h-10 hover:bg-sky-200  border-b border-sky-200">
+                    <Link
+                      href="/admin/clothing"
+                      className="w-full h-full flex items-center px-2 "
+                    >
+                      افزودن نوع لباس
+                    </Link>
                   </li>
                   <li className="w-full h-10 hover:bg-sky-200 flex items-center px-2 border-b border-sky-200">
                     مشاهده انواع لباس‌ها
