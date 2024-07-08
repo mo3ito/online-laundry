@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl">
-      <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto overflow-hidden ">
+      <body className="bg-slate-100 h-screen  text-zinc-600 container mx-auto ">
         <AuthContextProvider>
           <ReactQueryProvider>
             <AdminHeader />

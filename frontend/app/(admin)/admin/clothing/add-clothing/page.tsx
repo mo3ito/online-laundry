@@ -9,14 +9,10 @@ import React, { FormEvent, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import sendData from "@/services/sendData";
 import { toast } from "react-toastify";
-import axios from "axios";
 import senderFormData from "@/services/sendFormData";
-
-type servicesType = {
-  id: string;
-  service_name: string;
-  price: string;
-};
+import addClothingHandlerSubmit from "@/utils/admin/addClothingHandlerSubmit";
+import { ServicesType } from "@/types/admin";
+import addServiceHandler from "@/utils/admin/addSrviceHandler";
 
 export default function page() {
   const [clothingCategory, setClothingCategory] = useState<string>("");
@@ -24,7 +20,7 @@ export default function page() {
     useState<string>("");
   const [type, setType] = useState<string>("");
   const [englishType, setEnglishType] = useState<string>("");
-  const [services, setServices] = useState<servicesType[] | []>([]);
+  const [services, setServices] = useState<ServicesType[] | []>([]);
   const [serviceName, setServiceName] = useState<string>("");
   const [servicePrice, setServicePrice] = useState<string>("");
   const [unit, setUnit] = useState<string>("");
@@ -36,77 +32,13 @@ export default function page() {
 
   console.log(infos);
 
-  const addServiceHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-    const newService: servicesType = {
-      id: uuidv4(),
-      service_name: serviceName,
-      price: servicePrice,
-    };
-    setServices((prev) => [...prev, newService]);
-    setServiceName("");
-    setServicePrice("");
-  };
-  console.log(services);
+  
+
   const serviceDeleteHandler = (serviceId: string) => {
     const newServicesList = services.filter(
       (service) => service.id !== serviceId
     );
     setServices(newServicesList);
-  };
-
-  const addClothingHandlerSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
-    if (
-      !clothingCategory.trim() ||
-      !clothingCategoryEnglish.trim() ||
-      !type.trim() ||
-      !englishType.trim() ||
-      services.length === 0 ||
-      !unit
-    ) {
-      return toast.warn("لطفا تمامی فیلد‌ها را پر کنید");
-    }
-
-    const body = {
-      clothing_category: clothingCategory,
-      clothing_category_English: clothingCategoryEnglish,
-      type,
-      english_type: englishType,
-      services: services.map((item) => ({
-        service_name: item.service_name,
-        price: item.price,
-      })),
-      unit,
-    };
-    try {
-      setIsLoadingForSendClothingType(true);
-      const response = await sendData(
-        "http://localhost:4000/clothing-type/add-type",
-        body,
-        infos?._id
-      );
-      if (response.status === 200) {
-        setIsLoadingForSendClothingType(false);
-        toast.success("نوع لباس با موفقیت اضافه شد");
-      } else {
-        setIsLoadingForSendClothingType(false);
-      }
-    } catch (error: any) {
-      console.error("خطا در ارتباط با سرور:", error);
-
-      if (error.response && error.response.status === 400) {
-        setIsLoadingForSendClothingType(false);
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        toast.error(errorMessage);
-      } else {
-        setIsLoadingForSendClothingType(false);
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,11 +74,23 @@ export default function page() {
   };
 
   return (
-    <div className="container h-screen mx-auto  flex flex-col items-center mt-44 px-4">
+    <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 px-4">
       <ShowHeaderTitle content="افزودن لباس" />
       <div>
         <form
-          onSubmit={addClothingHandlerSubmit}
+          onSubmit={(event) =>
+            addClothingHandlerSubmit(
+              event,
+              clothingCategory,
+              clothingCategoryEnglish,
+              type,
+              englishType,
+              services,
+              unit,
+              setIsLoadingForSendClothingType,
+              infos?._id
+            )
+          }
           className="max-[420px]:w-full  w-96 mt-10"
         >
           <label
@@ -253,7 +197,7 @@ export default function page() {
             />
             <button
               className="w-full h-10 rounded-lg  bg-sky-500 text-white"
-              onClick={addServiceHandler}
+              onClick={(event)=>addServiceHandler(event , servicePrice , serviceName , setServices ,setServiceName , setServicePrice )}
             >
               افزودن خدمت
             </button>
