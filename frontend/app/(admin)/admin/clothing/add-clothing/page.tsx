@@ -9,6 +9,8 @@ import React, { FormEvent, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import sendData from "@/services/sendData";
 import { toast } from "react-toastify";
+import axios from "axios";
+import senderFormData from "@/services/sendFormData";
 
 type servicesType = {
   id: string;
@@ -26,6 +28,7 @@ export default function page() {
   const [serviceName, setServiceName] = useState<string>("");
   const [servicePrice, setServicePrice] = useState<string>("");
   const [unit, setUnit] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
   const [isLoadingForSendClothingType, setIsLoadingForSendClothingType] =
     useState<boolean>(false);
   const { infos } = useAuthContext();
@@ -41,8 +44,8 @@ export default function page() {
       price: servicePrice,
     };
     setServices((prev) => [...prev, newService]);
-    setServiceName("")
-    setServicePrice("")
+    setServiceName("");
+    setServicePrice("");
   };
   console.log(services);
   const serviceDeleteHandler = (serviceId: string) => {
@@ -106,14 +109,67 @@ export default function page() {
     }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFile(file);
+    }
+  };
+
+  const sendImageHandler = async (event: FormEvent) => {
+    event.preventDefault();
+
+    if (!file) {
+      return alert("لطفاً یک فایل انتخاب کنید.");
+    }
+
+    const formData = new FormData();
+    formData.append("clothing-types-image", file);
+
+    try {
+      const response = await senderFormData(
+        "http://localhost:4000/clothing-type/add-image",
+        infos?._id,
+        formData
+      );
+      if (response?.status === 200) {
+        toast.success("عکس با موفقیت اجرا شد");
+      }
+      console.log(response?.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
   return (
     <div className="container h-screen mx-auto  flex flex-col items-center mt-44 px-4">
       <ShowHeaderTitle content="افزودن لباس" />
       <div>
         <form
           onSubmit={addClothingHandlerSubmit}
-          className="max-[420px]:w-full  w-96 "
+          className="max-[420px]:w-full  w-96 mt-10"
         >
+          <label
+            htmlFor="add-image-clothing"
+            className="my-2 inline-block mr-2 text-sky-500 "
+          >
+            افزودن عکس لباس
+          </label>
+          <section className="border border-sky-500 rounded-lg p-2">
+            <input
+              id="add-image-clothing"
+              className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <button
+              className="w-full h-10 rounded-lg  bg-sky-500 text-white"
+              onClick={sendImageHandler}
+            >
+              ارسال
+            </button>
+          </section>
+
           <label
             htmlFor="group"
             className="my-2 inline-block mr-2 text-sky-500"
