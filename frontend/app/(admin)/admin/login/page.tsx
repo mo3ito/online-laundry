@@ -20,7 +20,7 @@ export default function Login({}) {
   return (
     <div className=" w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center">
       <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full -translate-y-36">
-        <LogoName />
+        <LogoName href="/admin/login" />
         <h1 className="w-96 text-center mt-6  text-sky-500 font-bold text-lg">
           ورود مدیران
         </h1>

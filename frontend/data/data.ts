@@ -1,9 +1,25 @@
+import { v4 as uuidv4 } from "uuid";
+
 const adminMnuItems = [
-  
-  { id: "ijrijrigjی", name: "لباس‌ها" },
-  { id: "ijrijrigjیe", name: "همکاران" },
-  { id: "ijrijrigj", name: "مشتریان" },
-  { id: "ijrijrigjیث", name: "گزارشات" },
+  {
+    id: uuidv4(),
+    name: "لباس‌ها",
+    list: [
+      {
+        id: uuidv4(),
+        itemName: "افزودن نوع لباس",
+        path: "/admin/clothing/add-clothing",
+      },
+      {
+        id: uuidv4(),
+        itemName: "مشاهده انواع لباس‌ها",
+        path: "/admin/clothing/add-clothing",
+      },
+    ],
+  },
+  { id: uuidv4(), name: "همکاران" },
+  { id: uuidv4(), name: "مشتریان" },
+  { id: uuidv4(), name: "گزارشات" },
 ];
 
 export { adminMnuItems };

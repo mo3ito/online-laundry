@@ -89,17 +89,19 @@ export default function AdminScreenHeader() {
                 } w-44 h-max bg-sky-50 top-[57px] inset-x-0 border border-sky-500`}
               >
                 <ul className="w-full">
-                  <li className="w-full h-10 hover:bg-sky-200  border-b border-sky-200">
-                    <Link
-                      href="/admin/clothing"
-                      className="w-full h-full flex items-center px-2 "
+                  {item.list?.map((listItem) => (
+                    <li
+                      key={listItem.id}
+                      className="w-full h-10 hover:bg-sky-200  border-b border-sky-200"
                     >
-                      افزودن نوع لباس
-                    </Link>
-                  </li>
-                  <li className="w-full h-10 hover:bg-sky-200 flex items-center px-2 border-b border-sky-200">
-                    مشاهده انواع لباس‌ها
-                  </li>
+                      <Link
+                        href={listItem.path}
+                        className="w-full h-full flex items-center px-2 "
+                      >
+                        {listItem.itemName}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </nav>
             </li>
