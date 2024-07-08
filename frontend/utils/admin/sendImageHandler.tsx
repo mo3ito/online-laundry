@@ -1,12 +1,14 @@
 import senderFormData from "@/services/sendFormData";
 import { FormEvent } from "react";
 import { toast } from "react-toastify";
-import { ADD_IMAGE_TYPE } from "@/routeApi/endpoints";
+
 
 const sendImageHandler = async (
   event: FormEvent,
   file: File | null,
-  _id: string | undefined
+  _id: string | undefined,
+  key:string,
+  apiAddress: string
 ) => {
   event.preventDefault();
 
@@ -15,10 +17,10 @@ const sendImageHandler = async (
   }
 
   const formData = new FormData();
-  formData.append("clothing-types-image", file);
+  formData.append( key , file);
 
   try {
-    const response = await senderFormData(ADD_IMAGE_TYPE, _id, formData);
+    const response = await senderFormData(apiAddress, _id, formData);
     if (response?.status === 200) {
       toast.success("عکس با موفقیت ارسال شد");
     }

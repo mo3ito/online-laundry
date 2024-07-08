@@ -9,6 +9,8 @@ import {
 
 //-- clothing category
 export const GET_CLOTHING_CATEGORY = `${BASE_URL_CLOTHING_CATEGORY}/get-category`;
+export const CLOTHING_CATEGORY_UPLOAD_IMAGE = `${BASE_URL_CLOTHING_CATEGORY}/upload-image`;
+export const CLOTHING_CATEGORY_ADD_CATEGORY = `${BASE_URL_CLOTHING_CATEGORY}/add-category`;
 
 //-- clothing type
 export const GET_ALL_TYPE = `${BASE_URL_CLOTHING_TYPE}/get-all-type`;

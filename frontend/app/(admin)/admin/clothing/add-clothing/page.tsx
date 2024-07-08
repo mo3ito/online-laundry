@@ -7,6 +7,8 @@ import addClothingHandlerSubmit from "@/utils/admin/addClothingHandlerSubmit";
 import { ServicesType } from "@/types/admin";
 import addServiceHandler from "@/utils/admin/addSrviceHandler";
 import sendImageHandler from "@/utils/admin/sendImageHandler";
+import handleFileChange from "@/utils/admin/handleFileChange";
+import { ADD_IMAGE_TYPE } from "@/routeApi/endpoints";
 
 export default function page() {
   const [clothingCategory, setClothingCategory] = useState<string>("");
@@ -30,12 +32,6 @@ export default function page() {
     setServices(newServicesList);
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setFile(file);
-    }
-  };
 
   return (
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 pb-20 px-4">
@@ -68,11 +64,19 @@ export default function page() {
               id="add-image-clothing"
               className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
               type="file"
-              onChange={handleFileChange}
+              onChange={(event) => handleFileChange(event, setFile)}
             />
             <button
               className="w-full h-10 rounded-lg  bg-sky-500 text-white"
-              onClick={(event) => sendImageHandler(event, file, infos?._id)}
+              onClick={(event) =>
+                sendImageHandler(
+                  event,
+                  file,
+                  infos?._id,
+                  "clothing-types-image",
+                  ADD_IMAGE_TYPE
+                )
+              }
             >
               ارسال
             </button>

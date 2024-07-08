@@ -7,6 +7,11 @@ const adminMnuItems = [
     list: [
       {
         id: uuidv4(),
+        itemName: "افزودن دسته‌بندی",
+        path: "/admin/clothing/add-category",
+      },
+      {
+        id: uuidv4(),
         itemName: "افزودن نوع لباس",
         path: "/admin/clothing/add-clothing",
       },
