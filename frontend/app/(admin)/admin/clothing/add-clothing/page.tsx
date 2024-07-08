@@ -1,18 +1,12 @@
 "use client";
-import InputPassword from "@/components/customerApp/share/inputs/InputPassword";
 import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
 import ShowHeaderTitle from "@/components/customerSite/ShowHeaderTitle";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import sendData from "@/services/sendData";
-import { toast } from "react-toastify";
-import senderFormData from "@/services/sendFormData";
+import React, { useState } from "react";
 import addClothingHandlerSubmit from "@/utils/admin/addClothingHandlerSubmit";
 import { ServicesType } from "@/types/admin";
 import addServiceHandler from "@/utils/admin/addSrviceHandler";
+import sendImageHandler from "@/utils/admin/sendImageHandler";
 
 export default function page() {
   const [clothingCategory, setClothingCategory] = useState<string>("");
@@ -28,11 +22,6 @@ export default function page() {
   const [isLoadingForSendClothingType, setIsLoadingForSendClothingType] =
     useState<boolean>(false);
   const { infos } = useAuthContext();
-  const router = useRouter();
-
-  console.log(infos);
-
-  
 
   const serviceDeleteHandler = (serviceId: string) => {
     const newServicesList = services.filter(
@@ -48,33 +37,8 @@ export default function page() {
     }
   };
 
-  const sendImageHandler = async (event: FormEvent) => {
-    event.preventDefault();
-
-    if (!file) {
-      return alert("لطفاً یک فایل انتخاب کنید.");
-    }
-
-    const formData = new FormData();
-    formData.append("clothing-types-image", file);
-
-    try {
-      const response = await senderFormData(
-        "http://localhost:4000/clothing-type/add-image",
-        infos?._id,
-        formData
-      );
-      if (response?.status === 200) {
-        toast.success("عکس با موفقیت اجرا شد");
-      }
-      console.log(response?.data);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
-
   return (
-    <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 px-4">
+    <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 pb-20 px-4">
       <ShowHeaderTitle content="افزودن لباس" />
       <div>
         <form
@@ -108,7 +72,7 @@ export default function page() {
             />
             <button
               className="w-full h-10 rounded-lg  bg-sky-500 text-white"
-              onClick={sendImageHandler}
+              onClick={(event) => sendImageHandler(event, file, infos?._id)}
             >
               ارسال
             </button>
@@ -197,7 +161,16 @@ export default function page() {
             />
             <button
               className="w-full h-10 rounded-lg  bg-sky-500 text-white"
-              onClick={(event)=>addServiceHandler(event , servicePrice , serviceName , setServices ,setServiceName , setServicePrice )}
+              onClick={(event) =>
+                addServiceHandler(
+                  event,
+                  servicePrice,
+                  serviceName,
+                  setServices,
+                  setServiceName,
+                  setServicePrice
+                )
+              }
             >
               افزودن خدمت
             </button>
