@@ -7,7 +7,8 @@ export type InitialInfosType = {
   created_at: string;
   is_driver?: boolean;
   is_dryer?:boolean;
-  is_register_by_admin?:boolean
+  is_register_by_admin?:boolean;
+  is_admin?:boolean
 };
 
 export type AuthContextValue = {

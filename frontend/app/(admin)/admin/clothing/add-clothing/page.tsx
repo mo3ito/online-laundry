@@ -31,6 +31,8 @@ export default function page() {
   const { infos } = useAuthContext();
   const router = useRouter();
 
+  console.log(infos);
+
   const addServiceHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const newService: servicesType = {
@@ -39,6 +41,8 @@ export default function page() {
       price: servicePrice,
     };
     setServices((prev) => [...prev, newService]);
+    setServiceName("")
+    setServicePrice("")
   };
   console.log(services);
   const serviceDeleteHandler = (serviceId: string) => {
@@ -50,6 +54,17 @@ export default function page() {
 
   const addClothingHandlerSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    if (
+      !clothingCategory.trim() ||
+      !clothingCategoryEnglish.trim() ||
+      !type.trim() ||
+      !englishType.trim() ||
+      services.length === 0 ||
+      !unit
+    ) {
+      return toast.warn("لطفا تمامی فیلد‌ها را پر کنید");
+    }
 
     const body = {
       clothing_category: clothingCategory,
@@ -67,7 +82,7 @@ export default function page() {
       const response = await sendData(
         "http://localhost:4000/clothing-type/add-type",
         body,
-        "6687ee740956a352601b3a2e"
+        infos?._id
       );
       if (response.status === 200) {
         setIsLoadingForSendClothingType(false);
@@ -178,13 +193,13 @@ export default function page() {
               id="servicePrice"
               className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
               type="text"
-              placeholder="قیمت خدمت"
+              placeholder="قیمت خدمت(تومان)"
             />
             <button
               className="w-full h-10 rounded-lg  bg-sky-500 text-white"
               onClick={addServiceHandler}
             >
-              افزودن خدمات
+              افزودن خدمت
             </button>
 
             {services.length > 0 && (
@@ -193,7 +208,7 @@ export default function page() {
                   {services.map((service) => (
                     <li
                       key={service.id}
-                      className="flex justify-between items-center mb-1"
+                      className="flex justify-between items-center my-1"
                     >
                       <div className="flex justify-center items-center gap-x-1">
                         <button
