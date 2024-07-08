@@ -2,15 +2,16 @@ import sendData from "@/services/sendData";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { ServicesType } from "@/types/admin";
+import { ADD_TYPE } from "@/routeApi/endpoints";
 
 const addClothingHandlerSubmit = async (
   event: FormEvent,
-  clothingCategory : string,
+  clothingCategory: string,
   clothingCategoryEnglish: string,
-  type : string,
-  englishType : string,
-  services : ServicesType[],
-  unit : string,
+  type: string,
+  englishType: string,
+  services: ServicesType[],
+  unit: string,
   setIsLoadingForSendClothingType: Dispatch<SetStateAction<boolean>>,
   _id: string | undefined
 ) => {
@@ -40,11 +41,7 @@ const addClothingHandlerSubmit = async (
   };
   try {
     setIsLoadingForSendClothingType(true);
-    const response = await sendData(
-      "http://localhost:4000/clothing-type/add-type",
-      body,
-      _id
-    );
+    const response = await sendData(ADD_TYPE, body, _id);
     if (response.status === 200) {
       setIsLoadingForSendClothingType(false);
       toast.success("نوع لباس با موفقیت اضافه شد");
