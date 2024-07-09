@@ -18,9 +18,9 @@ export default function page() {
   const { infos } = useAuthContext();
 
   return (
-    <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 pb-20 px-4">
+    <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center  pb-20 px-4">
       <ShowHeaderTitle content="افزودن دسته‌بندی" />
-      <div>
+      <div className="mt-56">
         <form
           onSubmit={(event) =>
             addCategorySubmitHandler(

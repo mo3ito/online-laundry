@@ -53,7 +53,7 @@ export default function AdminScreenHeader() {
   };
 
   return (
-    <section className="w-full h-max bg-sky-500 fixed top-0 left-0 flex flex-col items-center justify-between">
+    <section className="w-full h-max bg-sky-500 fixed top-0 left-0 flex flex-col items-center justify-between z-50">
       <header className="flex justify-between items-center w-full px-8 py-3">
         <div className=" ">
           <div className="flex justify-center items-center gap-x-2">
