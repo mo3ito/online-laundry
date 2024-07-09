@@ -15,3 +15,8 @@ export type ServicesType = {
     typeClothingId: string;
     typeClothingEnglishName: string;
   };
+
+  export type CategoryInfosType = {
+    categoryId: string;
+    categoryEnglishName: string;
+  };
