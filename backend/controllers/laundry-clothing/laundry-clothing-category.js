@@ -12,39 +12,7 @@ const uploadAndHandleClothingCategoryImage = uploadImage(
   "clothing-category-image"
 );
 
-// const getClothingCategory = async (req, res) => {
-//   try {
-//     const imageDirectory = path.join(
-//       __dirname,
-//       "../../public/images/clothing-category"
-//     );
-//     const imageFiles = fs.readdirSync(imageDirectory);
-//     const imageFileNames = imageFiles.map((item) => path.parse(item).name);
 
-//     console.log(imageFileNames);
-//     const allCategory = await ClothingCategoryModel.find({});
-//     const updatedCategories = allCategory.map((item) => {
-//       if (imageFileNames.includes(item.name)) {
-//         const matchingImage = imageFiles.find(
-//           (image) => path.parse(image).name === item.name
-//         );
-//         return {
-//           ...item.toObject(),
-//           image_url: `${process.env.HOST}:${process.env.PORT}/images/clothing-category/${matchingImage}`,
-//         };
-//       } else {
-//         return item.toObject();
-//       }
-//     });
-
-//     return res.status(200).json(updatedCategories);
-//   } catch (error) {
-//     console.error("error:", error.message);
-//     return res.status(500).json({
-//       message: "خطایی رخ داد",
-//     });
-//   }
-// };
 
 const getClothingCategory = async (req, res) => {
   try {

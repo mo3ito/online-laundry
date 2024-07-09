@@ -75,6 +75,8 @@ const addClothingTypes = async (req, res) => {
   }
 };
 
+
+
 const getAllTypeByClothingCategory = async (req, res) => {
   const clothingCategory = req.query.clothing_category_English;
 
@@ -97,9 +99,9 @@ const getAllTypeByClothingCategory = async (req, res) => {
     });
 
     const updatedTypes = allTypes.map((item) => {
-      if (imageFileNames.includes(item.type)) {
+      if (imageFileNames.includes(item.english_type)) {
         const matchingImage = imageFiles.find(
-          (image) => path.parse(image).name === item.type
+          (image) => path.parse(image).name === item.english_type
         );
         return {
           ...item.toObject(),
@@ -118,6 +120,7 @@ const getAllTypeByClothingCategory = async (req, res) => {
     });
   }
 };
+
 
 const getOneType = async (req, res) => {
   const englishTypeQuery = req.query.english_type;

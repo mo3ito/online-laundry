@@ -1,6 +1,5 @@
 "use client";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import ShowHeaderTitle from "@/components/customerSite/ShowHeaderTitle";
 import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
@@ -11,6 +10,7 @@ import { useEffect, useState } from "react";
 import Modal from "@/components/Modal";
 import getData from "@/services/getData";
 import { toast } from "react-toastify";
+import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed";
 
 type CategoryInfosType = {
   categoryId: string;
@@ -103,7 +103,7 @@ export default function page() {
   }
   return (
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 pb-20 px-4">
-      <ShowHeaderTitle content="دسته‌بندی" />
+      <ShowHeaderTitleFixed content="دسته‌بندی" />
       <section className="mt-20 w-full h-max ">
         {allcategory?.map((item: ClothingCategoryType) => (
           <div

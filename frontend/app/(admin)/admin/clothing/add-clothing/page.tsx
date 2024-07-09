@@ -12,6 +12,7 @@ import { ADD_IMAGE_TYPE, GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import { ClothingCategoryType } from "@/types/admin";
 import LoadingPage from "@/components/Loading/LoadingPage";
+import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed";
 
 export default function page() {
   const [clothingCategory, setClothingCategory] = useState<string>("زنانه");
@@ -48,7 +49,7 @@ export default function page() {
 
   return (
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center  pb-20 px-4">
-      <ShowHeaderTitle content="افزودن لباس" />
+      <ShowHeaderTitleFixed content="افزودن لباس" />
       <div className="mt-56">
         <form
           onSubmit={(event) =>

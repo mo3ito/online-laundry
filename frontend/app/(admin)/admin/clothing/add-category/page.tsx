@@ -7,6 +7,7 @@ import handleFileChange from "@/utils/admin/handleFileChange";
 import useAuthContext from "@/hooks/useAuthContext";
 import { CLOTHING_CATEGORY_UPLOAD_IMAGE } from "@/routeApi/endpoints";
 import addCategorySubmitHandler from "@/utils/admin/addCategorySubmitHandler";
+import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed";
 
 export default function page() {
   const [clothingCategory, setClothingCategory] = useState<string>("");
@@ -19,7 +20,7 @@ export default function page() {
 
   return (
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center  pb-20 px-4">
-      <ShowHeaderTitle content="افزودن دسته‌بندی" />
+      <ShowHeaderTitleFixed content="افزودن دسته‌بندی" />
       <div className="mt-56">
         <form
           onSubmit={(event) =>
