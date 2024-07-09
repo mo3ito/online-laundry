@@ -124,6 +124,7 @@ export default function page() {
               onClick={() => deleteCategoryHandle(item._id, item.english_name)}
               content="حذف"
               className="!bg-pink-300 h-10 max-[480px]:w-16 w-44 rounded-lg"
+              isLoading={isLoadingForDeleteCategory}
             />
           </div>
         ))}
