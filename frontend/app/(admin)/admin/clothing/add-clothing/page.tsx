@@ -2,18 +2,21 @@
 import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
 import ShowHeaderTitle from "@/components/customerSite/ShowHeaderTitle";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import addClothingHandlerSubmit from "@/utils/admin/addClothingHandlerSubmit";
 import { ServicesType } from "@/types/admin";
 import addServiceHandler from "@/utils/admin/addSrviceHandler";
 import sendImageHandler from "@/utils/admin/sendImageHandler";
 import handleFileChange from "@/utils/admin/handleFileChange";
-import { ADD_IMAGE_TYPE } from "@/routeApi/endpoints";
+import { ADD_IMAGE_TYPE, GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
+import useGetReactQuery from "@/hooks/useGetReactQuery";
+import { ClothingCategoryType } from "@/types/admin";
+import LoadingPage from "@/components/Loading/LoadingPage";
 
 export default function page() {
-  const [clothingCategory, setClothingCategory] = useState<string>("");
+  const [clothingCategory, setClothingCategory] = useState<string>("زنانه");
   const [clothingCategoryEnglish, setClothingCategoryEnglish] =
-    useState<string>("");
+    useState<string>("women");
   const [type, setType] = useState<string>("");
   const [englishType, setEnglishType] = useState<string>("");
   const [services, setServices] = useState<ServicesType[] | []>([]);
@@ -24,6 +27,11 @@ export default function page() {
   const [isLoadingForSendClothingType, setIsLoadingForSendClothingType] =
     useState<boolean>(false);
   const { infos } = useAuthContext();
+  const { data, isLoading } = useGetReactQuery(
+    infos?._id,
+    GET_CLOTHING_CATEGORY,
+    ["get all category"]
+  );
 
   const serviceDeleteHandler = (serviceId: string) => {
     const newServicesList = services.filter(
@@ -32,6 +40,11 @@ export default function page() {
     setServices(newServicesList);
   };
 
+  console.log(clothingCategoryEnglish);
+
+  if(isLoading){
+    return <LoadingPage/>
+  }
 
   return (
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 pb-20 px-4">
@@ -88,13 +101,18 @@ export default function page() {
           >
             نام دسته‌بندی
           </label>
-          <input
-            value={clothingCategory}
-            onChange={(event) => setClothingCategory(event?.target.value)}
+          <select
             id="group"
-            className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
-            type="text"
-          />
+            value={clothingCategory}
+            onChange={(event) => setClothingCategory(event.target.value)}
+            className="w-full h-10 rounded-lg mb-3 outline-none px-2 border border-sky-500 text-zinc-500 bg-white"
+          >
+            {data?.data.map((item: ClothingCategoryType) => (
+              <option key={item._id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
 
           <label
             htmlFor="english-group"
@@ -102,15 +120,18 @@ export default function page() {
           >
             نام دسته بندی انگلیسی
           </label>
-          <input
-            value={clothingCategoryEnglish}
-            onChange={(event) =>
-              setClothingCategoryEnglish(event?.target.value)
-            }
+          <select
             id="english-group"
-            className="w-full h-10 border block rounded-lg mb-3 outline-none px-2 border-sky-500 text-zinc-500"
-            type="text"
-          />
+            value={clothingCategoryEnglish}
+            onChange={(event) => setClothingCategoryEnglish(event.target.value)}
+            className="w-full h-10 rounded-lg mb-3 outline-none px-2 border border-sky-500 text-zinc-500 bg-white"
+          >
+            {data?.data.map((item: ClothingCategoryType) => (
+              <option key={item._id} value={item.english_name}>
+                {item.english_name}
+              </option>
+            ))}
+          </select>
 
           <label
             htmlFor="clothing-type"
