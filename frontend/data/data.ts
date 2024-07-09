@@ -12,6 +12,11 @@ const adminMnuItems = [
       },
       {
         id: uuidv4(),
+        itemName: "لباس‌ها",
+        path: "/admin/clothing/clothes",
+      },
+      {
+        id: uuidv4(),
         itemName: "افزودن دسته‌بندی",
         path: "/admin/clothing/add-category",
       },

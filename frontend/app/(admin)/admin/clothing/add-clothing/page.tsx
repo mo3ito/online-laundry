@@ -48,8 +48,10 @@ export default function page() {
   }
 
   return (
+    <>
+    <ShowHeaderTitleFixed content="افزودن لباس" />
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center  pb-20 px-4">
-      <ShowHeaderTitleFixed content="افزودن لباس" />
+      
       <div className="mt-56">
         <form
           onSubmit={(event) =>
@@ -254,5 +256,6 @@ export default function page() {
         </form>
       </div>
     </div>
+    </>
   );
 }

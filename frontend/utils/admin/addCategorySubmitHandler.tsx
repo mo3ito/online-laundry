@@ -23,7 +23,7 @@ const addCategorySubmitHandler = async (
     const response = await sendData(CLOTHING_CATEGORY_ADD_CATEGORY, body, _id);
     if (response.status === 200) {
       setIsLoadingForSendCategory(false);
-      toast.success("گروه با موفقیت اضافه شد");
+      toast.success("دسته‌بندی با موفقیت اضافه شد");
       setClothingCategory("");
       setClothingCategoryEnglish("");
     } else {

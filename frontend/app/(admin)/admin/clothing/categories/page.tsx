@@ -102,8 +102,10 @@ export default function page() {
     return <LoadingPage />;
   }
   return (
+    <>
+    <ShowHeaderTitleFixed content="دسته‌بندی" />
     <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-44 pb-20 px-4">
-      <ShowHeaderTitleFixed content="دسته‌بندی" />
+      
       <section className="mt-20 w-full h-max ">
         {allcategory?.map((item: ClothingCategoryType) => (
           <div
@@ -133,5 +135,6 @@ export default function page() {
         confirmOnClick={categorydeleteHandler}
       />
     </div>
+    </>
   );
 }
