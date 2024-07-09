@@ -10,6 +10,7 @@ const {
   getClothingCategory,
   addClothingCategory,
   uploadAndHandleClothingCategoryImage,
+  deleteClothingCategory,
 } = require("../controllers/laundry-clothing/laundry-clothing-category");
 
 router.post("/clothing-type/add-image", addImageClothingType);
@@ -22,5 +23,6 @@ router.post(
   "/clothing-category/upload-image",
   uploadAndHandleClothingCategoryImage
 );
+router.delete("/clothing-category/delete-category", deleteClothingCategory);
 
 module.exports = router;

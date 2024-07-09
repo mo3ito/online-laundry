@@ -1,9 +1,10 @@
+const fs = require("fs").promises;
+const path = require("path");
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
 const AdminModel = require("../../models/admin/AdminModel");
+const deleteFiles = require("../../utils/deleteFiles");
 const uploadImage = require("../../utils/uploadImage");
 require("dotenv").config();
-const path = require("path");
-const fs = require("fs");
 
 const uploadAndHandleClothingCategoryImage = uploadImage(
   "public/images/clothing-category",
@@ -108,10 +109,59 @@ const addClothingCategory = async (req, res) => {
   }
 };
 
-const deleteClothingCategory = (req, res) => {};
+const deleteClothingCategory = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { clothing_category_id, clothing_category_name } = req.body;
+
+  try {
+    if (!adminId) {
+      return res.status(400).json({
+        message: "شما ادمین آیدی را وارد نکرده‌اید",
+      });
+    }
+
+    const isAdmin = await AdminModel.findById(adminId);
+
+    if (!isAdmin) {
+      return res.status(400).json({
+        message: " ادمین آیدی صحیح نیست",
+      });
+    }
+
+    if (!clothing_category_id) {
+      return res.status(400).json({
+        message: "شما آیدی دسته‌بندی را وارد نکردید",
+      });
+    }
+
+    if (!clothing_category_name) {
+      return res.status(400).json({
+        message: "شما نام دسته‌بندی را وارد نکردید",
+      });
+    }
+
+    await ClothingCategoryModel.findByIdAndDelete(clothing_category_id);
+
+    const directoryPath = path.join(
+      __dirname,
+      "../../public/images/clothing-category"
+    );
+
+    await deleteFiles(directoryPath, clothing_category_name);
+
+    const newClothingCategories = await ClothingCategoryModel.find({});
+    res.status(200).json(newClothingCategories);
+  } catch (error) {
+    console.error("error:", error.message);
+    res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
 
 module.exports = {
   getClothingCategory,
   addClothingCategory,
   uploadAndHandleClothingCategoryImage,
+  deleteClothingCategory,
 };
