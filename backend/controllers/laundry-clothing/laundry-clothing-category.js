@@ -1,4 +1,4 @@
-const fs = require("fs").promises;
+const fs = require("fs")
 const path = require("path");
 const ClothingCategoryModel = require("../../models/laundry-services/ClothingCategories");
 const AdminModel = require("../../models/admin/AdminModel");
@@ -12,6 +12,40 @@ const uploadAndHandleClothingCategoryImage = uploadImage(
   "clothing-category-image"
 );
 
+// const getClothingCategory = async (req, res) => {
+//   try {
+//     const imageDirectory = path.join(
+//       __dirname,
+//       "../../public/images/clothing-category"
+//     );
+//     const imageFiles = fs.readdirSync(imageDirectory);
+//     const imageFileNames = imageFiles.map((item) => path.parse(item).name);
+
+//     console.log(imageFileNames);
+//     const allCategory = await ClothingCategoryModel.find({});
+//     const updatedCategories = allCategory.map((item) => {
+//       if (imageFileNames.includes(item.name)) {
+//         const matchingImage = imageFiles.find(
+//           (image) => path.parse(image).name === item.name
+//         );
+//         return {
+//           ...item.toObject(),
+//           image_url: `${process.env.HOST}:${process.env.PORT}/images/clothing-category/${matchingImage}`,
+//         };
+//       } else {
+//         return item.toObject();
+//       }
+//     });
+
+//     return res.status(200).json(updatedCategories);
+//   } catch (error) {
+//     console.error("error:", error.message);
+//     return res.status(500).json({
+//       message: "خطایی رخ داد",
+//     });
+//   }
+// };
+
 const getClothingCategory = async (req, res) => {
   try {
     const imageDirectory = path.join(
@@ -22,11 +56,11 @@ const getClothingCategory = async (req, res) => {
     const imageFileNames = imageFiles.map((item) => path.parse(item).name);
 
     console.log(imageFileNames);
-    const allCategory = await ClothingCategoryModel.find({});
-    const updatedCategories = allCategory.map((item) => {
-      if (imageFileNames.includes(item.name)) {
+    const allCategories = await ClothingCategoryModel.find({});
+    const updatedCategories = allCategories.map((item) => {
+      if (imageFileNames.includes(item.english_name)) {
         const matchingImage = imageFiles.find(
-          (image) => path.parse(image).name === item.name
+          (image) => path.parse(image).name === item.english_name
         );
         return {
           ...item.toObject(),
@@ -45,6 +79,7 @@ const getClothingCategory = async (req, res) => {
     });
   }
 };
+
 
 const addClothingCategory = async (req, res) => {
   const adminId = req.headers.authorization;
@@ -111,7 +146,7 @@ const addClothingCategory = async (req, res) => {
 
 const deleteClothingCategory = async (req, res) => {
   const adminId = req.headers.authorization;
-  const { clothing_category_id, clothing_category_name } = req.body;
+  const { clothing_category_id, clothing_category_english_name } = req.body;
 
   try {
     if (!adminId) {
@@ -134,7 +169,7 @@ const deleteClothingCategory = async (req, res) => {
       });
     }
 
-    if (!clothing_category_name) {
+    if (!clothing_category_english_name) {
       return res.status(400).json({
         message: "شما نام دسته‌بندی را وارد نکردید",
       });
@@ -147,7 +182,7 @@ const deleteClothingCategory = async (req, res) => {
       "../../public/images/clothing-category"
     );
 
-    await deleteFiles(directoryPath, clothing_category_name);
+    await deleteFiles(directoryPath, clothing_category_english_name);
 
     const newClothingCategories = await ClothingCategoryModel.find({});
     res.status(200).json(newClothingCategories);
