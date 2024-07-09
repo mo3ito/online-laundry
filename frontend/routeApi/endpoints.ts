@@ -17,6 +17,7 @@ export const GET_ALL_TYPE = `${BASE_URL_CLOTHING_TYPE}/get-all-type`;
 export const GET_ONE_TYPE = `${BASE_URL_CLOTHING_TYPE}/get-one-type`;
 export const ADD_TYPE = `${BASE_URL_CLOTHING_TYPE}/add-type`;
 export const ADD_IMAGE_TYPE = `${BASE_URL_CLOTHING_TYPE}/add-image`;
+export const DELETE_TYPE = `${BASE_URL_CLOTHING_TYPE}/delete-type-clothing`;
 
 //-- customers
 export const VALIDATION_PHONE_NUMBER = `${BASE_URL_CUSTOMERS}/validation`;

@@ -10,3 +10,8 @@ export type ServicesType = {
     english_name: string,
     image_url: string
   }
+
+  export type TypeClothinginfosType = {
+    typeClothingId: string;
+    typeClothingEnglishName: string;
+  };

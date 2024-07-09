@@ -7,18 +7,12 @@ import getTypeHandler from "@/utils/site/getTypeHandler";
 import getData from "@/services/getData";
 import { GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
 import { useQuery } from "@tanstack/react-query";
-import ShowCategoryGroup from "@/components/customerSite/ShowCategoryGroup";
-import ShowCategoryAdmin from "@/components/admin/showCategoryAdmin";
 import DefaultButton from "@/components/share/defaultButton";
-import deleteData from "@/services/deleteData";
 import Modal from "@/components/Modal";
 import useAuthContext from "@/hooks/useAuthContext";
-import { toast } from "react-toastify";
-
-type typeClothinginfosType = {
-  typeClothingId: string;
-  typeClothingEnglishName: string;
-};
+import { TypeClothinginfosType } from "@/types/admin";
+import deleteTypeClothingHandler from "@/utils/admin/deleteTypeClothingHandler";
+import { GET_ALL_TYPE } from "@/routeApi/endpoints";
 
 export default function page() {
   const [showDetails, setShowDetails] = useState<boolean[]>([]);
@@ -26,10 +20,12 @@ export default function page() {
     InformationClothingsItemProps[] | null
   >(null);
   const [currentCategory, setCurrentCategory] = useState<string>("");
-  const [allTypes, setAllTypes] = useState([]);
+  const [allTypes, setAllTypes] = useState<
+    InformationClothingsItemProps[] | []
+  >([]);
   const { infos } = useAuthContext();
   const [typeClothinginfos, setTypeClothingInfos] =
-    useState<typeClothinginfosType>({
+    useState<TypeClothinginfosType>({
       typeClothingId: "",
       typeClothingEnglishName: "",
     });
@@ -43,7 +39,7 @@ export default function page() {
   useEffect(() => {
     if (allGroupTypeData) {
       getTypeHandler(
-        "women",
+        "men",
         setTypeCategory,
         setCurrentCategory,
         setShowDetails
@@ -51,14 +47,11 @@ export default function page() {
     }
   }, [allGroupTypeData]);
 
-  console.log("currentCategory", currentCategory);
-  console.log("details", showDetails);
-
   useEffect(() => {
     const getAllTypesCategory = async () => {
       if (currentCategory) {
         const response = await getData(
-          `http://localhost:4000/clothing-type/get-all-type/?clothing_category_English=${currentCategory}`
+          `${GET_ALL_TYPE}/?clothing_category_English=${currentCategory}`
         );
         if (response?.status === 200) {
           setAllTypes(response.data);
@@ -78,45 +71,6 @@ export default function page() {
     setIsShowModalForDeleteType(true);
   };
 
-  const deleteTypeClothinghandler = async () => {
-    const body = {
-      type_clothing_id: typeClothinginfos.typeClothingId,
-      type_clothing_english_name: typeClothinginfos.typeClothingEnglishName,
-    };
-
-    try {
-      const deleteTypeResponse = await deleteData(
-        "http://localhost:4000/clothing-category/delete-type-clothing",
-        body,
-        infos?._id
-      );
-
-      if (deleteTypeResponse.status === 200) {
-        const allTypeResponse = await getData(
-          `http://localhost:4000/clothing-type/get-all-type/?clothing_category_English=${currentCategory}`
-        );
-        setAllTypes(allTypeResponse?.data);
-        setIsShowModalForDeleteType(false);
-        toast.success("تایپ لباس با موفقیت حذف شد");
-      } else {
-        setIsShowModalForDeleteType(false);
-      }
-    } catch (error: any) {
-      console.error("خطا در ارتباط با سرور:", error);
-
-      if (error.response && error.response.status === 400) {
-        setIsShowModalForDeleteType(false);
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        toast.error(errorMessage);
-      } else {
-        setIsShowModalForDeleteType(false);
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    }
-  };
-
   return (
     <>
       <ShowHeaderTitleFixed content="لباس‌ها" />
@@ -128,7 +82,6 @@ export default function page() {
           setTypeCategory={setTypeCategory}
           setShowDetails={setShowDetails}
         />
-
         {
           <section className="mt-20 w-full h-max ">
             {allTypes?.map((item: InformationClothingsItemProps) => (
@@ -161,7 +114,15 @@ export default function page() {
           messageContent="آیا از حذف اطمینان دارید؟"
           isShowModal={isShowModalForDeleteType}
           setIsShowModal={setIsShowModalForDeleteType}
-          confirmOnClick={deleteTypeClothinghandler}
+          confirmOnClick={() =>
+            deleteTypeClothingHandler(
+              typeClothinginfos,
+              setAllTypes,
+              setIsShowModalForDeleteType,
+              infos?._id,
+              currentCategory
+            )
+          }
         />
       </div>
     </>

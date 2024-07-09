@@ -16,6 +16,7 @@ const {
 
 router.post("/clothing-type/add-image", addImageClothingType);
 router.post("/clothing-type/add-type", addClothingTypes);
+router.delete("/clothing-type/delete-type-clothing", deleteTypeClothing);
 router.get("/clothing-type/get-all-type", getAllTypeByClothingCategory);
 router.get("/clothing-type/get-one-type", getOneType);
 router.get("/clothing-category/get-category", getClothingCategory);
@@ -25,6 +26,5 @@ router.post(
   uploadAndHandleClothingCategoryImage
 );
 router.delete("/clothing-category/delete-category", deleteClothingCategory);
-router.delete("/clothing-category/delete-type-clothing", deleteTypeClothing);
 
 module.exports = router;
