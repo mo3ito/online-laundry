@@ -5,6 +5,7 @@ const {
   addClothingTypes,
   getAllTypeByClothingCategory,
   getOneType,
+  deleteTypeClothing,
 } = require("../controllers/laundry-clothing/clothing-type");
 const {
   getClothingCategory,
@@ -24,5 +25,6 @@ router.post(
   uploadAndHandleClothingCategoryImage
 );
 router.delete("/clothing-category/delete-category", deleteClothingCategory);
+router.delete("/clothing-category/delete-type-clothing", deleteTypeClothing);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const uploadImage = require("../../utils/uploadImage");
 const path = require("path");
 const fs = require("fs/promises");
 require("dotenv").config();
+const deleteFiles = require("../../utils/deleteFiles");
 
 const addImageClothingType = uploadImage(
   "public/images/clothing-types",
@@ -33,19 +34,23 @@ const addClothingTypes = async (req, res) => {
     }
 
     if (
-      !clothing_category &&
-      !clothing_category_English &&
-      !type &&
-      !english_type &&
-      !services || !Array.isArray(services) || services.length === 0 &&
-      !unit
+      (!clothing_category &&
+        !clothing_category_English &&
+        !type &&
+        !english_type &&
+        !services) ||
+      !Array.isArray(services) ||
+      (services.length === 0 && !unit)
     ) {
       return res.status(400).json({
         message: "لطفا همه‌ی فیلدهای مورد نیاز را پر کنید",
       });
     }
 
-    const isClothingTypeBefore = await ClothingTypesModel.findOne({ type , english_type});
+    const isClothingTypeBefore = await ClothingTypesModel.findOne({
+      type,
+      english_type,
+    });
 
     if (isClothingTypeBefore) {
       return res.status(400).json({
@@ -74,8 +79,6 @@ const addClothingTypes = async (req, res) => {
     });
   }
 };
-
-
 
 const getAllTypeByClothingCategory = async (req, res) => {
   const clothingCategory = req.query.clothing_category_English;
@@ -121,7 +124,6 @@ const getAllTypeByClothingCategory = async (req, res) => {
   }
 };
 
-
 const getOneType = async (req, res) => {
   const englishTypeQuery = req.query.english_type;
   const clothingCategoryEnglishQuery = req.query.clothing_category_English;
@@ -147,10 +149,60 @@ const getOneType = async (req, res) => {
   }
 };
 
+const deleteTypeClothing = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { type_clothing_id, type_clothing_english_name } = req.body;
+
+  try {
+    if (!adminId) {
+      return res.status(400).json({
+        message: "شما ادمین آیدی را وارد نکرده‌اید",
+      });
+    }
+
+    const isAdmin = await AdminModel.findById(adminId);
+
+    if (!isAdmin) {
+      return res.status(400).json({
+        message: " ادمین آیدی صحیح نیست",
+      });
+    }
+
+    if (!type_clothing_id) {
+      return res.status(400).json({
+        message: "شما آیدی تایپ لباس را وارد نکردید",
+      });
+    }
+
+    if (!type_clothing_english_name) {
+      return res.status(400).json({
+        message: "شما نام تایپ را به انگلیسی وارد نکردید",
+      });
+    }
+
+    await ClothingTypesModel.findByIdAndDelete(type_clothing_id);
+
+    const directoryPath = path.join(
+      __dirname,
+      "../../public/images/clothing-types"
+    );
+
+    await deleteFiles(directoryPath, type_clothing_english_name);
+
+    const newClothingTypes = await ClothingTypesModel.find({});
+    res.status(200).json(newClothingTypes);
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
 
 module.exports = {
   addClothingTypes,
   addImageClothingType,
   getAllTypeByClothingCategory,
   getOneType,
+  deleteTypeClothing,
 };
