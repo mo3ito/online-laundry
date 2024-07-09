@@ -53,7 +53,7 @@ export default function AdminScreenHeader() {
   };
 
   return (
-    <section className="w-full h-max bg-sky-500 fixed top-0 left-0 flex flex-col items-center justify-between z-50">
+    <section className="w-full h-max bg-sky-500 hidden sm:flex fixed top-0 left-0  flex-col items-center justify-between z-50">
       <header className="flex justify-between items-center w-full px-8 py-3">
         <div className=" ">
           <div className="flex justify-center items-center gap-x-2">
@@ -88,8 +88,8 @@ export default function AdminScreenHeader() {
         <LogoName isLink={true} href="/admin" />
       </header>
 
-      <nav className="w-full h-20 bg-slate-200 flex items-center justify-center">
-        <ul className="flex items-center justify-between w-1/5 mr-44">
+      <nav className="w-full h-20 bg-slate-200 flex items-center justify-center ">
+        <ul className="flex items-center justify-center gap-x-5  w-full ">
           <li className="p-4 rounded-full bg-sky-50 cursor-pointer hover:bg-sky-200 hover:border hover:border-sky-500 transition-all duration-150 ease-out relative shadow-lg">
             <Link className="size-full" href="/admin">
               خانه

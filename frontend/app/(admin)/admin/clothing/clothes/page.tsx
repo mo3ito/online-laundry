@@ -74,7 +74,7 @@ export default function page() {
   return (
     <>
       <ShowHeaderTitleFixed content="لباس‌ها" />
-      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-64 pb-20 px-4">
+      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-32 sm:mt-64 pb-20 px-4">
         <SwiperShowListPrice
           currentCategory={currentCategory}
           setCurrentCategory={setCurrentCategory}
@@ -83,7 +83,7 @@ export default function page() {
           setShowDetails={setShowDetails}
         />
         {
-          <section className="mt-20 w-full h-max ">
+          <section className="mt-5 w-full h-max ">
             {allTypes?.map((item: InformationClothingsItemProps) => (
               <div
                 key={item._id}

@@ -22,7 +22,7 @@ export default function page() {
     <>
       <ShowHeaderTitleFixed content="افزودن دسته‌بندی" />
       <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center  pb-20 px-4">
-        <div className="mt-56">
+        <div className=" mt-32 sm:mt-64">
           <form
             onSubmit={(event) =>
               addCategorySubmitHandler(
@@ -35,7 +35,7 @@ export default function page() {
                 setClothingCategoryEnglish
               )
             }
-            className="max-[420px]:w-full  w-96 mt-10"
+            className="max-[420px]:w-full  w-96 "
           >
             <label
               htmlFor="add-image-clothing"
