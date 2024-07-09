@@ -74,16 +74,19 @@ export default function page() {
   return (
     <>
       <ShowHeaderTitleFixed content="لباس‌ها" />
-      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-32 sm:mt-64 pb-20 px-4">
-        <SwiperShowListPrice
-          currentCategory={currentCategory}
-          setCurrentCategory={setCurrentCategory}
-          allGroupTypeData={allGroupTypeData}
-          setTypeCategory={setTypeCategory}
-          setShowDetails={setShowDetails}
-        />
+      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-16 sm:mt-56 pb-20 px-4">
+        <section className="bg-slate-100 w-full h-48 sticky top-28 sm:top-56 flex items-center justify-center z-40">
+          <SwiperShowListPrice
+            currentCategory={currentCategory}
+            setCurrentCategory={setCurrentCategory}
+            allGroupTypeData={allGroupTypeData}
+            setTypeCategory={setTypeCategory}
+            setShowDetails={setShowDetails}
+          />
+        </section>
+
         {
-          <section className="mt-5 w-full h-max ">
+          <section className=" mt-10 sm:mt-2 w-full h-max ">
             {allTypes?.map((item: InformationClothingsItemProps) => (
               <div
                 key={item._id}

@@ -5,11 +5,8 @@ import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import { GET_CLOTHING_CATEGORY } from "@/routeApi/endpoints";
 import { ClothingCategoryType, CategoryInfosType } from "@/types/admin";
-import deleteData from "@/services/deleteData";
 import { useEffect, useState } from "react";
 import Modal from "@/components/Modal";
-import getData from "@/services/getData";
-import { toast } from "react-toastify";
 import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed";
 import categoryDeleteHandler from "@/utils/admin/categoryDeleteHandler";
 
@@ -49,57 +46,12 @@ export default function page() {
     });
   };
 
-  // const categorydeleteHandler = async () => {
-  //   const body = {
-  //     clothing_category_id: categoryInfos.categoryId,
-  //     clothing_category_english_name: categoryInfos.categoryEnglishName,
-  //   };
-  //   try {
-  //     setIsLoadingForDeleteCategory(true);
-  //     const deleteResponse = await deleteData(
-  //       "http://localhost:4000/clothing-category/delete-category",
-  //       body,
-  //       infos?._id
-  //     );
-  //     if (deleteResponse.status === 200) {
-  //       const getCategoryResponse = await getData(
-  //         GET_CLOTHING_CATEGORY,
-  //         true,
-  //         undefined,
-  //         infos?._id
-  //       );
-  //       await setAllCategory(getCategoryResponse?.data);
-  //       toast.success("دسته‌بندی با موفقیت حذف شد");
-  //       setIsShowDeleteCategoryModal(false);
-  //       setIsLoadingForDeleteCategory(false);
-  //     } else {
-  //       setIsShowDeleteCategoryModal(false);
-  //       setIsLoadingForDeleteCategory(false);
-  //     }
-  //   } catch (error: any) {
-  //     console.error("خطا در ارتباط با سرور:", error);
-
-  //     if (error.response && error.response.status === 400) {
-  //       setIsLoadingForDeleteCategory(false);
-  //       const errorMessage: string =
-  //         error.response.data?.message || "خطایی رخ داده است.";
-  //         setIsShowDeleteCategoryModal(false)
-  //       toast.error(errorMessage);
-  //     } else {
-  //       setIsShowDeleteCategoryModal(false)
-  //       setIsLoadingForDeleteCategory(false);
-  //       console.log("خطا:", error);
-  //       toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-  //     }
-  //   }
-  // };
-
   if (isLoading) {
     return <LoadingPage />;
   }
   return (
     <>
-      <ShowHeaderTitleFixed content="دسته‌بندی" />
+      <ShowHeaderTitleFixed content="دسته‌بندی‌ها" />
       <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-10 sm:mt-44 pb-20 px-4">
         <section className="mt-20 w-full h-max ">
           {allcategory?.map((item: ClothingCategoryType) => (
