@@ -36,8 +36,8 @@ const adminMnuItems = [
     },
     {
       id: uuidv4(),
-      itemName: "تایپ‌ها",
-      path: "/admin/clothing/clothes",
+      itemName: "تایید رانندگان",
+      path: "/admin/drivers/unverified-driver",
     },
 
 
