@@ -97,6 +97,13 @@ export default function AdminMobileHeader() {
         </section>
 
         <ul className="w-full h-max max-[320px]:text-sm max-[480px]:text-sm ">
+        <li
+             
+              onClick={() => linkHandler("/admin",setIsSideMenu, router)}
+              className=" px-6 flex items-center  h-12  max-[480px]:h-10  border-t border-zinc-200 cursor-pointer "
+            >
+              خانه
+            </li>
           {adminMnuItems.map((item, index) => (
             <li
               key={item.id}
