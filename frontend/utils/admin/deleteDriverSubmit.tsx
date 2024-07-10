@@ -9,7 +9,9 @@ const deleteDriverSubmit = async (
   setIsLoadingForDeleteDriverResponse: Dispatch<SetStateAction<boolean>>,
   _id: string | undefined,
   setAllUnverifiedDrivers: Dispatch<SetStateAction<DriversType[] | []>>,
-  setIsShowModalDeleteUnverifyDriver: Dispatch<SetStateAction<boolean>>
+  setIsShowModalDeleteUnverifyDriver: Dispatch<SetStateAction<boolean>>,
+  isUnverified: boolean
+
 ) => {
   const body = {
     driver_id: driverId,
@@ -23,13 +25,24 @@ const deleteDriverSubmit = async (
       _id
     );
     if (deleteDriverResponse.status === 200) {
-      const allDriverUnverified = await deleteDriverResponse.data.map(
-        (item: DriversType) => !item.is_register_by_admin
-      );
-      setAllUnverifiedDrivers(allDriverUnverified);
-      setIsLoadingForDeleteDriverResponse(false);
-      setIsShowModalDeleteUnverifyDriver(false);
-      toast.success("راننده با موفقیت حذف شد");
+        if(isUnverified){
+            const allDriverUnverified = await deleteDriverResponse.data.map(
+                (item: DriversType) => !item.is_register_by_admin
+              );
+              setAllUnverifiedDrivers(allDriverUnverified);
+              setIsLoadingForDeleteDriverResponse(false);
+              setIsShowModalDeleteUnverifyDriver(false);
+              toast.success("راننده با موفقیت حذف شد");
+        }else{
+            const allDriververified = await deleteDriverResponse.data.map(
+                (item: DriversType) => item.is_register_by_admin
+              );
+              setAllUnverifiedDrivers(allDriververified);
+              setIsLoadingForDeleteDriverResponse(false);
+              setIsShowModalDeleteUnverifyDriver(false);
+              toast.success("راننده با موفقیت حذف شد");
+        }
+
     } else {
       setIsLoadingForDeleteDriverResponse(false);
       setIsShowModalDeleteUnverifyDriver(false);

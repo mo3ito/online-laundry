@@ -62,7 +62,7 @@ export default function page() {
       <ShowHeaderTitleFixed content="رانندگان تایید نشده" />
       {allUnverifiedDrivers?.length > 0 ? (
         <section className="w-full h-max px-4 mt-28 sm:mt-64">
-          {allUnverifiedDrivers?.map((item, index) => (
+         
             <table className="table-auto w-full text-center  max-[280px]:text-xs text-sm sm:text-base">
               <thead className="bg-sky-200 rounded-lg ">
                 <tr className="">
@@ -72,7 +72,7 @@ export default function page() {
                   <th className="py-3">عملیات</th>
                 </tr>
               </thead>
-              <tbody className="bg-sky-300 border border-sky-600">
+              {allUnverifiedDrivers?.map((item, index) => (<tbody className="bg-sky-300 border border-sky-600">
                 <tr key={item._id}>
                   <td className="py-2">
                     {item.name} {item.last_name}
@@ -103,9 +103,9 @@ export default function page() {
                     </div>
                   </td>
                 </tr>
-              </tbody>
+              </tbody>))}
             </table>
-          ))}
+          
         </section>
       ) : (
         <p className="mt-72 text-center">
@@ -136,7 +136,8 @@ export default function page() {
             setIsLoadingForDeleteDriverResponse,
             infos?._id,
             setAllUnverifiedDrivers,
-            setIsShowModalDeleteUnverifyDriver
+            setIsShowModalDeleteUnverifyDriver,
+            true
           )
         }
       />
