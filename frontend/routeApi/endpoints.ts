@@ -39,6 +39,7 @@ export const DRIVER_GET_ALL_ORDERS_IS_NOT_DONE = `${BASE_URL_DRIVER}/get-all-ord
 export const DRIVER_GET_ALL_ORDERS_IS_DONE = `${BASE_URL_DRIVER}/get-all-orders-is-done`;
 export const DRIVER_GET_ALL_ORDERS_FROM_CUSTOMER = `${BASE_URL_DRIVER}/get-orders-from-customer`;
 export const DRIVER_PAY_ORDERS_MONEY = `${BASE_URL_DRIVER}/pay-orders-money`;
+export const DRIVER_GET_ALL_DRIVER = `${BASE_URL_DRIVER}/get-all-driver`;
 
 //-- dryer
 export const DRYER_REGISTER = `${BASE_URL_DRYER}/register`;

@@ -20,3 +20,16 @@ export type ServicesType = {
     categoryId: string;
     categoryEnglishName: string;
   };
+
+ export type DriversType = {
+    _id: string;
+    name: string;
+    last_name: string;
+    phone_number: string;
+    is_driver: boolean;
+    password: string;
+    is_register_by_admin: boolean;
+    created_at: string;
+    created_at_shamsi: string;
+  };
+  
