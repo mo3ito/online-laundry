@@ -5,6 +5,7 @@ import {
   BASE_URL_ORDERS,
   BASE_URL_DRIVER,
   BASE_URL_DRYER,
+  BASE_URL_ADMIN,
 } from "./baseUrlNextApi";
 
 //-- clothing category
@@ -46,3 +47,7 @@ export const DRYER_REGISTER = `${BASE_URL_DRYER}/register`;
 export const DRYER_LOGIN = `${BASE_URL_DRYER}/login`;
 export const DONE_ORDER = `${BASE_URL_DRYER}/done-order`;
 export const DRYER_ORDERS = `${BASE_URL_DRYER}/orders-for-dryer`;
+
+//-- admin
+export const ADMIN_VERIFY_DRIVER = `${BASE_URL_ADMIN}/verify-driver`;
+export const ADMIN_DELETE_DRIVER = `${BASE_URL_ADMIN}/delete-driver`;

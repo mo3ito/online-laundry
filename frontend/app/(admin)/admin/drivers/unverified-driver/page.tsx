@@ -1,6 +1,6 @@
 "use client";
 import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import useAuthContext from "@/hooks/useAuthContext";
 import { DriversType } from "@/types/admin";
@@ -8,16 +8,21 @@ import LoadingPage from "@/components/Loading/LoadingPage";
 import { DRIVER_GET_ALL_DRIVER } from "@/routeApi/endpoints";
 import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
-import updateData from "@/services/updateData";
-import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import verifyHandlerDriverSubmit from "@/utils/admin/verifyHandlerDriverSubmit";
+import deleteDriverSubmit from "@/utils/admin/deleteDriverSubmit";
 
 export default function page() {
   const { infos } = useAuthContext();
   const [isShowModalVerify, setIsShowModalVerify] = useState<boolean>(false);
+  const [isShowModalDeleteUnverifyDriver, setIsShowModalDeleteUnverifyDriver] =
+    useState<boolean>(false);
   const [isLoadingForVerifyResponse, setIsLoadingForVerifyResponse] =
     useState<boolean>(false);
+  const [
+    isLoadingForDeleteDriverResponse,
+    setIsLoadingForDeleteDriverResponse,
+  ] = useState<boolean>(false);
   const [driverId, setDriverId] = useState<string>("");
   const router = useRouter();
   const { data, isLoading } = useGetReactQuery(
@@ -41,9 +46,12 @@ export default function page() {
     filterDriver();
   }, [data]);
 
-  const verifyHandler = async (driverId: string) => {
+  const verifyDeleteHandler = async (
+    driverId: string,
+    setState: Dispatch<SetStateAction<boolean>>
+  ) => {
     await setDriverId(driverId);
-    setIsShowModalVerify(true);
+    setState(true);
   };
 
   if (isLoading) {
@@ -74,14 +82,23 @@ export default function page() {
                   <td className="py-2">
                     <div className="w-full flex items-center justify-center gap-x-3">
                       <DefaultButton
-                        onClick={() => verifyHandler(item._id)}
+                        onClick={() =>
+                          verifyDeleteHandler(item._id, setIsShowModalVerify)
+                        }
                         className="w-1/2 bg-green-500 h-10 px-2 rounded-lg"
                         content="تایید"
                         isLoading={isLoadingForVerifyResponse}
                       />
                       <DefaultButton
+                        onClick={() =>
+                          verifyDeleteHandler(
+                            item._id,
+                            setIsShowModalDeleteUnverifyDriver
+                          )
+                        }
                         className="w-1/2 bg-red-400 h-10 px-2 rounded-lg"
                         content="حذف"
+                        isLoading={isLoadingForDeleteDriverResponse}
                       />
                     </div>
                   </td>
@@ -106,6 +123,20 @@ export default function page() {
             infos?._id,
             setAllUnverifiedDrivers,
             setIsShowModalVerify
+          )
+        }
+      />
+      <Modal
+        messageContent="آیا از حذف راننده اطمینان دارید؟"
+        isShowModal={isShowModalDeleteUnverifyDriver}
+        setIsShowModal={setIsShowModalDeleteUnverifyDriver}
+        confirmOnClick={() =>
+          deleteDriverSubmit(
+            driverId,
+            setIsLoadingForDeleteDriverResponse,
+            infos?._id,
+            setAllUnverifiedDrivers,
+            setIsShowModalDeleteUnverifyDriver
           )
         }
       />

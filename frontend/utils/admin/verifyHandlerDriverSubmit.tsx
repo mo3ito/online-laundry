@@ -2,6 +2,7 @@ import updateData from "@/services/updateData";
 import { DriversType } from "@/types/admin";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
+import { ADMIN_VERIFY_DRIVER } from "@/routeApi/endpoints";
 
 const verifyHandlerDriverSubmit = async (
   driverId: string,
@@ -17,7 +18,7 @@ const verifyHandlerDriverSubmit = async (
   try {
     setIsLoadingForVerifyResponse(true);
     const verifyResponse = await updateData(
-      "http://localhost:4000/admin/verify-driver",
+        ADMIN_VERIFY_DRIVER,
       body,
       _id
     );
