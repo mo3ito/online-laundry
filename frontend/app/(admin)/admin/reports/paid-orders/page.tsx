@@ -47,9 +47,6 @@ export default function page() {
     }
   }, [data]);
 
-  console.log("allCountOrders", allCountOrders);
-  console.log("allTotalPrice", allTotalPrice);
-
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -57,7 +54,13 @@ export default function page() {
   return (
     <main>
       <ShowHeaderTitleFixed content="مشتریان" />
-      <section className="px-4 w-full h-max mt-28 sm:mt-64 pb-10">
+      {allCountOrders && allTotalPrice && (
+        <section className="mt-28 sm:mt-64 px-4 text-sm sm:text-base">
+          <p>تعداد کل سفارشات : {allCountOrders} عدد</p>
+          <p>مبلغ کل سفارشات : {allTotalPrice.toLocaleString("en-US")} تومان</p>
+        </section>
+      )}
+      <section className="w-full h-max px-4 mt-6 pb-10">
         <ul className="w-full h-max   ">
           {data?.data?.map((order: OrdersTemplate) => (
             <li
