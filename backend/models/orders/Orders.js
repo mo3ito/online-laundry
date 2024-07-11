@@ -38,10 +38,6 @@ const OrderSchema = new Schema({
     type: String,
     default: "در انتظار تحویل"
   },
-  is_done_order: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const OrdersSchema = new Schema({

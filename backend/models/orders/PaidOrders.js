@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const GotOrderSchema = new Schema({
+const OrdersSchema = new Schema({
   service_type: {
     type: String,
     required: true,
@@ -41,7 +41,7 @@ const GotOrderSchema = new Schema({
 
 });
 
-const GotOrdersSchema = new Schema({
+const PaidOrdersSchema = new Schema({
   customer_id: {
     type: String,
     required: true,
@@ -53,7 +53,7 @@ const GotOrdersSchema = new Schema({
     type: String,
   },
   orders: {
-    type: [GotOrderSchema],
+    type: [OrdersSchema],
     required: true,
   },
   phone_number: {
@@ -77,6 +77,6 @@ const GotOrdersSchema = new Schema({
   },
 });
 
-const GotOrders = mongoose.model("got-orders", GotOrdersSchema);
+const PaidOrders = mongoose.model("paid-orders", PaidOrdersSchema);
 
-module.exports = GotOrders;
+module.exports = PaidOrders;
