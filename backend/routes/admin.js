@@ -9,6 +9,7 @@ const {
   getAllDriver,
   verifyDriver,
   deleteDriver,
+  getAlcustomers,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -16,5 +17,5 @@ router.post("/admin/login", adminLogin);
 router.get("/admin/get-all-drivers", getAllDriver);
 router.put("/admin/verify-driver", verifyDriver);
 router.delete("/admin/delete-driver", deleteDriver);
-
+router.get("/admin/get-all-customers", getAlcustomers);
 module.exports = router;

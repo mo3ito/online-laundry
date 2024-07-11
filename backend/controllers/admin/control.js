@@ -1,5 +1,6 @@
 const DriverModel = require("../../models/driver/DriverModel");
 const AdminModel = require("../../models/admin/AdminModel");
+const CustomerModel = require("../../models/customer/CustomerModel")
 
 const getAllDriver = async (req, res) => {
   const adminId = req.headers.authorization;
@@ -111,5 +112,34 @@ const deleteDriver = async (req, res) => {
   }
 };
 
+const getAlcustomers = async (req , res)=>{
+  const adminId = req.headers.authorization;
 
-module.exports = { getAllDriver  , verifyDriver , deleteDriver};
+  if (!adminId) {
+    return res.status(400).json({
+      message: "آیدی ادمین وجود ندارد",
+    });
+  }
+  try {
+
+
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({
+        message: "ادمینی با این آیدی وجود ندارد",
+      });
+    }
+
+    const allCustomer = await CustomerModel.find({})
+
+    return res.status(200).json(allCustomer)
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
+
+
+module.exports = { getAllDriver  , verifyDriver , deleteDriver , getAlcustomers};
