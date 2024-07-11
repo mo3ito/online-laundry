@@ -169,19 +169,20 @@ const paidOrders = async (req, res) => {
 
     const paidOrders = await OrdersModel.find({ is_pay_money: true });
 
-    if (paidOrders.length === 0) {
-      return res.status(200).json({
-        message: "سفارشی با وضعیت پرداخت شده یافت نشد",
-      });
-    }
+    // if (paidOrders.length === 0) {
+    //   return res.status(200).json({
+    //     message: "سفارشی با وضعیت پرداخت شده یافت نشد",
+    //   });
+    // }
 
     await PaidOrdersModel.insertMany(paidOrders);
 
     await OrdersModel.deleteMany({ is_pay_money: true });
+    const allPaidOrders = await PaidOrdersModel.find({})
 
-    res.status(200).json({
-      message: "سفارشات پرداخت شده با موفقیت منتقل شدند و حذف شدند",
-    });
+
+
+    res.status(200).json(allPaidOrders);
   } catch (error) {
     console.error("خطا در انتقال سفارشات پرداخت شده:", error);
     res.status(500).json({

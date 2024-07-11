@@ -19,7 +19,6 @@ export type OrdersType = {
   cost: number;
   count: number;
   created_at: string;
-  is_done_order: boolean;
   orders_id: string;
   service_type: string;
   totalCost: number;

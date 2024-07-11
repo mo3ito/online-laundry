@@ -5,7 +5,7 @@ import useGetReactQuery from "@/hooks/useGetReactQuery";
 import useAuthContext from "@/hooks/useAuthContext";
 import { DriversType } from "@/types/admin";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import { DRIVER_GET_ALL_DRIVER } from "@/routeApi/endpoints";
+import { ADMIN_GET_ALL_DRIVER } from "@/routeApi/endpoints";
 import Modal from "@/components/Modal";
 import DefaultButton from "@/components/share/defaultButton";
 import deleteDriverSubmit from "@/utils/admin/deleteDriverSubmit";
@@ -21,7 +21,7 @@ export default function page() {
   ] = useState<boolean>(false);
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
-    DRIVER_GET_ALL_DRIVER,
+    ADMIN_GET_ALL_DRIVER,
     ["get all drivers"]
   );
   const [allDriverRegistered, setAllDriverRegistered] = useState<
@@ -57,7 +57,7 @@ export default function page() {
     <div>
       <ShowHeaderTitleFixed content="رانندگان" />
       {allDriverRegistered?.length > 0 ? (
-        <section className="w-full h-max px-4 mt-28 sm:mt-64">
+        <section className="w-full h-max px-4 mt-28 sm:mt-64 pb-10">
           <table className="table-auto w-full text-center  max-[280px]:text-[10px] text-sm sm:text-base">
             <thead className="bg-sky-200 rounded-lg ">
               <tr className="">

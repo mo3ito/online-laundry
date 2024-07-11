@@ -30,7 +30,7 @@ export default function DryerHeader() {
           />
           <LogoutButton onClick={() => setIsShowModalExit(true)} />
         </div>
-        <JobPosition />
+        <JobPosition content="مالک خشکشویی" />
       </header>
       <Modal
         messageContent="آیا از خروج اطمینان دارید؟"

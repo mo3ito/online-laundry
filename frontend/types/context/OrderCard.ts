@@ -29,7 +29,6 @@ export type OrdersRegistered = {
   orders_id: string;
   address: string;
   situation:string;
-  is_done_order?: boolean;
 };
 
 

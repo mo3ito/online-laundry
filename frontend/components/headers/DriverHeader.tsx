@@ -30,7 +30,7 @@ export default function DriverHeader() {
           />
           <LogoutButton onClick={() => setIsShowModalExit(true)} />
         </div>
-        <JobPosition />
+        <JobPosition content="راننده" />
       </header>
       <Modal
         messageContent="آیا از خروج اطمینان دارید؟"

@@ -5,7 +5,7 @@ import useGetReactQuery from "@/hooks/useGetReactQuery";
 import useAuthContext from "@/hooks/useAuthContext";
 import { DriversType } from "@/types/admin";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import { DRIVER_GET_ALL_DRIVER } from "@/routeApi/endpoints";
+import { ADMIN_GET_ALL_DRIVER } from "@/routeApi/endpoints";
 import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ export default function Page() {
   const router = useRouter();
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
-    DRIVER_GET_ALL_DRIVER,
+    ADMIN_GET_ALL_DRIVER,
     ["get all drivers"]
   );
   const [allUnverifiedDrivers, setAllUnverifiedDrivers] = useState<
@@ -64,7 +64,7 @@ export default function Page() {
     <div>
       <ShowHeaderTitleFixed content="رانندگان تایید نشده" />
       {allUnverifiedDrivers?.length > 0 ? (
-        <section className="w-full h-max px-4 mt-28 sm:mt-64">
+        <section className="w-full h-max px-4 mt-28 sm:mt-64 pb-10">
           <table className="table-auto w-full text-center  max-[280px]:text-xs text-sm sm:text-base">
             <thead className="bg-sky-200 rounded-lg ">
               <tr className="">

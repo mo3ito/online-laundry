@@ -25,25 +25,46 @@ const adminMnuItems = [
         itemName: "افزودن تایپ",
         path: "/admin/clothing/add-clothing",
       },
-
     ],
   },
-  { id: uuidv4(), name: "رانندگان" ,     list: [
-    {
-      id: uuidv4(),
-      itemName: "مشاهده رانندگان",
-      path: "/admin/drivers/show-drivers",
-    },
-    {
-      id: uuidv4(),
-      itemName: "تایید رانندگان",
-      path: "/admin/drivers/unverified-driver",
-    },
-
-
-  ], },
-  { id: uuidv4(), name: "مشتریان" },
-  { id: uuidv4(), name: "گزارشات" },
+  {
+    id: uuidv4(),
+    name: "رانندگان",
+    list: [
+      {
+        id: uuidv4(),
+        itemName: "مشاهده رانندگان",
+        path: "/admin/drivers/show-drivers",
+      },
+      {
+        id: uuidv4(),
+        itemName: "تایید رانندگان",
+        path: "/admin/drivers/unverified-driver",
+      },
+    ],
+  },
+  {
+    id: uuidv4(),
+    name: "مشتریان",
+    list: [
+      {
+        id: uuidv4(),
+        itemName: "مشاهده مشتریان",
+        path: "/admin/customers/show-customers",
+      },
+    ],
+  },
+  {
+    id: uuidv4(),
+    name: "گزارشات",
+    list: [
+      {
+        id: uuidv4(),
+        itemName: "سفارشات پرداخت شده",
+        path: "/admin/reports/paid-orders",
+      },
+    ],
+  },
 ];
 
 export { adminMnuItems };

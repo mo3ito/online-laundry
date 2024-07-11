@@ -9,7 +9,6 @@ export type OrdersInTemplate= {
     created_at: string;
     address: string;
     situation: string;
-    is_done_order: boolean;
     is_pay_money: boolean
   };
   

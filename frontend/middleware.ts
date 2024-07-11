@@ -47,10 +47,17 @@ export async function middleware(request: NextRequest) {
   }
 
   if (
-    pathname === "/driver/orders/send" ||
-    (pathname === "/driver/orders/get" &&
-      tokenValue?.infos?.is_driver &&
-      !tokenValue.infos.is_register_by_admin)
+    pathname === "/driver/orders/get" &&
+    tokenValue?.infos?.is_driver &&
+    !tokenValue.infos?.is_register_by_admin
+  ) {
+    return NextResponse.redirect(new URL("/driver", request.url));
+  }
+
+  if (
+    pathname === "/driver/orders/send" &&
+    tokenValue?.infos?.is_driver &&
+    !tokenValue.infos?.is_register_by_admin
   ) {
     return NextResponse.redirect(new URL("/driver", request.url));
   }
