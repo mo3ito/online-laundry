@@ -52,3 +52,5 @@ export const ADMIN_VERIFY_DRIVER = `${BASE_URL_ADMIN}/verify-driver`;
 export const ADMIN_DELETE_DRIVER = `${BASE_URL_ADMIN}/delete-driver`;
 export const ADMIN_GET_ALL_CUSTOMERS = `${BASE_URL_ADMIN}/get-all-customers`;
 export const ADMIN_GET_ALL_DRIVER = `${BASE_URL_ADMIN}/get-all-drivers`;
+export const ADMIN_GET_ALL_PAID_ORDERS = `${BASE_URL_ADMIN}/paid-orders`
+
