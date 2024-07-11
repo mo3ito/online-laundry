@@ -4,16 +4,51 @@ import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed
 import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import { OrdersTemplate } from "@/types/context/Orders";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ADMIN_GET_ALL_PAID_ORDERS } from "@/routeApi/endpoints";
 
 export default function page() {
   const { infos } = useAuthContext();
+  const [allCountOrders, setAllCountOrders] = useState<number>(0);
+  const [allTotalPrice, setAllTotalPrice] = useState<number>(0);
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
     ADMIN_GET_ALL_PAID_ORDERS,
     ["get all paid orders"]
   );
+
+  useEffect(() => {
+    if (data) {
+      const { count, totalCost } = data.data.reduce(
+        (
+          acc: { count: number; totalCost: number },
+          customer: OrdersTemplate
+        ) => {
+          const customerOrderCount = customer.orders.reduce(
+            (orderAcc, order) => {
+              return {
+                count: orderAcc.count + order.count,
+                totalCost: orderAcc.totalCost + order.totalCost,
+              };
+            },
+            { count: 0, totalCost: 0 }
+          );
+
+          return {
+            count: acc.count + customerOrderCount.count,
+            totalCost: acc.totalCost + customerOrderCount.totalCost,
+          };
+        },
+        { count: 0, totalCost: 0 }
+      );
+
+      setAllCountOrders(count);
+      setAllTotalPrice(totalCost);
+    }
+  }, [data]);
+
+  console.log("allCountOrders", allCountOrders);
+  console.log("allTotalPrice", allTotalPrice);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -32,7 +67,9 @@ export default function page() {
               <article>
                 <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
                   <p>نام</p>
-                  <p className="">{order.name} {order.last_name}</p>
+                  <p className="">
+                    {order.name} {order.last_name}
+                  </p>
                 </div>
                 <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
                   <p>شماره موبایل</p>
