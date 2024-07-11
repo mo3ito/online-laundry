@@ -4,14 +4,14 @@ import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { ADMIN_DELETE_DRIVER } from "@/routeApi/endpoints";
 
+
 const deleteDriverSubmit = async (
   driverId: string,
   setIsLoadingForDeleteDriverResponse: Dispatch<SetStateAction<boolean>>,
   _id: string | undefined,
-  setAllUnverifiedDrivers: Dispatch<SetStateAction<DriversType[] | []>>,
+  setArrayDrivers: Dispatch<SetStateAction<DriversType[] | []>>,
   setIsShowModalDeleteUnverifyDriver: Dispatch<SetStateAction<boolean>>,
-  isUnverified: boolean
-
+  isUnverified: boolean,
 ) => {
   const body = {
     driver_id: driverId,
@@ -19,49 +19,27 @@ const deleteDriverSubmit = async (
 
   try {
     setIsLoadingForDeleteDriverResponse(true);
-    const deleteDriverResponse = await deleteData(
-      ADMIN_DELETE_DRIVER,
-      body,
-      _id
-    );
-    if (deleteDriverResponse.status === 200) {
-        if(isUnverified){
-            const allDriverUnverified = await deleteDriverResponse.data.map(
-                (item: DriversType) => !item.is_register_by_admin
-              );
-              setAllUnverifiedDrivers(allDriverUnverified);
-              setIsLoadingForDeleteDriverResponse(false);
-              setIsShowModalDeleteUnverifyDriver(false);
-              toast.success("راننده با موفقیت حذف شد");
-        }else{
-            const allDriververified = await deleteDriverResponse.data.map(
-                (item: DriversType) => item.is_register_by_admin
-              );
-              setAllUnverifiedDrivers(allDriververified);
-              setIsLoadingForDeleteDriverResponse(false);
-              setIsShowModalDeleteUnverifyDriver(false);
-              toast.success("راننده با موفقیت حذف شد");
-        }
+    const deleteDriverResponse = await deleteData(ADMIN_DELETE_DRIVER, body, _id);
 
+    if (deleteDriverResponse.status === 200) {
+      const updatedDrivers = await deleteDriverResponse.data;
+      const filteredDrivers = updatedDrivers.filter((item: DriversType) =>
+        isUnverified ? !item.is_register_by_admin : item.is_register_by_admin
+      );
+
+      setArrayDrivers(filteredDrivers);
+      toast.success("راننده با موفقیت حذف شد");
     } else {
-      setIsLoadingForDeleteDriverResponse(false);
-      setIsShowModalDeleteUnverifyDriver(false);
+      toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);
-
-    if (error.response && error.response.status === 400) {
-      setIsShowModalDeleteUnverifyDriver(false);
-      setIsLoadingForDeleteDriverResponse(false);
-      const errorMessage: string =
-        error.response.data?.message || "خطایی رخ داده است.";
-      toast.error(errorMessage);
-    } else {
-      setIsShowModalDeleteUnverifyDriver(false);
-      setIsLoadingForDeleteDriverResponse(false);
-      console.log("خطا:", error);
-      toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-    }
+    const errorMessage =
+      error.response?.data?.message || "متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.";
+    toast.error(errorMessage);
+  } finally {
+    setIsLoadingForDeleteDriverResponse(false);
+    setIsShowModalDeleteUnverifyDriver(false);
   }
 };
 

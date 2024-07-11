@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import verifyHandlerDriverSubmit from "@/utils/admin/verifyHandlerDriverSubmit";
 import deleteDriverSubmit from "@/utils/admin/deleteDriverSubmit";
 
-export default function page() {
+export default function Page() {
   const { infos } = useAuthContext();
   const [isShowModalVerify, setIsShowModalVerify] = useState<boolean>(false);
   const [isShowModalDeleteUnverifyDriver, setIsShowModalDeleteUnverifyDriver] =
@@ -33,6 +33,7 @@ export default function page() {
   const [allUnverifiedDrivers, setAllUnverifiedDrivers] = useState<
     DriversType[] | []
   >([]);
+
   useEffect(() => {
     const filterDriver = async () => {
       if (data) {
@@ -50,30 +51,32 @@ export default function page() {
     driverId: string,
     setState: Dispatch<SetStateAction<boolean>>
   ) => {
-    await setDriverId(driverId);
+    console.log(driverId);
+    setDriverId(driverId);
     setState(true);
   };
 
   if (isLoading) {
     return <LoadingPage />;
   }
+
   return (
     <div>
       <ShowHeaderTitleFixed content="رانندگان تایید نشده" />
       {allUnverifiedDrivers?.length > 0 ? (
         <section className="w-full h-max px-4 mt-28 sm:mt-64">
-         
-            <table className="table-auto w-full text-center  max-[280px]:text-xs text-sm sm:text-base">
-              <thead className="bg-sky-200 rounded-lg ">
-                <tr className="">
-                  <th className="py-3">نام و نام خانوادگی</th>
-                  <th className="py-3">شماره موبایل</th>
-                  <th className="py-3">تاریخ ثبت‌نام</th>
-                  <th className="py-3">عملیات</th>
-                </tr>
-              </thead>
-              {allUnverifiedDrivers?.map((item, index) => (<tbody className="bg-sky-300 border border-sky-600">
-                <tr key={item._id}>
+          <table className="table-auto w-full text-center  max-[280px]:text-xs text-sm sm:text-base">
+            <thead className="bg-sky-200 rounded-lg ">
+              <tr className="">
+                <th className="py-3">نام و نام خانوادگی</th>
+                <th className="py-3">شماره موبایل</th>
+                <th className="py-3">تاریخ ثبت‌نام</th>
+                <th className="py-3">عملیات</th>
+              </tr>
+            </thead>
+            {allUnverifiedDrivers?.map((item) => (
+              <tbody className="bg-sky-300 border border-sky-600" key={item._id}>
+                <tr>
                   <td className="py-2">
                     {item.name} {item.last_name}
                   </td>
@@ -85,7 +88,7 @@ export default function page() {
                         onClick={() =>
                           verifyDeleteHandler(item._id, setIsShowModalVerify)
                         }
-                        className="w-1/2 bg-green-500 h-10 px-2 rounded-lg"
+                        className="w-1/2 !bg-green-500 h-10 px-2 rounded-lg"
                         content="تایید"
                         isLoading={isLoadingForVerifyResponse}
                       />
@@ -96,16 +99,16 @@ export default function page() {
                             setIsShowModalDeleteUnverifyDriver
                           )
                         }
-                        className="w-1/2 bg-red-400 h-10 px-2 rounded-lg"
+                        className="w-1/2 !bg-red-400 h-10 px-2 rounded-lg"
                         content="حذف"
                         isLoading={isLoadingForDeleteDriverResponse}
                       />
                     </div>
                   </td>
                 </tr>
-              </tbody>))}
-            </table>
-          
+              </tbody>
+            ))}
+          </table>
         </section>
       ) : (
         <p className="mt-72 text-center">
@@ -137,7 +140,8 @@ export default function page() {
             infos?._id,
             setAllUnverifiedDrivers,
             setIsShowModalDeleteUnverifyDriver,
-            true
+            true,
+           
           )
         }
       />

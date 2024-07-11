@@ -9,6 +9,7 @@ import { DRIVER_GET_ALL_DRIVER } from "@/routeApi/endpoints";
 import Modal from "@/components/Modal";
 import DefaultButton from "@/components/share/defaultButton";
 import deleteDriverSubmit from "@/utils/admin/deleteDriverSubmit";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const { infos } = useAuthContext();
@@ -27,6 +28,7 @@ export default function page() {
     DriversType[] | []
   >([]);
   const [driverId, setDriverId] = useState<string>("");
+  const router = useRouter()
   useEffect(() => {
     const filterDriver = async () => {
       if (data) {
@@ -67,8 +69,8 @@ export default function page() {
               </tr>
             </thead>
             {allDriverRegistered?.map((item, index) => (
-              <tbody className="bg-sky-300 border border-sky-600">
-                <tr key={item._id}>
+              <tbody key={item._id} className="bg-sky-300 border border-sky-600">
+                <tr >
                   <td className="py-2">
                     {index + 1}
                   </td>
@@ -85,7 +87,7 @@ export default function page() {
                           setIsShowModalDeleteUnverifyDriver
                         )
                       }
-                      className="bg-red-400 w-full py-1 rounded-lg"
+                      className="!bg-red-400 w-full py-1 rounded-lg"
                       content="حذف"
                       isLoading={isLoadingForDeleteDriverResponse}
                     />
@@ -105,12 +107,12 @@ export default function page() {
         confirmOnClick={() =>
           deleteDriverSubmit(
             driverId,
-            setDriverId,
             setIsLoadingForDeleteDriverResponse,
             infos?._id,
             setAllDriverRegistered,
             setIsShowModalDeleteUnverifyDriver,
             false
+
           )
         }
       />
