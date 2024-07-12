@@ -52,15 +52,17 @@ export default function page() {
   }
 
   return (
-    <main>
+    <main className="mt-32 md:mt-64  pb-10">
       <ShowHeaderTitleFixed content="مشتریان" />
-      {allCountOrders && allTotalPrice && (
-        <section className="mt-28 sm:mt-64 px-4 text-sm sm:text-base">
-          <p>تعداد کل سفارشات : {allCountOrders} عدد</p>
-          <p>مبلغ کل سفارشات : {allTotalPrice.toLocaleString("en-US")} تومان</p>
+      
+        <section className=" px-4 text-sm sm:text-base">
+        {allCountOrders && allTotalPrice &&
+        <>
+         <p className="">تعداد کل سفارشات : {allCountOrders} عدد</p>
+          <p>مبلغ کل سفارشات : {allTotalPrice.toLocaleString("en-US")} تومان</p> </> }
         </section>
-      )}
-      <section className="w-full h-max px-4 mt-6 pb-10">
+     
+      <section className="w-full h-max px-4 mt-6">
         <ul className="w-full h-max   ">
           {data?.data?.map((order: OrdersTemplate) => (
             <li

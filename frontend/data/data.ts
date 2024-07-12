@@ -65,6 +65,17 @@ const adminMnuItems = [
       },
     ],
   },
+  {
+    id: uuidv4(),
+    name: "امکانات",
+    list: [
+      {
+        id: uuidv4(),
+        itemName: "Qr",
+        path: "/admin/reports/paid-orders",
+      },
+    ],
+  },
 ];
 
 export { adminMnuItems };

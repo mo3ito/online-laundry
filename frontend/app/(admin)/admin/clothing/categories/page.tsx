@@ -52,7 +52,7 @@ export default function page() {
   return (
     <>
       <ShowHeaderTitleFixed content="دسته‌بندی‌ها" />
-      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-10 sm:mt-44 pb-20 px-4">
+      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-10 md:mt-44 pb-20 px-4">
         <section className="mt-20 w-full h-max ">
           {allcategory?.map((item: ClothingCategoryType) => (
             <div

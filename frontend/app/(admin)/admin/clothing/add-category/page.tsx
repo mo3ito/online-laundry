@@ -22,7 +22,7 @@ export default function page() {
     <>
       <ShowHeaderTitleFixed content="افزودن دسته‌بندی" />
       <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center  pb-20 px-4">
-        <div className=" mt-32 sm:mt-64">
+        <div className=" mt-32 md:mt-64">
           <form
             onSubmit={(event) =>
               addCategorySubmitHandler(

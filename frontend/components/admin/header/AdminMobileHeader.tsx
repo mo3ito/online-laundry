@@ -33,7 +33,7 @@ export default function AdminMobileHeader() {
   };
 
   return (
-    <section className="w-full h-14 bg-sky-500 sm:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between px-4">
+    <section className="w-full h-14 bg-sky-500 md:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between px-4">
       <button
         onClick={() => setIsSideMenu((prev) => !prev)}
         className="size-max "

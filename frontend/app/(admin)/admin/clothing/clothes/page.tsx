@@ -73,9 +73,9 @@ export default function page() {
 
   return (
     <>
-      <ShowHeaderTitleFixed content="لباس‌ها" />
-      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-16 sm:mt-56 pb-20 px-4">
-        <section className="bg-slate-100 w-full h-48 sticky top-28 sm:top-56 flex items-center justify-center z-40">
+      <ShowHeaderTitleFixed content="تایپ‌ها" />
+      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-16 md:mt-56 pb-20 px-4">
+        <section className="bg-slate-100 w-full h-48 sticky top-28 md:top-56 flex items-center justify-center z-40">
           <SwiperShowListPrice
             currentCategory={currentCategory}
             setCurrentCategory={setCurrentCategory}
@@ -86,7 +86,7 @@ export default function page() {
         </section>
 
         {
-          <section className=" mt-10 sm:mt-2 w-full h-max ">
+          <section className=" mt-10 md:mt-2 w-full h-max ">
             {allTypes?.map((item: InformationClothingsItemProps) => (
               <div
                 key={item._id}

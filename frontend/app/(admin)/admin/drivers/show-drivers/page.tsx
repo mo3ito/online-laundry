@@ -57,7 +57,7 @@ export default function page() {
     <div>
       <ShowHeaderTitleFixed content="رانندگان" />
       {allDriverRegistered?.length > 0 ? (
-        <section className="w-full h-max px-4 mt-28 sm:mt-64 pb-10">
+        <section className="w-full h-max px-4 mt-28 md:mt-64 pb-10">
           <table className="table-auto w-full text-center  max-[280px]:text-[10px] text-sm sm:text-base">
             <thead className="bg-sky-200 rounded-lg ">
               <tr className="">

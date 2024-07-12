@@ -20,17 +20,17 @@ export default function Page() {
   }
 
   return (
-    <main>
+    <main className="mt-32 md:mt-64 px-4">
       <ShowHeaderTitleFixed content="مشتریان" />
       {data?.data.length > 0 && (
-        <section className="mt-28 sm:mt-64 px-4">
+        <section className="">
           <h1 className="text-sm sm:text-base">
             تعداد کل مشتری‌ها: {data?.data.length} عدد
           </h1>
         </section>
       )}
       {data?.data?.length > 0 ? (
-        <section className="w-full h-max px-4 mt-6">
+        <section className="w-full h-max  mt-6">
           <table className="table-auto w-full text-center max-[280px]:text-[10px] text-sm sm:text-base">
             <thead className="bg-sky-200 rounded-lg">
               <tr>
