@@ -72,7 +72,7 @@ const adminMnuItems = [
       {
         id: uuidv4(),
         itemName: "Qr",
-        path: "/admin/reports/paid-orders",
+        path: "/admin/qr-code",
       },
     ],
   },
