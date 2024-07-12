@@ -169,18 +169,10 @@ const paidOrders = async (req, res) => {
 
     const paidOrders = await OrdersModel.find({ is_pay_money: true });
 
-    // if (paidOrders.length === 0) {
-    //   return res.status(200).json({
-    //     message: "سفارشی با وضعیت پرداخت شده یافت نشد",
-    //   });
-    // }
-
     await PaidOrdersModel.insertMany(paidOrders);
 
     await OrdersModel.deleteMany({ is_pay_money: true });
-    const allPaidOrders = await PaidOrdersModel.find({})
-
-
+    const allPaidOrders = await PaidOrdersModel.find({});
 
     res.status(200).json(allPaidOrders);
   } catch (error) {
@@ -191,4 +183,62 @@ const paidOrders = async (req, res) => {
   }
 };
 
-module.exports = { getAllDriver, verifyDriver, deleteDriver, getAlcustomers , paidOrders };
+const gotOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const orders = await OrdersModel.find({});
+
+    const gotOrders = await orders.filter((item) =>
+      item.orders.every((item) => item.situation === "تحویل گرفته شده")
+    );
+
+    return res.status(200).json(gotOrders);
+  } catch (error) {
+    console.error("خطا در انتقال سفارشات پرداخت شده:", error);
+    res.status(500).json({
+      message: "خطایی در انتقال سفارشات پرداخت شده رخ داد",
+    });
+  }
+};
+
+const deleteOrder = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { orderId } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    await OrdersModel.findByIdAndDelete(orderId);
+
+    const orders = await OrdersModel.find({});
+
+    return res.status(200).json(orders);
+  } catch (error) {
+    console.error("خطا در انتقال سفارشات پرداخت شده:", error);
+    res.status(500).json({
+      message: "خطایی در انتقال سفارشات پرداخت شده رخ داد",
+    });
+  }
+};
+module.exports = {
+  getAllDriver,
+  verifyDriver,
+  deleteDriver,
+  getAlcustomers,
+  paidOrders,
+  gotOrders,
+  deleteOrder
+};

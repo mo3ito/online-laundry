@@ -11,6 +11,8 @@ const {
   deleteDriver,
   getAlcustomers,
   paidOrders,
+  gotOrders,
+  deleteOrder,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -20,4 +22,6 @@ router.put("/admin/verify-driver", verifyDriver);
 router.delete("/admin/delete-driver", deleteDriver);
 router.get("/admin/get-all-customers", getAlcustomers);
 router.get("/admin/paid-orders", paidOrders);
+router.get("/admin/got-orders", gotOrders);
+router.delete("/admin/delete-order", deleteOrder);
 module.exports = router;
