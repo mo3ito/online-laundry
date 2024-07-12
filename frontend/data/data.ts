@@ -71,7 +71,7 @@ const adminMnuItems = [
     list: [
       {
         id: uuidv4(),
-        itemName: "Qr",
+        itemName: "QR code",
         path: "/admin/qr-code",
       },
     ],

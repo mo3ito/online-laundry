@@ -41,12 +41,11 @@ export default function QRCodeLinkShower({
   }
 
   return (
-    <div className="container mx-auto">
-      <p className="translate-y-48 font-semibold text-center max-xs:text-sm text-base md:text-lg lg:text-xl xl:text-2xl">
-        {content}
-      </p>
-      <div className="mt-52  px-6 mx-auto border flex items-center justify-center flex-col gap-y-3 py-12 shadow-lg rounded-lg border-sky-400 w-11/12 sm:w-8/12 md:w-8/12 lg:w-7/12   xl:w-6/12 2xl:w-5/12">
+    <div className="container mx-auto">     
+      <div className="mt-20 px-6 mx-auto border flex items-center justify-center flex-col gap-y-3 py-12 shadow-lg rounded-lg border-sky-400 w-11/12 sm:w-8/12 md:w-8/12 lg:w-7/12   xl:w-6/12 2xl:w-5/12">
         {qrCodeData && (
+            <>
+             <p className=" text-base md:text-xl">{content}</p>
           <div className=" max-xs:!w-28  !w-36  md:!w-40  lg:!w-44  xl:!w-48  2xl:!w-52 ">
             <div id="qrcode">
               <QRCode
@@ -65,13 +64,14 @@ export default function QRCodeLinkShower({
               className="border bg-sky-400 border-sky-500-400 py-1 rounded-lg cursor-pointer w-full text-[10px] sm:text-sm md:text-base mt-2 sm:mt-4"
               onClick={handleDownload}
             >
-              Download QR Code
+             دانلود QR code
             </button>
           </div>
+          </>
         )}
         <div className="mt-4">
           <p className="text-center text-xs  sm:text-sm md:text-base font-semibold mb-2">
-            your link
+            لینک شما
           </p>
           <button
             title="click to copy"
