@@ -63,6 +63,11 @@ const adminMnuItems = [
         itemName: "سفارشات پرداخت شده",
         path: "/admin/reports/paid-orders",
       },
+      {
+        id: uuidv4(),
+        itemName: "سفارشات تحویل گرفته شده",
+        path: "/admin/reports/got-orders",
+      },
     ],
   },
   {

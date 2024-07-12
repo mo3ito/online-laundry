@@ -121,7 +121,7 @@ export default function AdminScreenHeader() {
                   {item.list?.map((listItem) => (
                     <li
                       key={listItem.id}
-                      className="w-full h-10 hover:bg-sky-200  border-b border-sky-200"
+                      className="w-full h-12 hover:bg-sky-200  border-b border-sky-200"
                     >
                       <Link
                         href={listItem.path}
