@@ -13,6 +13,7 @@ const {
   paidOrders,
   gotOrders,
   deleteOrder,
+  deletePaidOrder,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -24,4 +25,6 @@ router.get("/admin/get-all-customers", getAlcustomers);
 router.get("/admin/paid-orders", paidOrders);
 router.get("/admin/got-orders", gotOrders);
 router.delete("/admin/delete-order", deleteOrder);
+router.delete("/admin/delete-paid-order", deletePaidOrder);
+
 module.exports = router;

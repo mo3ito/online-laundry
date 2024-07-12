@@ -233,6 +233,31 @@ const deleteOrder = async (req, res) => {
     });
   }
 };
+
+const deletePaidOrder = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { orderId } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    await PaidOrdersModel.findByIdAndDelete(orderId);
+
+    const orders = await PaidOrdersModel.find({});
+
+    return res.status(200).json(orders);
+  } catch (error) {
+    console.error("خطا در انتقال سفارشات پرداخت شده:", error);
+    res.status(500).json({
+      message: "خطایی در انتقال سفارشات پرداخت شده رخ داد",
+    });
+  }
+};
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -240,5 +265,6 @@ module.exports = {
   getAlcustomers,
   paidOrders,
   gotOrders,
-  deleteOrder
+  deleteOrder,
+  deletePaidOrder
 };
