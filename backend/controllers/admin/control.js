@@ -156,6 +156,28 @@ const getAllDriver = async (req, res) => {
   }
 };
 
+const getAllOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const allOrders = await OrdersModel.find({});
+
+    return res.status(200).json(allOrders);
+  } catch (error) {
+    console.error("error:", error.message);
+    return res.status(500).json({
+      message: "خطایی رخ داد",
+    });
+  }
+};
+
 const paidOrders = async (req, res) => {
   const adminId = req.headers.authorization;
 
@@ -266,5 +288,6 @@ module.exports = {
   paidOrders,
   gotOrders,
   deleteOrder,
-  deletePaidOrder
+  deletePaidOrder,
+  getAllOrders
 };

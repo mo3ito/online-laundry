@@ -14,6 +14,7 @@ const {
   gotOrders,
   deleteOrder,
   deletePaidOrder,
+  getAllOrders,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -26,5 +27,6 @@ router.get("/admin/paid-orders", paidOrders);
 router.get("/admin/got-orders", gotOrders);
 router.delete("/admin/delete-order", deleteOrder);
 router.delete("/admin/delete-paid-order", deletePaidOrder);
+router.get("/admin/get-all-orders", getAllOrders);
 
 module.exports = router;
