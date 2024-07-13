@@ -12,6 +12,7 @@ export default function page() {
       idDeleteButton={true}
       dleteOrderApi={ADMIN_DELETE_PAID_ORDERS}
       headersPage="سفارشات پرداخت شده"
+      emptyMessage="هیچ سفارش پرداخت شده‌ای وجود ندارد"
     />
   );
 }

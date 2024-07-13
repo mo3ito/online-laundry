@@ -53,9 +53,9 @@ export default function QRCodeLinkShower({
                   size={300}
                   value={qrCodeData}
                   imageSettings={{
-                    src: "/images/eyeRoll_logo.png",
-                    height: 60,
-                    width: 70,
+                    src: "/images/tshirt_2887535.png",
+                    height: 50,
+                    width: 60,
                     excavate: true,
                   }}
                 />

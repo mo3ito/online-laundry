@@ -9,6 +9,7 @@ export default function page() {
       idDeleteButton={true}
       dleteOrderApi={ADMIN_DELETE_ORDERS}
       headersPage="سفارشات تحویل گرفته شده"
+      emptyMessage="هیچ سفارش تحویل گرفته شده‌ای وجود ندارد"
     />
   );
 }
