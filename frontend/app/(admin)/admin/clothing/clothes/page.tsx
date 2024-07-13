@@ -74,18 +74,18 @@ export default function page() {
   return (
     <>
       <ShowHeaderTitleFixed content="تایپ‌ها" />
-      <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-16 md:mt-56 pb-20 px-4">
-        <section className="bg-slate-100 w-full h-48 sticky top-28 md:top-56 flex items-center justify-center z-40">
-          <SwiperShowListPrice
-            currentCategory={currentCategory}
-            setCurrentCategory={setCurrentCategory}
-            allGroupTypeData={allGroupTypeData}
-            setTypeCategory={setTypeCategory}
-            setShowDetails={setShowDetails}
-          />
-        </section>
+      {!!allTypes ? (
+        <div className="container min-h-screen h-max  mx-auto  flex flex-col items-center mt-16 md:mt-56 pb-20 px-4">
+          <section className="bg-slate-100 w-full h-48 sticky top-28 md:top-56 flex items-center justify-center z-40">
+            <SwiperShowListPrice
+              currentCategory={currentCategory}
+              setCurrentCategory={setCurrentCategory}
+              allGroupTypeData={allGroupTypeData}
+              setTypeCategory={setTypeCategory}
+              setShowDetails={setShowDetails}
+            />
+          </section>
 
-        {
           <section className=" mt-10 md:mt-2 w-full h-max ">
             {allTypes?.map((item: InformationClothingsItemProps) => (
               <div
@@ -112,22 +112,27 @@ export default function page() {
               </div>
             ))}
           </section>
-        }
-        <Modal
-          messageContent="آیا از حذف اطمینان دارید؟"
-          isShowModal={isShowModalForDeleteType}
-          setIsShowModal={setIsShowModalForDeleteType}
-          confirmOnClick={() =>
-            deleteTypeClothingHandler(
-              typeClothinginfos,
-              setAllTypes,
-              setIsShowModalForDeleteType,
-              infos?._id,
-              currentCategory
-            )
-          }
-        />
-      </div>
+
+          <Modal
+            messageContent="آیا از حذف اطمینان دارید؟"
+            isShowModal={isShowModalForDeleteType}
+            setIsShowModal={setIsShowModalForDeleteType}
+            confirmOnClick={() =>
+              deleteTypeClothingHandler(
+                typeClothinginfos,
+                setAllTypes,
+                setIsShowModalForDeleteType,
+                infos?._id,
+                currentCategory
+              )
+            }
+          />
+        </div>
+      ) : (
+        <p className="text-center pt-20 max-[280px]:text-sm text-base sm:text-lg mt-16 md:mt-56">
+          هیچ تایپ لباسی وجود ندارد
+        </p>
+      )}
     </>
   );
 }

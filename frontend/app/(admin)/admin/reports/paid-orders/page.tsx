@@ -1,4 +1,4 @@
-import ShowOrdersForadmin from "@/components/admin/showOrdersForAdmin";
+import ShowOrdersForadmin from "@/components/admin/ShowOrdersForAdmin";
 import React from "react";
 import {
   ADMIN_ALL_PAID_ORDERS,
