@@ -29,7 +29,7 @@ export default function InformationClothingsItem(
 
         <img
           className="size-24 sm:size-32 rounded-xl p-2"
-          src={props.image_url ? props.image_url : "/images/no-image.jpg"}
+          src={props.image_url ? props.image_url : "/images/no-photo.png"}
           alt={`عکس ${props.type}`}
         />
       </Link>

@@ -13,7 +13,7 @@ export default function SwiperMenu({
   return (
     <>
       {allCategoryWithoutCurrent ? (
-        <div className="w-full h-40  px-8 flex items-center justify-center bg-white ">
+        <div className="w-full h-40  px-8bg-white ">
           <Swiper
             slidesPerView={1}
             spaceBetween={10}
@@ -52,7 +52,7 @@ export default function SwiperMenu({
                         src={
                           category.image_url
                             ? category.image_url
-                            : "/images/no-image.jpg"
+                            : "/images/no-photo.png"
                         }
                         alt={`عکس ${category.name}`}
                       />

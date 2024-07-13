@@ -63,7 +63,7 @@ export default function SwiperShowListPrice(props: SwiperShowListPriceProps) {
                     >
                       <img
                         className="size-full rounded-xl"
-                        src={category.image_url || "/images/no-image.jpg"}
+                        src={category.image_url || "/images/no-photo.png"}
                         alt={`عکس ${category.name}`}
                       />
                       <figcaption className="text-center mt-3">

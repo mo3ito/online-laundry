@@ -95,7 +95,7 @@ export default function page() {
                 <div className="flex items-center justify-center gap-x-2">
                   <img
                     className="size-16"
-                    src={item.image_url || "/images/no-image.jpg"}
+                    src={item.image_url || "/images/no-photo.png"}
                     alt={item.type}
                   />
                   <div className="">

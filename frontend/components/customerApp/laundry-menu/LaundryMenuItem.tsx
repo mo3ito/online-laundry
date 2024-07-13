@@ -24,7 +24,7 @@ export default function MenuItem({
       <Link href={`/application/group/${englishNameCategory}`} className="size-full">
         <figure className="size-full ">
           <img
-            src={srcImage ? srcImage : "/images/no-image.jpg"}
+            src={srcImage ? srcImage : "/images/no-photo.png"}
             className=" rounded-xl size-32 sm:size-44"
             alt={`عکس لباس ${imageCaption}`}
           />

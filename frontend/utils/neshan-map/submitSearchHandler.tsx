@@ -41,6 +41,8 @@ const submitSearchHandler = async (
         setIsLoadingSearch(false);
         console.error("Location not found");
       }
+    }else{
+      setIsLoadingSearch(false);
     }
   } catch (error) {
     setIsLoadingSearch(false);

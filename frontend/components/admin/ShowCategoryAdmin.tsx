@@ -19,7 +19,7 @@ export default function ShowCategoryAdmin({
         >
           <figure className="p-2 rounded-xl flex items-center gap-x-4">
             <img
-              src={item.image_url || "/images/no-image.jpg"}
+              src={item.image_url || "/images/no-photo.png"}
               className="rounded-xl  max-[280px]:size-24 size-28"
               alt={`عکس ${item.type}`}
             />
