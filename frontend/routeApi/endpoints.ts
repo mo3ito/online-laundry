@@ -57,5 +57,6 @@ export const ADMIN_GOT_ORDERS = `${BASE_URL_ADMIN}/got-orders`
 export const ADMIN_DELETE_ORDERS = `${BASE_URL_ADMIN}/delete-order`
 export const ADMIN_DELETE_PAID_ORDERS = `${BASE_URL_ADMIN}/delete-paid-order`
 export const ADMIN_ALL_PAID_ORDERS = `${BASE_URL_ADMIN}/paid-orders`
+export const ADMIN_GET_ALL_ORDERS = `${BASE_URL_ADMIN}/get-all-orders`
 
 
