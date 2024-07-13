@@ -1,12 +1,16 @@
 import React from "react";
 import ShowImagesForAdmin from "@/components/admin/ShowImagesForAdmin";
+import {
+  ADMIN_GET_ALL_TYPE_IMAGES,
+  ADMIN_DELETE_TYPE_IMAGES,
+} from "@/routeApi/endpoints";
 
 export default function page() {
   return (
     <ShowImagesForAdmin
-      deleteImageApi="http://localhost:4000/admin/delete-type-image"
-      getAllImageApi="http://localhost:4000/admin/get-all-type-images"
-      headersPage="عکس‌های دسته‌بندی"
+      deleteImageApi={ADMIN_DELETE_TYPE_IMAGES}
+      getAllImageApi={ADMIN_GET_ALL_TYPE_IMAGES}
+      headersPage="عکس‌های تایپ‌های لباس"
     />
   );
 }

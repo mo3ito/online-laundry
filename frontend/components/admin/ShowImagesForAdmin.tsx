@@ -56,7 +56,7 @@ export default function ShowImagesForAdmin({
               key={item._id}
               className="w-full h-max bg-sky-200 p-2 flex items-center justify-between px-3 rounded-lg mb-2 max-[480px]:text-xs text-sm sm:text-base "
             >
-              <figure className="flex flex-col  sm:flex-row items-center gap-x-3 ">
+              <figure className="flex flex-col  sm:flex-row sm:items-center gap-x-3 ">
                 <img
                   className="size-20 "
                   src={item.image_url}

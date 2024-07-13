@@ -58,5 +58,5 @@ export const ADMIN_DELETE_ORDERS = `${BASE_URL_ADMIN}/delete-order`
 export const ADMIN_DELETE_PAID_ORDERS = `${BASE_URL_ADMIN}/delete-paid-order`
 export const ADMIN_ALL_PAID_ORDERS = `${BASE_URL_ADMIN}/paid-orders`
 export const ADMIN_GET_ALL_ORDERS = `${BASE_URL_ADMIN}/get-all-orders`
-
-
+export const ADMIN_GET_ALL_TYPE_IMAGES = `${BASE_URL_ADMIN}/get-all-type-images`
+export const ADMIN_DELETE_TYPE_IMAGES = `${BASE_URL_ADMIN}/delete-type-image`
