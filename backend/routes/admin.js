@@ -15,6 +15,7 @@ const {
   deleteOrder,
   deletePaidOrder,
   getAllOrders,
+  getAllCategoryImages
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -28,5 +29,7 @@ router.get("/admin/got-orders", gotOrders);
 router.delete("/admin/delete-order", deleteOrder);
 router.delete("/admin/delete-paid-order", deletePaidOrder);
 router.get("/admin/get-all-orders", getAllOrders);
+router.get("/admin/get-all-category-images",getAllCategoryImages)
+
 
 module.exports = router;

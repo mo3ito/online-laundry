@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+const getAllImages = require("../../utils/getAllImages");
 const DriverModel = require("../../models/driver/DriverModel");
 const AdminModel = require("../../models/admin/AdminModel");
 const CustomerModel = require("../../models/customer/CustomerModel");
@@ -280,6 +283,38 @@ const deletePaidOrder = async (req, res) => {
     });
   }
 };
+
+const getAllCategoryImages = async (req, res) => {
+  const adminId = req.headers.authorization;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    try {
+      const images = await getAllImages(
+        "public/images/clothing-category",
+        "clothing-category"
+      );
+      res.status(200).json({ images: images });
+    } catch (err) {
+      console.error("Error in getAllImages:", err);
+      res.status(500).json({
+        message: "خطا در خواندن دایرکتوری",
+      });
+    }
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -289,5 +324,6 @@ module.exports = {
   gotOrders,
   deleteOrder,
   deletePaidOrder,
-  getAllOrders
+  getAllOrders,
+  getAllCategoryImages,
 };
