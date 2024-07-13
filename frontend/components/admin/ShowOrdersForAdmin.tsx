@@ -7,20 +7,12 @@ import { OrdersTemplate } from "@/types/context/Orders";
 import React, { useEffect, useState } from "react";
 import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
-
+import { ShowOrdersForadminProps } from "@/types/admin";
 import deleteOrderHandler from "@/utils/admin/deleteOrderHandler";
-
-type ShowOrdersForadminProps = {
-  ordersApi: string;
-  idDeleteButton: boolean;
-  dleteOrderApi: string;
-  headersPage: string;
-  emptyMessage: string;
-};
 
 export default function ShowOrdersForadmin({
   ordersApi,
-  idDeleteButton = false,
+  isDeleteButton = false,
   dleteOrderApi,
   headersPage,
   emptyMessage,
@@ -170,9 +162,12 @@ export default function ShowOrdersForadmin({
           </ul>
         </section>
       ) : (
-        <p className="text-center pt-20 max-[280px]:text-sm text-base sm:text-lg"> {emptyMessage} </p>
+        <p className="text-center pt-20 max-[280px]:text-sm text-base sm:text-lg">
+          {" "}
+          {emptyMessage}{" "}
+        </p>
       )}
-      {idDeleteButton && (
+      {isDeleteButton && (
         <Modal
           messageContent="آیا از حذف اطمینان دارید؟"
           isShowModal={isShowModalDeleteGotOrder}

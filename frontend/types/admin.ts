@@ -43,3 +43,12 @@ export type CustomersType = {
   orders: [];
   created_at_shamsi: "string";
 };
+
+
+ export type ShowOrdersForadminProps = {
+  ordersApi: string;
+  isDeleteButton: boolean;
+  dleteOrderApi: string;
+  headersPage: string;
+  emptyMessage: string;
+};

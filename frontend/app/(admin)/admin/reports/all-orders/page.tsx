@@ -6,7 +6,7 @@ export default function page() {
   return (
     <ShowOrdersForadmin
     ordersApi={"http://localhost:4000/admin/get-all-orders"}
-    idDeleteButton={true}
+    isDeleteButton={true}
     dleteOrderApi={ADMIN_DELETE_ORDERS}
     headersPage="سفارشات تحویل گرفته شده"
     emptyMessage="هیچ سفارشی وجود ندارد"
