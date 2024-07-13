@@ -1,4 +1,5 @@
 const fs = require("fs").promises;
+const { v4: uuidv4 } = require('uuid');
 
 const getAllImages = async (pathImages, ImagesFolderName) => {
   try {
@@ -9,6 +10,7 @@ const getAllImages = async (pathImages, ImagesFolderName) => {
     );
 
     let allImages = images.map((item) => ({
+      _id: uuidv4(),  
       image_name: item,
       image_url: `${process.env.HOST}:${process.env.PORT}/images/${ImagesFolderName}/${item}`,
     }));

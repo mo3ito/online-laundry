@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 const getAllImages = require("../../utils/getAllImages");
 const DriverModel = require("../../models/driver/DriverModel");
@@ -315,6 +315,103 @@ const getAllCategoryImages = async (req, res) => {
   }
 };
 
+const getAllTypeImages = async (req, res) => {
+  const adminId = req.headers.authorization;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    try {
+      const images = await getAllImages(
+        "public/images/clothing-types",
+        "clothing-types"
+      );
+      res.status(200).json({ images: images });
+    } catch (err) {
+      console.error("Error in getAllImages:", err);
+      res.status(500).json({
+        message: "خطا در خواندن دایرکتوری",
+      });
+    }
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+const deleteCategoryImage = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { image_name } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const imagePath = path.join(
+      __dirname,
+      "../../public/images/clothing-category",
+      image_name
+    );
+
+    await fs.unlink(imagePath);
+
+    const images = await getAllImages(
+      "public/images/clothing-category",
+      "clothing-category"
+    );
+    res.status(200).json({ images: images });
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+const deleteTypeImage = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { image_name } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const imagePath = path.join(
+      __dirname,
+      "../../public/images/clothing-types",
+      image_name
+    );
+
+    await fs.unlink(imagePath);
+
+    const images = await getAllImages(
+      "public/images/clothing-types",
+      "clothing-types"
+    );
+    res.status(200).json({ images: images });
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -326,4 +423,7 @@ module.exports = {
   deletePaidOrder,
   getAllOrders,
   getAllCategoryImages,
+  getAllTypeImages,
+  deleteCategoryImage,
+  deleteTypeImage,
 };
