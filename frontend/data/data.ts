@@ -25,6 +25,11 @@ const adminMnuItems = [
         itemName: "افزودن تایپ",
         path: "/admin/clothing/add-clothing",
       },
+      {
+        id: uuidv4(),
+        itemName: "عکس‌های دسته‌بندی",
+        path: "/admin/clothing/category-image-show",
+      },
     ],
   },
   {
