@@ -11,6 +11,7 @@ export default function page() {
       deleteImageApi={ADMIN_DELETE_CATEGORY_IMAGES}
       getAllImageApi={ADMIN_GET_ALL_CATEGORY_IMAGES}
       headersPage="عکس‌های دسته‌بندی"
+      emptyMessage="هیچ عکسی برای دسته‌بندی وجود ندارد"
     />
   );
 }

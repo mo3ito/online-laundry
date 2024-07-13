@@ -11,6 +11,7 @@ export default function page() {
       deleteImageApi={ADMIN_DELETE_TYPE_IMAGES}
       getAllImageApi={ADMIN_GET_ALL_TYPE_IMAGES}
       headersPage="عکس‌های تایپ‌های لباس"
+      emptyMessage="هیچ عکسی برای تایپ لباس وجود ندارد"
     />
   );
 }
