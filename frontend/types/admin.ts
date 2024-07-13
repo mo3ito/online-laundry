@@ -57,3 +57,11 @@ export type AllDataImagesType = {
   image_name: string;
   image_url: string;
 };
+
+
+export type ShowImagesForAdminProps = {
+  deleteImageApi: string;
+  getAllImageApi: string;
+  headersPage: string;
+  emptyMessage: string;
+};

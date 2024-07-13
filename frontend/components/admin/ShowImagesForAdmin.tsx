@@ -8,13 +8,7 @@ import Modal from "@/components/Modal";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { AllDataImagesType } from "@/types/admin";
 import deleteImageHandler from "@/utils/admin/deleteImageHandler";
-
-type ShowImagesForAdminProps = {
-  deleteImageApi: string;
-  getAllImageApi: string;
-  headersPage: string;
-  emptyMessage: string;
-};
+import { ShowImagesForAdminProps } from "@/types/admin";
 
 export default function ShowImagesForAdmin({
   deleteImageApi,
