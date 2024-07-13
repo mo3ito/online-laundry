@@ -30,6 +30,11 @@ const adminMnuItems = [
         itemName: "عکس‌های دسته‌بندی",
         path: "/admin/clothing/category-image-show",
       },
+      {
+        id: uuidv4(),
+        itemName: "عکس‌های تایپ‌ها",
+        path: "/admin/clothing/type-image-show",
+      },
     ],
   },
   {

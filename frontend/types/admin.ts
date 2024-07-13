@@ -44,11 +44,16 @@ export type CustomersType = {
   created_at_shamsi: "string";
 };
 
-
- export type ShowOrdersForadminProps = {
+export type ShowOrdersForadminProps = {
   ordersApi: string;
   isDeleteButton: boolean;
   dleteOrderApi: string;
   headersPage: string;
   emptyMessage: string;
+};
+
+export type AllDataImagesType = {
+  _id: string;
+  image_name: string;
+  image_url: string;
 };
