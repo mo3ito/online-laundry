@@ -3,7 +3,6 @@ import { useState, useRef, useCallback, ChangeEvent } from "react";
 import NeshanMap, {
   NeshanMapRef,
 } from "@neshan-maps-platform/react-openlayers";
-import LoadingPage from "../Loading/LoadingPage";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
@@ -23,7 +22,8 @@ export default function Neshan() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState<boolean>(false);
   const { infos, login } = useAuthContext();
-  const { orders, setTotalNumber, setOrders , setRegisteredOrders } = useOrderCardContext();
+  const { orders, setTotalNumber, setOrders, setRegisteredOrders } =
+    useOrderCardContext();
   const router = useRouter();
   useMapCenter(mapRef, setLatLong);
 

@@ -55,6 +55,8 @@ const confirmAddressHandler = async (
           setOrders([]);
           router.push("/application/order/registered-orders");
         }
+      }else{
+        setIsLoading(false);
       }
     }
   } catch (error: any) {

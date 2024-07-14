@@ -28,6 +28,8 @@ const findDestination = async (
       });
       setRoutes(response?.data?.routes);
       setIsLoadingForRoutes(false);
+    }else{
+      setIsLoadingForRoutes(false);
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);
