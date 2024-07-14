@@ -31,7 +31,7 @@ export default function Header() {
           />
           <LogoutButton onClick={() => setIsShowModalExit(true)} />
         </div>
-        <IncreaseCredit />
+        {/* <IncreaseCredit /> */}
       </header>
       <Modal
         messageContent="آیا از خروج اطمینان دارید؟"
