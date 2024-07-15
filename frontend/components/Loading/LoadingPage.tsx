@@ -2,7 +2,7 @@ import React from "react";
 
 export default function LoadingPage() {
   return (
-    <div className="fixed inset-0 w-full h-screen bg-slate-100 z-50 overflow-auto backdrop-blur flex flex-col justify-center items-center">
+    <div className="fixed inset-0 w-full h-screen bg-slate-100 z-50 backdrop-blur flex flex-col justify-center items-center">
       
         <svg
           className=" size-20 sm:size-28 -translate-y-28"

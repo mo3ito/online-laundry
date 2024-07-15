@@ -9,6 +9,7 @@ import InputPassword from "@/components/customerApp/share/inputs/InputPassword";
 import useFocus from "@/hooks/useFocus";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ADMIN_REGISTER } from "@/routeApi/endpoints";
 
 export default function page() {
   const { infos, login } = useAuthContext();
@@ -49,12 +50,13 @@ export default function page() {
               setIsLoadingForRegister,
               login,
               router,
-              "http://localhost:4000/admin/register",
+              ADMIN_REGISTER,
               "/admin"
             )
           }
           className="max-[420px]:w-full  w-96 "
         >
+
           <label
             htmlFor="name-user"
             className="my-2 inline-block mr-2 text-sky-500"

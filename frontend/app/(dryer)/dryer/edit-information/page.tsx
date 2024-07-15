@@ -6,7 +6,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import NoPersonSvg from "@/components/customerApp/svgs/NoPersonSvg";
 import editInfosSubmitHandler from "@/utils/editInfosSubmitHandler";
 import { toast } from "react-toastify";
-import { DRIVER_EDIT_INFORMATION } from "@/routeApi/endpoints";
+import { DRYER_EDIT_INFORMATION } from "@/routeApi/endpoints";
 
 export default function page() {
   const { infos, login } = useAuthContext();
@@ -46,9 +46,10 @@ export default function page() {
       setIsLoadingForEdit,
       login,
       infos?._id,
-      "http://localhost:4000/dryer/edit-information"
+      DRYER_EDIT_INFORMATION
     );
   };
+
 
   return (
     <div

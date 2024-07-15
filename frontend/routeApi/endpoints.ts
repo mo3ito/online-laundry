@@ -46,9 +46,16 @@ export const DRYER_REGISTER = `${BASE_URL_DRYER}/register`;
 export const DRYER_LOGIN = `${BASE_URL_DRYER}/login`;
 export const DONE_ORDER = `${BASE_URL_DRYER}/done-order`;
 export const DRYER_ORDERS = `${BASE_URL_DRYER}/orders-for-dryer`;
+export const DRYER_EDIT_INFORMATION = `${BASE_URL_DRYER}/edit-information`;
+export const DRYER_DONE_ORDERS_BY_DRYER = `${BASE_URL_DRYER}/done-orders-by-dryer`;
+
+
+
 
 //-- admin
 export const ADMIN_VERIFY_DRIVER = `${BASE_URL_ADMIN}/verify-driver`;
+export const ADMIN_REGISTER = `${BASE_URL_ADMIN}/register`;
+export const ADMIN_LOGIN = `${BASE_URL_ADMIN}/login`;
 export const ADMIN_DELETE_DRIVER = `${BASE_URL_ADMIN}/delete-driver`;
 export const ADMIN_GET_ALL_CUSTOMERS = `${BASE_URL_ADMIN}/get-all-customers`;
 export const ADMIN_GET_ALL_DRIVER = `${BASE_URL_ADMIN}/get-all-drivers`;

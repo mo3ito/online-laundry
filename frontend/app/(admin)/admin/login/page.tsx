@@ -7,6 +7,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import submitLoginAdmin from "@/utils/admin/submitLoginAdmin";
+import { ADMIN_LOGIN } from "@/routeApi/endpoints";
 
 export default function Login({}) {
   const [phoneNumberValue, setPhoneNumberValue] = useState<string>("");
@@ -35,10 +36,11 @@ export default function Login({}) {
               login,
               setIsLoadingForLogin,
               router,
-              "http://localhost:4000/admin/login",
+              ADMIN_LOGIN,
               "/admin"
             )
           }
+
           className="max-[420px]:w-full  w-96 "
         >
           <label

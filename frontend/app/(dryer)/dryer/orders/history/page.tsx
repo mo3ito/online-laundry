@@ -6,6 +6,7 @@ import useGetReactQuery from "@/hooks/useGetReactQuery";
 
 import { OrdersTemplate } from "@/types/context/Orders";
 import LoadingPage from "@/components/Loading/LoadingPage";
+import { DRYER_DONE_ORDERS_BY_DRYER } from "@/routeApi/endpoints";
 
 export default function page() {
   const { infos } = useAuthContext();
@@ -13,7 +14,7 @@ export default function page() {
   const [totalAllServices, setTotalAllServices] = useState<number>(0);
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
-    "http://localhost:4000/dryer/done-orders-by-dryer",
+    DRYER_DONE_ORDERS_BY_DRYER,
     ["get recived orders"]
   );
 
