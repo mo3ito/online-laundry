@@ -56,11 +56,11 @@ export default function page() {
 
   return (
     <main
-      style={{ height: `calc(100vh - 248px)` }}
+      style={{ height: `calc(100vh - 128px)` }}
       className="w-full  bg-slate-100 border border-sky-500  mx-auto sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto pb-10"
     >
       <HeaderComponent as="header" title="سفارشات" />
-      <section className="w-full">
+      { allOrders.length>0 ? <section className="w-full">
         <ul className="w-full h-max p-6 sm:p-8 ">
           {allOrders?.map((order: OrdersTemplate) => (
             <li
@@ -134,7 +134,7 @@ export default function page() {
             </li>
           ))}
         </ul>
-      </section>
+      </section> : <p className="text-center text-sm sm:text-base mt-20">هیچ سفارشی وجود ندارد</p>}
       <Modal
         messageContent="آیا تمامی سرویس‌ها انجام شده است؟"
         setIsShowModal={setIsShowIsDoneModal}

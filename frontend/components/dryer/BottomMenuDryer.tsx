@@ -6,10 +6,10 @@ import useDryerContext from "@/hooks/useDryerContext";
 export default function BottomMenuDryer() {
   const {totalOrders} = useDryerContext()
   return (
-    <div className=" pt-3 h-20 bg-sky-500 border-t sticky bottom-0 flex items-center justify-between sm:justify-around px-8  mx-auto border border-sky-500  shadow-xl sm:w-5/6 md:w-5/6 lg:w-4/6  ">
+    <div className=" pt-2 h-12 bg-sky-500 border-t sticky bottom-0 flex items-center justify-between sm:justify-around px-8  mx-auto border border-sky-500  shadow-xl sm:w-5/6 md:w-5/6 lg:w-4/6  ">
       <Link href="/dryer">
         <svg
-          className=" size-8 fill-white"
+          className=" size-6 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -19,7 +19,7 @@ export default function BottomMenuDryer() {
       </Link>
       <Link href="/dryer/orders/service" className="relative">
         <svg
-          className="size-8 fill-white"
+          className="size-6 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -33,7 +33,7 @@ export default function BottomMenuDryer() {
 
       <Link href="/dryer/orders/history" className="relative">
         <svg
-          className="size-8 fill-white"
+          className="size-6 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"

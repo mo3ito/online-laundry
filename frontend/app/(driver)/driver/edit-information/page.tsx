@@ -7,6 +7,7 @@ import editInfosSubmitHandler from "@/utils/editInfosSubmitHandler";
 import { toast } from "react-toastify";
 import { DRIVER_EDIT_INFORMATION } from "@/routeApi/endpoints";
 
+
 export default function page() {
   const { infos, login } = useAuthContext();
   const [nameValue, setNameValue] = useState<string | undefined>("");
@@ -49,9 +50,10 @@ export default function page() {
     );
   };
 
+
   return (
     <div
-      style={{ height: `calc(100vh - 248px)` }}
+    style={{ height: `calc(100vh - 124px)` }}
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
     >
       <HeaderComponent as="header" title="ویرایش اطلاعات" />

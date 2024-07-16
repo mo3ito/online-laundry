@@ -37,14 +37,14 @@ export default function page() {
 
   return (
     <main
-      style={{ height: `calc(100vh - 248px)` }}
+      style={{ height: `calc(100vh - 128px)` }}
       className="w-full  bg-slate-100 border border-sky-500  mx-auto sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto pb-10"
     >
       <HeaderComponent as="header" title="تاریخچه سفارشات" />
 
       <section className="w-full">
-        <ul className="w-full h-max p-6 sm:p-8 ">
-          <li className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2 p-3 bg-sky-500 rounded-lg text-white">
+        <ul className="w-full h-max max-[280px]:px-3 px-6 sm:px-8 ">
+          <li className="flex  justify-between w-full text-sm items-center mb-3 gap-x-2 py-1 px-2 bg-sky-500 rounded-lg text-white">
             <p>تعداد کل خدمات انجام شده</p>
             <p>{totalAllServices}</p>
           </li>

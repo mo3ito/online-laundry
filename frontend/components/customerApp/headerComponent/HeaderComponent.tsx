@@ -23,7 +23,7 @@ export default function HeaderComponent({
 
   return (
     <Component
-      className={`${className} flex items-center justify-between max-[280px]:px-3 px-6  sm:px-8 py-3 text-sm sm:text-base`}
+      className={`${className} flex items-center justify-between max-[280px]:px-3 px-6  sm:px-8 py-3 text-sm sm:text-base bg-slate-100 sticky top-0 z-40`}
     >
       <h1 className="font-bold">{title}</h1>
       <button

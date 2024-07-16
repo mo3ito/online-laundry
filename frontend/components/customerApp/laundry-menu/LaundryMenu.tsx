@@ -30,7 +30,7 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
     <>
       {!isLoading ? (
         <div className="">
-          <h1 className="w-full bg-sky-500 p-3 my-4 text-center text-white">
+          <h1 className="w-full bg-sky-500 p-1 my-4 text-center text-white">
             {title}
           </h1>
           <ul className="w-full mt-8 px-8 flex items-center justify-center sm:justify-around flex-wrap">

@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditInfosButton from "../customerApp/share/buttons/EditInfosButton";
-import ShowName from "../customerApp/ShowName";
 import Modal from "../Modal";
 import { useRouter } from "next/navigation";
 import useAuthContext from "@/hooks/useAuthContext";
@@ -11,9 +10,10 @@ import JobPosition from "../driver/JobPosition";
 export default function DriverHeader() {
   const { infos, logout } = useAuthContext();
   const [isShowModalExit, setIsShowModalExit] = useState<boolean>(false);
+
   const router = useRouter();
   console.log(infos);
-
+  const driverHeaderRef = useRef<HTMLElement | null>(null);
   const logoutHandler = () => {
     logout();
     router.push("/");
@@ -21,13 +21,18 @@ export default function DriverHeader() {
 
   return (
     <>
-      <header className="bg-sky-500 pb-2 max-[280px]:px-3 px-6  sm:px-8 text-white w-full mx-auto  sm:w-5/6 md:w-5/6 lg:w-4/6 ">
-        <div className="flex  justify-between pt-5 ">
-          <EditInfosButton hrefPath="/driver/edit-information"/>
-          <ShowName
-            customerName={infos?.name}
-            customerLastName={infos?.last_name}
-          />
+      <header
+        ref={driverHeaderRef}
+        className="bg-sky-500 py-2 max-[280px]:px-3 px-6  sm:px-8 text-white w-full mx-auto  sm:w-5/6 md:w-5/6 lg:w-4/6 "
+      >
+        <div className="flex items-center justify-between  ">
+          <EditInfosButton hrefPath="/driver/edit-information" />
+
+          <p className=" text-sm sm:text-lg ">
+            {`${infos?.name ? infos.name : ""} ${
+              infos?.last_name ? infos.last_name : ""
+            }`}
+          </p>
           <LogoutButton onClick={() => setIsShowModalExit(true)} />
         </div>
         <JobPosition content="راننده" />

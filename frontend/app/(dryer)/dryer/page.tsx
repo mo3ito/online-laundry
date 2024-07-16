@@ -25,13 +25,13 @@ export default function page() {
   }
   return (
     <main
-      style={{ height: `calc(100vh - 220px)` }}
-      className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
+      style={{ height: `calc(100vh - 128px)` }}
+      className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500 "
     >
-      <section className="w-full h-full flex flex-col items-center justify-center  gap-y-4 px-6 pt-10 pb-14 sm:px-8 text-lg ">
+      <section className="w-full h-full flex flex-col items-center  gap-y-4 px-6  sm:px-8 text-lg py-3 overflow-y-auto">
         <Link
           href="/dryer/orders/service"
-          className="w-full h-1/3 bg-yellow-300 rounded-lg flex items-center justify-center flex-col"
+          className="w-full h-40 bg-yellow-300 rounded-lg flex items-center justify-center flex-col"
         >
           <svg
             className="size-20 fill-zinc-600"
@@ -45,7 +45,7 @@ export default function page() {
         </Link>
         <Link
           href="/dryer/orders/history"
-          className="w-full h-1/3 bg-green-300 rounded-lg flex flex-col items-center justify-center"
+          className="w-full h-40 bg-green-300 rounded-lg flex flex-col items-center justify-center"
         >
           <svg
             className="size-20 fill-zinc-600"
@@ -59,7 +59,7 @@ export default function page() {
         </Link>
         <Link
           href="/dryer/edit-information"
-          className="w-full h-1/3 bg-pink-300 rounded-lg flex flex-col items-center justify-center mb-3"
+          className="w-full h-40 bg-pink-300 rounded-lg flex flex-col items-center justify-center "
         >
           <svg
             className="size-20 fill-zinc-600"

@@ -21,13 +21,15 @@ export default function DryerHeader() {
 
   return (
     <>
-      <header className="bg-sky-500 pb-2 max-[280px]:px-3 px-6  sm:px-8 text-white w-full mx-auto  sm:w-5/6 md:w-5/6 lg:w-4/6 ">
-        <div className="flex  justify-between pt-5 ">
-          <EditInfosButton hrefPath="/dryer/edit-information"/>
-          <ShowName
-            customerName={infos?.name}
-            customerLastName={infos?.last_name}
-          />
+      <header className="bg-sky-500  max-[280px]:px-3 px-6  sm:px-8 text-white w-full mx-auto  sm:w-5/6 md:w-5/6 lg:w-4/6 py-2">
+        <div className="flex items-center justify-between  ">
+          <EditInfosButton hrefPath="/dryer/edit-information" />
+
+          <p className="  text-sm sm:text-lg ">
+            {`${infos?.name ? infos.name : ""} ${
+              infos?.last_name ? infos.last_name : ""
+            }`}
+          </p>
           <LogoutButton onClick={() => setIsShowModalExit(true)} />
         </div>
         <JobPosition content="مالک خشکشویی" />
