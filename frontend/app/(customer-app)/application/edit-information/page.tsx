@@ -4,7 +4,6 @@ import DefaultButton from "@/components/share/defaultButton";
 import React, { FormEvent, useEffect, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import LoadingPage from "@/components/Loading/LoadingPage";
-import NoPersonSvg from "@/components/customerApp/svgs/NoPersonSvg";
 import editInfosSubmitHandler from "@/utils/editInfosSubmitHandler";
 import { toast } from "react-toastify";
 import { CUSTOMER_EDIT_INFORMATION } from "@/routeApi/endpoints";
@@ -33,7 +32,6 @@ export default function page() {
       return toast.warn("مقدار ورودی نام خانوادگی خالی است");
     }
 
-
     editInfosSubmitHandler(
       event,
       body,
@@ -46,16 +44,12 @@ export default function page() {
 
   return (
     <div
-      style={{ height: `calc(100vh - 220px)` }}
+      style={{ height: `calc(100vh - 80px)` }}
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
     >
       <HeaderComponent as="header" title="ویرایش اطلاعات" />
-      <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full">
-        <NoPersonSvg />
-        <form
-          onSubmit={submitForm}
-          className="max-[420px]:w-full  w-96 "
-        >
+      <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full ">
+        <form onSubmit={submitForm} className="max-[420px]:w-full  w-96 ">
           <label
             htmlFor="name-user"
             className="my-2 inline-block mr-2 text-sky-500"

@@ -43,7 +43,7 @@ export default function Page() {
     <>
       {information ? (
         <div
-          style={{ height: `calc(100vh - 220px)` }}
+          style={{ height: `calc(100vh - 80px)` }}
           className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6 shadow-xl border border-sky-500"
         >
           <HeaderComponent title={information.data.type} as="div" />

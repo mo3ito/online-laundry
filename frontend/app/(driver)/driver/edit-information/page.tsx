@@ -3,7 +3,6 @@ import HeaderComponent from "@/components/customerApp/headerComponent/HeaderComp
 import DefaultButton from "@/components/share/defaultButton";
 import React, { FormEvent, useEffect, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
-import NoPersonSvg from "@/components/customerApp/svgs/NoPersonSvg";
 import editInfosSubmitHandler from "@/utils/editInfosSubmitHandler";
 import { toast } from "react-toastify";
 import { DRIVER_EDIT_INFORMATION } from "@/routeApi/endpoints";
@@ -57,7 +56,7 @@ export default function page() {
     >
       <HeaderComponent as="header" title="ویرایش اطلاعات" />
       <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full">
-        <NoPersonSvg />
+       
         <form onSubmit={submitForm} className="max-[420px]:w-full  w-96 ">
           <label
             htmlFor="name-user"

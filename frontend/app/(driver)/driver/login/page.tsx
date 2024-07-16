@@ -8,8 +8,8 @@ export default function page() {
     <Login
       header="ورود رانندگان"
       apiAddress={DRIVER_LOGIN}
-      pathRoute="/driver"
-      registerRoute="/driver/register"
+      pathRoute={`${process.env.NEXT_PUBLIC_BASE_URL}/driver`}
+      registerRoute={`${process.env.NEXT_PUBLIC_BASE_URL}/driver/register`}
     />
   );
 }
