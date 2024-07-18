@@ -5,6 +5,7 @@ const AdminModel = require("../../models/admin/AdminModel");
 const deleteFiles = require("../../utils/deleteFiles");
 const uploadImage = require("../../utils/uploadImage");
 require("dotenv").config();
+const {host} = require("../../endpoint")
 
 const uploadAndHandleClothingCategoryImage = uploadImage(
   "public/images/clothing-category",
@@ -17,9 +18,10 @@ const uploadAndHandleClothingCategoryImage = uploadImage(
 const getClothingCategory = async (req, res) => {
   try {
     const imageDirectory = path.join(
-      __dirname,
-      "../../public/images/clothing-category"
+      path.resolve("public/images/"),
+      "clothing-category"
     );
+   
     const imageFiles = fs.readdirSync(imageDirectory);
     const imageFileNames = imageFiles.map((item) => path.parse(item).name);
 
@@ -32,7 +34,7 @@ const getClothingCategory = async (req, res) => {
         );
         return {
           ...item.toObject(),
-          image_url: `${process.env.HOST}:${process.env.PORT}/images/clothing-category/${matchingImage}`,
+          image_url: `${host}/images/clothing-category/${matchingImage}`,
         };
       } else {
         return item.toObject();

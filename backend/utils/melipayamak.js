@@ -1,9 +1,10 @@
 require("dotenv").config();
 const https = require("https");
+const {bodyId} = require("../endpoint")
 
 const sendSMS = (to, args) => {
   const data = JSON.stringify({
-    bodyId: Number(process.env.BODYID),
+    bodyId: Number(bodyId),
     to: to,
     args: args,
   });

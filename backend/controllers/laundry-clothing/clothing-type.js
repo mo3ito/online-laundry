@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs/promises");
 require("dotenv").config();
 const deleteFiles = require("../../utils/deleteFiles");
+const { host } = require("../../endpoint");
 
 const addImageClothingType = uploadImage(
   "public/images/clothing-types",
@@ -90,10 +91,9 @@ const getAllTypeByClothingCategory = async (req, res) => {
       });
     }
 
-    const imageDirectory = path.join(
-      __dirname,
-      "../../public/images/clothing-types"
-    );
+    const imageDirectory = path.resolve("public/images/clothing-types");
+
+    console.log("image directory:" , imageDirectory);
     const imageFiles = await fs.readdir(imageDirectory);
     const imageFileNames = imageFiles.map((item) => path.parse(item).name);
 
@@ -108,7 +108,7 @@ const getAllTypeByClothingCategory = async (req, res) => {
         );
         return {
           ...item.toObject(),
-          image_url: `${process.env.HOST}:${process.env.PORT}/images/clothing-types/${matchingImage}`,
+          image_url: `${host}/images/clothing-types/${matchingImage}`,
         };
       } else {
         return item.toObject();
@@ -182,10 +182,7 @@ const deleteTypeClothing = async (req, res) => {
 
     await ClothingTypesModel.findByIdAndDelete(type_clothing_id);
 
-    const directoryPath = path.join(
-      __dirname,
-      "../../public/images/clothing-types"
-    );
+    const directoryPath = path.resolve("public/images/clothing-types");
 
     await deleteFiles(directoryPath, type_clothing_english_name);
 

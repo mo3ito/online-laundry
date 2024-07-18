@@ -7,6 +7,7 @@ const CustomerModel = require("../../models/customer/CustomerModel");
 const OrdersModel = require("../../models/orders/Orders");
 const PaidOrdersModel = require("../../models/orders/PaidOrders");
 const JDate = require("jalali-date");
+const { host } = require("../../endpoint");
 
 const verifyDriver = async (req, res) => {
   const adminId = req.headers.authorization;
@@ -297,8 +298,8 @@ const getAllCategoryImages = async (req, res) => {
 
     try {
       const images = await getAllImages(
-        "public/images/clothing-category",
-        "clothing-category"
+        path.resolve("public/images"),
+        "/clothing-category"
       );
       res.status(200).json({ images: images });
     } catch (err) {
@@ -328,7 +329,7 @@ const getAllTypeImages = async (req, res) => {
 
     try {
       const images = await getAllImages(
-        "public/images/clothing-types",
+        path.resolve(`public/images/`),
         "clothing-types"
       );
       res.status(200).json({ images: images });

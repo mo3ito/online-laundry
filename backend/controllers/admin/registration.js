@@ -3,13 +3,14 @@ require("dotenv").config();
 const AdminModel = require("../../models/admin/AdminModel");
 const DriverModel = require("../../models/driver/DriverModel");
 const createToken = require("../../utils/createToken");
+const {adminKey} = require("../../endpoint")
 
 const adminRegister = async (req, res) => {
   const { name, last_name, username, password, admin_key, phone_number } =
     req.body;
 
   try {
-    const passwordKey = process.env.ADMIN_KEY;
+    const passwordKey = adminKey;
     const compareadmin_key = await bcrypt.compare(admin_key, passwordKey);
     const isExistAdmin = await AdminModel.findOne({ username, phone_number });
 
@@ -52,7 +53,7 @@ const adminRegister = async (req, res) => {
       username,
       password: hashedPassword,
       phone_number,
-      admin_key: process.env.ADMIN_KEY,
+      admin_key: adminKey,
     };
 
     const newAdmin = await new AdminModel(adminInformation);
