@@ -31,7 +31,7 @@ export default function ShowCategoryGroup({
           <figure className="p-2 rounded-xl flex items-center gap-x-4">
             <img
               src={item.image_url || "/images/no-photo.png"}
-              className="rounded-xl  max-[280px]:size-24 size-28"
+              className="rounded-xl  max-[280px]:size-16 size-20 sm:size-24"
               alt={`عکس ${item.type}`}
             />
             <figcaption className="font-bold">{item?.type}</figcaption>
