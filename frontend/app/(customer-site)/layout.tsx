@@ -3,6 +3,7 @@ import "./../globals.css";
 import Header from "@/components/customerSite/header/Header";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import ToastifyContainer from "@/components/providers/TostifyContainer";
+import Footer from "@/components/customerSite/Footer";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین مسیتوپاک",
@@ -20,22 +21,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <Header />
           <main className="flex-grow">{children}</main>
-          <footer className="w-full h-64 bg-gray-200 ">
-          <a
-      referrerPolicy='origin'
-      target='_blank'
-      href='https://trustseal.enamad.ir/?id=508337&Code=xxV2ueSAdCBxdpyxUACrkjgxipNUepn9'
-    >
-      <img
-      className="size-44"
-        referrerPolicy='origin'
-        src='https://trustseal.enamad.ir/logo.aspx?id=508337&Code=xxV2ueSAdCBxdpyxUACrkjgxipNUepn9'
-        alt=''
-        style={{ cursor: 'pointer' }}
-        data-code='xxV2ueSAdCBxdpyxUACrkjgxipNUepn9'
-      />
-    </a>
-          </footer>
+          <Footer/>
         </ReactQueryProvider>
         <ToastifyContainer />
       </body>

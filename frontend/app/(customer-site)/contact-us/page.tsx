@@ -13,7 +13,7 @@ export default function ContactMeBox() {
   const router = useRouter();
 
   return (
-    <div className="container mx-auto px-6 mt-20 sm:mt-3">
+    <div className="container mx-auto px-6 mt-20 sm:mt-40">
       <ShowHeaderTitle content="تماس با ما" />
       <form
         ref={mailFormRef}

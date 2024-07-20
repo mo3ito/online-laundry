@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ScreenHeader() {
   return (
-    <header className=" h-max w-full  mx-auto bg-gray-200  hidden sm:block">
+    <header className=" h-max w-full  mx-auto bg-gray-200  hidden sm:block fixed inset-x-0 top-0">
       <div className="container mx-auto px-6 py-3 ">
         <div className=" w-full flex items-center justify-between mb-3">
           <div className="flex items-center gap-x-2 ">

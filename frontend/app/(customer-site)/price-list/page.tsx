@@ -34,7 +34,7 @@ export default function Page() {
   }, [allGroupTypeData]);
 
   return (
-    <div className="container mx-auto px-6 py-3 mt-20 pb-10 sm:mt-0">
+    <div className="container mx-auto px-6 py-3 mt-16 pb-10 sm:mt-36">
       <ShowHeaderTitle content="لیست قیمت‌ها"/>
       <section className="my-5 bg-gray-200 p-3 rounded-lg text-sm sm:text-base">
         <h2 className="font-bold text-lg pb-3">اطلاعیه</h2>
