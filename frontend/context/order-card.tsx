@@ -24,9 +24,11 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
     useState(0);
   const { infos } = useAuthContext();
 
-  const { data } = useGetReactQuery(infos?._id, GET_ORDERS_CUSTOER, [
-    "all registered orders",
-  ]);
+  const { data } = useGetReactQuery(
+    !infos?.is_driver && !infos?.is_admin && !infos?.is_dryer && infos?._id,
+    GET_ORDERS_CUSTOER,
+    ["all registered orders"]
+  );
 
   useEffect(() => {
     if (data) {
@@ -42,14 +44,14 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   }, [orders]);
 
   useEffect(() => {
-    if (registeredOrders && !infos?.is_driver) {
+    if (registeredOrders) {
       const totalRegisterd = registeredOrders.reduce(
         (prev, current) => prev + current.count,
         0
       );
       setTotalNumberRegisterdOrders(totalRegisterd);
     }
-  }, [registeredOrders, infos]);
+  }, [registeredOrders]);
   console.log(totalNumberRegisterdOrders);
 
   console.log(totalNumber);
