@@ -1,21 +1,15 @@
 import sendData from "@/services/sendData";
 import { InitialInfosType } from "@/types/context/AuthContextType";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { Dispatch, FormEvent, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
-
 const submitLoginHandler = async (
-  event: FormEvent,
   phoneNumberValue: string,
   passwordValue: string,
   login: (infos: InitialInfosType, token: string) => void,
-  setIsLoadingForLogin: Dispatch<SetStateAction<boolean>>,
-  router: AppRouterInstance,
+  onToggleLoading: (value: boolean) => unknown,
   apiAddress: string,
   pathRoute: string
 ) => {
-  event.preventDefault();
   const regex = /^[0-9]*$/;
   try {
     const body = {
@@ -36,26 +30,25 @@ const submitLoginHandler = async (
       return toast.warn("مقدار ورودی رمز عبور خالی است");
     }
 
-
-    setIsLoadingForLogin(true)
+    onToggleLoading(true);
     const response = await sendData(apiAddress, body);
     if (response.status === 200) {
       await login(response.data.infos, response.data.token);
-      setIsLoadingForLogin(false);
-      router.push(pathRoute);
-    } else{
-      setIsLoadingForLogin(false);
+      onToggleLoading(false);
+      window.location.href = pathRoute;
+    } else {
+      onToggleLoading(false);
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);
 
     if (error.response && error.response.status === 400) {
-      setIsLoadingForLogin(false);
+      onToggleLoading(false);
       const errorMessage: string =
         error.response.data?.message || "خطایی رخ داده است.";
       toast.error(errorMessage);
     } else {
-      setIsLoadingForLogin(false);
+      onToggleLoading(false);
       console.log("خطا:", error);
       toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
     }

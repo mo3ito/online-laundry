@@ -83,9 +83,9 @@ export default function Neshan() {
         />
       </div>
 
-      <div className="absolute bottom-28 right-4 flex items-center justify-center gap-x-4">
+      <div className=" -translate-y-64 flex items-center mr-8 gap-x-4">
         <button
-          onClick={() => findLocationHandler(setLatLong)}
+          onClick={() => findLocationHandler(setLatLong , mapRef )}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"
         >
           <svg

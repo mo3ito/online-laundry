@@ -13,7 +13,7 @@ type allClothingCategoryType = {
   _id: string;
   image_url: string;
   name: string;
-  english_name:string
+  english_name: string;
 };
 
 export default function LaundryMenu({ title }: LaundryMenuProps) {
@@ -29,7 +29,7 @@ export default function LaundryMenu({ title }: LaundryMenuProps) {
   return (
     <>
       {!isLoading ? (
-        <div className="">
+        <div className="overflow-y-auto pb-20">
           <h1 className="w-full bg-sky-500 p-1 my-4 text-center text-white">
             {title}
           </h1>

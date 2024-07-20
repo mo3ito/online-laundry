@@ -15,7 +15,7 @@ const findDestination = async (
     setIsLoadingForRoutes(true);
     const type = "car";
     const origin = latLongDriver
-      ? `${latLongDriver.latitude},${latLongDriver.longitude}`
+      ? `${latLong.latitude},${latLong.longitude}`
       : "34.083774237954756,49.6975543016356";
     const destination = `${latLong?.latitude},${latLong?.longitude}`;
     const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY;

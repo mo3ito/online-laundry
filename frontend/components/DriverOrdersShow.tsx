@@ -74,12 +74,12 @@ export default function DriverOrdersShow({
   return (
     <div
     style={{ height: `calc(100vh - 124px)` }}
-      className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
+      className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500 pb-28"
     >
       <HeaderComponent title={header} />
       <>
         {ordersForDriver.length > 0 ? (
-          <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 pb-10">
+          <ul className="w-full h-max pt-6 px-6 sm:pt-8 sm:px-8 ">
             {ordersForDriver.map((order: OrdersTemplate) => (
               <li
                 key={order._id}

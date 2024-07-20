@@ -61,7 +61,7 @@ export default function page() {
     >
       <HeaderComponent as="header" title="سفارشات" />
       { allOrders.length>0 ? <section className="w-full">
-        <ul className="w-full h-max p-6 sm:p-8 ">
+        <ul className="w-full h-max p-6 sm:p-8 pb-28">
           {allOrders?.map((order: OrdersTemplate) => (
             <li
               key={order._id}

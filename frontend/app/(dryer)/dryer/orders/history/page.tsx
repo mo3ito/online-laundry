@@ -43,7 +43,7 @@ export default function page() {
       <HeaderComponent as="header" title="تاریخچه سفارشات" />
 
       <section className="w-full">
-        <ul className="w-full h-max max-[280px]:px-3 px-6 sm:px-8 ">
+        <ul className="w-full h-max max-[280px]:px-3 px-6 sm:px-8 pb-28">
           <li className="flex  justify-between w-full text-sm items-center mb-3 gap-x-2 py-1 px-2 bg-sky-500 rounded-lg text-white">
             <p>تعداد کل خدمات انجام شده</p>
             <p>{totalAllServices}</p>

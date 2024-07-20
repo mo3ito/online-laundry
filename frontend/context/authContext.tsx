@@ -24,25 +24,25 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [infos, setInfos] = useState<InitialInfosType | null>(initInfos);
   const [token, setToken] = useState<string | null>(null);
 
-  const login = useCallback(async (infos: InitialInfosType, token: string) => {
-    await setToken(token);
-    await Cookies.set(mo3itoPakToken, token);
-    await setInfos(infos);
+  const login = useCallback((infos: InitialInfosType, token: string) => {
+    setToken(token);
+    Cookies.set(mo3itoPakToken, token);
+    setInfos(infos);
   }, []);
 
-  const logout = useCallback(async () => {
-    await setToken(null);
-    await setInfos(null);
-    await Cookies.remove(mo3itoPakToken);
+  const logout = useCallback(() => {
+    setToken(null);
+    setInfos(null);
+    Cookies.remove(mo3itoPakToken);
   }, []);
 
   useEffect(() => {
-    const getInfosFromToken = async () => {
+    const getInfosFromToken = () => {
       try {
-        const token = await Cookies.get(mo3itoPakToken);
+        const token = Cookies.get(mo3itoPakToken);
         if (token && token.length > 0) {
           const decodedToken: DecodedTokenType =
-            await jwtDecode<DecodedTokenType>(token);
+            jwtDecode<DecodedTokenType>(token);
           console.log("decodedToken:", decodedToken);
           setInfos(decodedToken.infos);
         } else {

@@ -81,8 +81,9 @@ export default function Page() {
         const { token, infos } = response.data;
 
         if (token) {
-          await login(infos, token);
-          router.replace("/application");
+          login(infos, token);
+          // router.replace("/application");
+          window.location.href = "/application";
         } else {
           router.replace("/application/registration");
         }

@@ -45,13 +45,13 @@ export default function page() {
     <>
       <div
         style={{ height: `calc(100vh - 80px)` }}
-        className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
+        className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500 pb-20"
       >
         <HeaderComponent title="سفارشات ثبت شده" />
 
         {registeredOrders?.length ? (
           <section className="w-full">
-            <ul className="w-full h-max p-6 sm:p-8 ">
+            <ul className="w-full h-max px-6 sm:px-8 pb-28">
               {registeredOrders?.map((order: OrdersRegistered) => (
                 <li
                   key={order.orders_id}

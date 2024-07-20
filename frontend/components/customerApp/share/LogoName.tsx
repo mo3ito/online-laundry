@@ -5,14 +5,16 @@ import React from "react";
 export default function LogoName({
   isLink,
   href,
+  className
 }: {
   href?: Url | undefined;
   isLink?: boolean;
+  className?:string
 }) {
   return (
     <>
       {isLink ? (
-        <Link href={href as Url} className="flex items-center gap-x-2 ">
+        <Link  href={href as Url} className={`${className} flex items-center gap-x-2`}>
           <img
             src="/images/tshirt_2887535.png"
             className=" w-12 h-12"
@@ -24,10 +26,10 @@ export default function LogoName({
           </div>
         </Link>
       ) : (
-        <div className="flex items-center gap-x-2 ">
+        <div className={`${className} flex items-center gap-x-2`}>
           <img
             src="/images/tshirt_2887535.png"
-            className=" w-12 h-12"
+            className=" size-12 "
             alt="T-shirt icon"
           />
           <div>
