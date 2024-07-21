@@ -1,33 +1,72 @@
 import { LatLongType } from "@/types/neshan-map";
 import { Dispatch, SetStateAction } from "react";
+import addMarkersToMap from "./addMarksToMap";
+import { fromLonLat } from "@neshan-maps-platform/ol/proj";
+import { toast } from "react-toastify";
 
-const findLocationHandler = (
+const checkGeolocationPermission = async () => {
+  try {
+    const permission = await navigator.permissions.query({
+      name: "geolocation",
+    });
+    return permission.state;
+  } catch (error) {
+    console.error("خطا در بررسی مجوز موقعیت مکانی", error);
+    return "denied";
+  }
+};
+
+const findLocationHandler = async (
   setLatLong: Dispatch<SetStateAction<LatLongType | null>>,
-  mapRef: any
+  mapRef: any,
 ) => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
+  const permissionState = await checkGeolocationPermission();
 
-        setLatLong({
-          latitude: latitude,
-          longitude: longitude,
-        });
+  if (permissionState === "granted") {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
 
-        const map = mapRef.current.map;
-        const view = map.getView();
+          setLatLong({
+            latitude: latitude,
+            longitude: longitude,
+          });
 
-        // انتقال مرکز نقشه به موقعیت جدید
-        view.setCenter([longitude, latitude]);
-        view.setZoom(15); // این خط برای زوم کردن به موقعیت جدید است، می‌توانید مقدار زوم را تغییر دهید.
-      },
-      (error) => {
-        console.error(`Error Code = ${error.code} - ${error.message}`);
-      }
+          const map = mapRef.current.map;
+          const view = map.getView();
+
+          view.setCenter(fromLonLat([longitude, latitude]));
+          view.setZoom(15);
+
+          addMarkersToMap(map, { latitude, longitude }, true);
+        },
+        (error) => {
+          console.error(`کد خطا = ${error.code} - ${error.message}`);
+          if (error.code === error.PERMISSION_DENIED) {
+            toast.warn("لطفاً خدمات موقعیت مکانی را روشن کرده و دسترسی به موقعیت مکانی را در تنظیمات مرورگر خود فعال کنید.");
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            toast.warn("اطلاعات موقعیت در دسترس نیست. لطفاً دوباره تلاش کنید.");
+          } else if (error.code === error.TIMEOUT) {
+            toast.warn(
+              "درخواست برای دریافت موقعیت مکانی به پایان رسید. لطفاً دوباره تلاش کنید."
+            );
+          }
+        }
+      );
+    } else {
+      toast.warn("مرورگر شما از موقعیت مکانی پشتیبانی نمی‌کند.");
+    }
+  } else if (permissionState === "denied") {
+    toast.warn(
+      "خدمات موقعیت مکانی رد شده است. لطفاً خدمات موقعیت مکانی را روشن کرده و دسترسی به موقعیت مکانی را در تنظیمات مرورگر خود فعال کنید."
+    );
+  } else if (permissionState === "prompt") {
+    toast.warn(
+      "لطفا لوکیشن دستگاه خود را روشن کنید"
     );
   } else {
-    console.error("Geolocation is not supported by this browser.");
+    toast.error("نمی‌توان وضعیت مجوزها را تعیین کرد.");
   }
 };
 

@@ -9,13 +9,13 @@ const findDestination = async (
   latLong: LatLongType,
   setDistanceTime: Dispatch<SetStateAction<DistanceTimeType | null>>,
   setRoutes: Dispatch<SetStateAction<RouteType[]>>,
-  latLongDriver?: LatLongDriver
+  latLongDriver?: LatLongDriver | null
 ) => {
   try {
     setIsLoadingForRoutes(true);
     const type = "car";
     const origin = latLongDriver
-      ? `${latLong.latitude},${latLong.longitude}`
+      ? `${latLongDriver.latitude},${latLongDriver.longitude}`
       : "34.083774237954756,49.6975543016356";
     const destination = `${latLong?.latitude},${latLong?.longitude}`;
     const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY;
