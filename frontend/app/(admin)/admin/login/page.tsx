@@ -5,7 +5,6 @@ import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
 import Link from "next/link";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import submitLoginAdmin from "@/utils/admin/submitLoginAdmin";
 import { ADMIN_LOGIN } from "@/routeApi/endpoints";
 
@@ -16,12 +15,11 @@ export default function Login({}) {
   const [adminKeyValue, setAdminKeyValue] = useState<string>("");
   const [isLoadingForLogin, setIsLoadingForLogin] = useState<boolean>(false);
   const { login } = useAuthContext();
-  const router = useRouter();
 
   return (
     <div className=" w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center">
-      <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 py-12 w-full -translate-y-36">
-        <LogoName  />
+      <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 py-12 w-full ">
+        <LogoName />
         <h1 className="w-96 text-center mt-6  text-sky-500 font-bold text-lg">
           ورود مدیران
         </h1>
@@ -39,7 +37,6 @@ export default function Login({}) {
               "/admin"
             )
           }
-
           className="max-[420px]:w-full  w-96 overflow-auto max-h-[calc(100vh-100px)] pb-44"
         >
           <label
