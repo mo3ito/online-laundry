@@ -28,7 +28,7 @@ const addMarkersToMap = (
           ? new CircleStyle({
               radius: 10,
               fill: new Fill({
-                color: 'rgba(0, 0, 255, 0.5)',
+                color: '#22c55e',
               }),
             })
           : new Icon({
