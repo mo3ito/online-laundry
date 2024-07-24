@@ -31,7 +31,7 @@ export default function Modal({
         role="dialog"
         aria-labelledby="dialogTitle"
         aria-describedby="dialogDescription"
-        className="bg-sky-100 w-96 h-64 rounded-lg border border-sky-500 -translate-y-44 flex flex-col gap-y-10 items-center justify-center p-4 relative "
+        className="bg-sky-100 w-96 h-64 rounded-lg border border-sky-500  flex flex-col gap-y-10 items-center justify-center p-4 relative "
       >
         <button
           onClick={() => setIsShowModal(false)}
