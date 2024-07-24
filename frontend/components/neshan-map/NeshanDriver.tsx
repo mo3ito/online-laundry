@@ -27,7 +27,7 @@ export default function NeshanDriver({
   const [distanceTime, setDistanceTime] = useState<DistanceTimeType | null>(
     null
   );
-  const [latLongDriver , setLatLongDriver]=useState<LatLongType | null>(null);
+  const [latLongDriver, setLatLongDriver] = useState<LatLongType | null>(null);
   const [routes, setRoutes] = useState<RouteType[]>([]);
   const [isLoadingForRoutes, setIsLoadingForRoutes] = useState<boolean>(false);
   const mapRef = useRef<NeshanMapRef | null>(null);
@@ -39,8 +39,6 @@ export default function NeshanDriver({
   useAddMarkersToMap(mapRef, latLong);
   useShowRouteOnMap(mapRef, routes);
 
-
-  
   if (latLong === null) {
     return <LoadingPage />;
   }
@@ -75,7 +73,7 @@ export default function NeshanDriver({
       )}
       <div className="absolute bottom-28 right-4 flex items-center justify-center gap-x-4">
         <button
-          onClick={() => findLocationHandleDriver(setLatLongDriver ,mapRef )}
+          onClick={() => findLocationHandleDriver(setLatLongDriver, mapRef)}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"
         >
           <svg
@@ -92,13 +90,15 @@ export default function NeshanDriver({
           svgClassName="fill-white"
           isLoading={isLoadingForRoutes}
           onClick={() =>
-            findDestination(
-              setIsLoadingForRoutes,
-              latLong,
-              setDistanceTime,
-              setRoutes,
-              latLongDriver
-            )
+            setInterval(() => {
+              findDestination(
+                setIsLoadingForRoutes,
+                latLong,
+                setDistanceTime,
+                setRoutes,
+                latLongDriver
+              );
+            }, 500)
           }
           content="مسیریابی"
           className="bg-sky-500 rounded-lg text-white text-sm h-9 w-32 sm:h-12 sm:text-base "

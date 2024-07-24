@@ -34,11 +34,11 @@ export default function page() {
       if (response.status === 200) {
         await login(response.data.infos, response.data.token);
         setIsLoading(false);
-        router.replace("/application");
+        window.location.href = "/application";
       }
     } catch (error: any) {
       console.error("خطا در ارتباط با سرور:", error);
-      
+
       if (error.response && error.response.status === 400) {
         setIsLoading(false);
         const errorMessage: string =

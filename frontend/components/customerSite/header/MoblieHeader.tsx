@@ -38,6 +38,12 @@ export default function MoblieHeader() {
             خانه
           </li>
           <li
+            onClick={() => linkHandler("https://mo3ito-pak.ir", setIsShowMenu, router)}
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
+          >
+            دریافت اپلیکیشن
+          </li>
+          <li
             onClick={() => linkHandler("/application", setIsShowMenu, router)}
             className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
           >

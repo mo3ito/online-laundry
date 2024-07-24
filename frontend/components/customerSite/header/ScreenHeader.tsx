@@ -24,9 +24,9 @@ export default function ScreenHeader() {
             >
               ثبت سفارش
             </Link>
-            <button className="bg-sky-500 px-2 py-2 rounded-md">
+            <Link href="https://mo3ito-pak.ir" className="bg-sky-500 px-2 py-2 rounded-md">
               دریافت اپلیکیشن
-            </button>
+            </Link>
           </div>
         </div>
         <nav>
