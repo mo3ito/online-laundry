@@ -90,15 +90,13 @@ export default function NeshanDriver({
           svgClassName="fill-white"
           isLoading={isLoadingForRoutes}
           onClick={() =>
-            setInterval(() => {
-              findDestination(
-                setIsLoadingForRoutes,
-                latLong,
-                setDistanceTime,
-                setRoutes,
-                latLongDriver
-              );
-            }, 500)
+            findDestination(
+              setIsLoadingForRoutes,
+              latLong,
+              setDistanceTime,
+              setRoutes,
+              latLongDriver
+            )
           }
           content="مسیریابی"
           className="bg-sky-500 rounded-lg text-white text-sm h-9 w-32 sm:h-12 sm:text-base "
