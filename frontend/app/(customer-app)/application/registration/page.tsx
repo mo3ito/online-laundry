@@ -57,7 +57,7 @@ export default function page() {
   useFocusInput(nameInputRef);
   return (
     <div className="w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center flex-col justify-center">
-      <main className="max-[380px]:w-full  max-[410px]:px-3 w-96 h-max -translate-y-44">
+      <main className="max-[380px]:w-full  max-[410px]:px-3 w-96 h-max ">
         <Logo classNameContainer="bg-transparent " />
         <form
           onSubmit={registrationHandler}

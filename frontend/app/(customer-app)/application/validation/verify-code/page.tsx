@@ -82,7 +82,6 @@ export default function Page() {
 
         if (token) {
           login(infos, token);
-          // router.replace("/application");
           window.location.href = "/application";
         } else {
           router.replace("/application/registration");
@@ -109,7 +108,7 @@ export default function Page() {
     <div className="w-full h-screen fixed inset-0 bg-slate-100 z-50 flex items-center justify-center flex-col">
       <form
         onSubmit={sendCodeHandler}
-        className="-translate-y-44 text-center  max-[350px]:w-full max-[350px]:px-6 w-8/12 sm:w-96"
+        className=" text-center  max-[350px]:w-full max-[350px]:px-6 w-8/12 sm:w-96"
       >
         <Logo as="header" />
         <h1 className="my-4 max-[350px]:text-base text-xl sm:text-2xl">
