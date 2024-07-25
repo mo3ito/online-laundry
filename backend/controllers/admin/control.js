@@ -7,7 +7,6 @@ const CustomerModel = require("../../models/customer/CustomerModel");
 const OrdersModel = require("../../models/orders/Orders");
 const PaidOrdersModel = require("../../models/orders/PaidOrders");
 const JDate = require("jalali-date");
-const { host } = require("../../endpoint");
 
 const verifyDriver = async (req, res) => {
   const adminId = req.headers.authorization;
@@ -413,6 +412,31 @@ const deleteTypeImage = async (req, res) => {
   }
 };
 
+const deleteCustomer = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { customer_id } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    await CustomerModel.findByIdAndDelete(customer_id);
+
+    const allCustomer = await CustomerModel.find({});
+
+    return res.status(200).json(allCustomer);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -427,4 +451,5 @@ module.exports = {
   getAllTypeImages,
   deleteCategoryImage,
   deleteTypeImage,
+  deleteCustomer
 };

@@ -19,6 +19,7 @@ const {
   getAllTypeImages,
   deleteCategoryImage,
   deleteTypeImage,
+  deleteCustomer,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -27,6 +28,7 @@ router.get("/admin/get-all-drivers", getAllDriver);
 router.put("/admin/verify-driver", verifyDriver);
 router.delete("/admin/delete-driver", deleteDriver);
 router.get("/admin/get-all-customers", getAlcustomers);
+router.delete("/admin/delete-customer", deleteCustomer);
 router.get("/admin/paid-orders", paidOrders);
 router.get("/admin/got-orders", gotOrders);
 router.delete("/admin/delete-order", deleteOrder);
