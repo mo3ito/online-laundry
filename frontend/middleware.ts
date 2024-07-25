@@ -25,18 +25,18 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith("/application") && tokenValue?.infos?.is_customer) {
-    return;
-  } else if (
-    pathname.startsWith("/application") &&
-    !pathname.startsWith("/application/validation/enter-phone-number") &&
-    !pathname.startsWith("/application/validation/verify-code") &&
-    !pathname.startsWith("/application/registration") &&
-    !tokenValue?.infos?.is_customer
-  ) {
-    return NextResponse.redirect(
-      new URL("/application/validation/enter-phone-number", request.url)
-    );
+  if (pathname.startsWith("/application")) {
+    if (tokenValue?.infos?.is_customer) {
+      return;
+    } else if (
+      !pathname.startsWith("/application/validation/enter-phone-number") &&
+      !pathname.startsWith("/application/validation/verify-code") &&
+      !pathname.startsWith("/application/registration")
+    ) {
+      return NextResponse.redirect(
+        new URL("/application/validation/enter-phone-number", request.url)
+      );
+    }
   }
 
   if (
