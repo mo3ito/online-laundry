@@ -25,7 +25,7 @@ const OrderCardProvider = ({ children }: { children: React.ReactNode }) => {
   const { infos } = useAuthContext();
 
   const { data } = useGetReactQuery(
-    !infos?.is_driver && !infos?.is_admin && !infos?.is_dryer && infos?._id,
+    infos?.is_customer && infos?._id,
     GET_ORDERS_CUSTOER,
     ["all registered orders"]
   );

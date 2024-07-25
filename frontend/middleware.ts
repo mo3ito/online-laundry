@@ -25,7 +25,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (
+  if (pathname.startsWith("/application") && tokenValue?.infos?.is_customer) {
+    return;
+  } else if (
     pathname.startsWith("/application") &&
     !pathname.startsWith("/application/validation/enter-phone-number") &&
     !pathname.startsWith("/application/validation/verify-code") &&
