@@ -359,16 +359,16 @@ const deleteCategoryImage = async (req, res) => {
     }
 
     const imagePath = path.join(
-      __dirname,
-      "../../public/images/clothing-category",
+      path.resolve("public/images"),
+      "/clothing-category",
       image_name
     );
 
     await fs.unlink(imagePath);
 
     const images = await getAllImages(
-      "public/images/clothing-category",
-      "clothing-category"
+      path.resolve("public/images"),
+      "/clothing-category"
     );
     res.status(200).json({ images: images });
   } catch (error) {
@@ -392,16 +392,24 @@ const deleteTypeImage = async (req, res) => {
     }
 
     const imagePath = path.join(
-      __dirname,
-      "../../public/images/clothing-types",
+      path.resolve("public/images"),
+      "clothing-types",
       image_name
     );
+
+    try {
+      await fs.access(imagePath);
+    } catch (error) {
+      return res.status(400).json({
+        message: "تصویری با این نام یافت نشد",
+      });
+    }
 
     await fs.unlink(imagePath);
 
     const images = await getAllImages(
-      "public/images/clothing-types",
-      "clothing-types"
+      path.resolve("public/images"),
+      "/clothing-types"
     );
     res.status(200).json({ images: images });
   } catch (error) {
@@ -451,5 +459,5 @@ module.exports = {
   getAllTypeImages,
   deleteCategoryImage,
   deleteTypeImage,
-  deleteCustomer
+  deleteCustomer,
 };
