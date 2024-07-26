@@ -26,7 +26,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = useCallback((infos: InitialInfosType, token: string) => {
     setToken(token);
-    Cookies.set(mo3itoPakToken, token);
+    Cookies.set(mo3itoPakToken, token, { expires: 100 });
     setInfos(infos);
   }, []);
 

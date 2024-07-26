@@ -48,7 +48,7 @@ export default function page() {
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500"
     >
       <HeaderComponent as="header" title="ویرایش اطلاعات" />
-      <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-12 w-full ">
+      <section className="flex justify-center items-center flex-col max-[420px]:px-4 px-10 pt-20 w-full ">
         <form onSubmit={submitForm} className="max-[420px]:w-full  w-96 ">
           <label
             htmlFor="name-user"
