@@ -25,14 +25,16 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  const publicPaths = [
+    "/application/validation/enter-phone-number",
+    "/application/validation/verify-code",
+    "/application/registration",
+  ];
+
   if (pathname.startsWith("/application")) {
     if (tokenValue?.infos?.is_customer) {
-      return;
-    } else if (
-      !pathname.startsWith("/application/validation/enter-phone-number") &&
-      !pathname.startsWith("/application/validation/verify-code") &&
-      !pathname.startsWith("/application/registration")
-    ) {
+      return NextResponse.next();
+    } else if (!publicPaths.some((path) => pathname.startsWith(path))) {
       return NextResponse.redirect(
         new URL("/application/validation/enter-phone-number", request.url)
       );
