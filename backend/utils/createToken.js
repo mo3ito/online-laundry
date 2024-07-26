@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
-const {jwtKey} = require("../endpoint")
-
+const { jwtKey } = require("../endpoint");
 
 const createToken = async (infos) => {
-  const token = await jwt.sign(infos, jwtKey, { expiresIn: "10d" });
+  const token = await jwt.sign(infos, jwtKey);
   return token;
 };
 
