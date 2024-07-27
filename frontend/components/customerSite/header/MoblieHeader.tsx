@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
-import useDropDown from "@/hooks/useDropDown";
 import linkHandler from "@/utils/linkHandler";
 
 export default function MoblieHeader() {
@@ -33,7 +32,7 @@ export default function MoblieHeader() {
         <ul className="w-full  text-white">
           <li
             onClick={() => linkHandler("/", setIsShowMenu, router)}
-            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b cursor-pointer"
           >
             خانه
           </li>
@@ -41,26 +40,26 @@ export default function MoblieHeader() {
             onClick={() =>
               linkHandler("https://mo3ito-pak.ir", setIsShowMenu, router)
             }
-            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b cursor-pointer"
           >
             دریافت اپلیکیشن
           </li>
           <li
             onClick={() => linkHandler("/application", setIsShowMenu, router)}
-            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b cursor-pointer"
           >
             ثبت سفارش
           </li>
 
           <li
             onClick={() => linkHandler("/price-list", setIsShowMenu, router)}
-            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b"
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2  border-b cursor-pointer"
           >
             لیست قیمت‌ها
           </li>
           <li
             onClick={() => linkHandler("/contact-us", setIsShowMenu, router)}
-            className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b"
+            className="w-full h-10 hover:bg-sky-500 flex items-center px-2 border-b cursor-pointer"
           >
             تماس با ما
           </li>

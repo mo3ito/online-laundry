@@ -22,6 +22,20 @@ export default function page() {
 
   const registrationHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const regex = /^[0-9]*$/;
+
+    if (!name.trim().length) {
+      return toast.warn("لطفا فیلد نام را وارد کنید");
+    }
+    if (!lastName.trim().length) {
+      return toast.warn("لطفا فیلد نام خانوادگی را وارد کنید");
+    }
+    if (phoneNumber.length !== 11) {
+      return toast.warn("تعداد کاراکترهای شماره موبایل اشتباه است");
+    }
+    if (!regex.test(phoneNumber)) {
+      return toast.warn("لطفا شماره موبایل را با اعداد انگلیسی وارد کنید");
+    }
     const body = {
       name,
       last_name: lastName,
