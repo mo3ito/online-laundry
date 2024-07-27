@@ -3,7 +3,6 @@ export type InitialInfosType = {
   name: string;
   last_name: string;
   phone_number: string;
-  orders?: any[];
   created_at: string;
   is_customer?: boolean;
   is_driver?: boolean;

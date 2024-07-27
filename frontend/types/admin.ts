@@ -33,6 +33,8 @@ export type DriversType = {
   created_at_shamsi: string;
 };
 
+export type DryerTypes = DriversType
+
 export type CustomersType = {
   _id: string;
   name: string;

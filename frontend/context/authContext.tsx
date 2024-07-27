@@ -17,7 +17,6 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     name: "",
     last_name: "",
     phone_number: "",
-    orders: [],
     created_at: "",
   };
 

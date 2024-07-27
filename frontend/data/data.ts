@@ -39,7 +39,7 @@ const adminMnuItems = [
   },
   {
     id: uuidv4(),
-    name: "رانندگان",
+    name: "همکاران",
     list: [
       {
         id: uuidv4(),
@@ -50,6 +50,16 @@ const adminMnuItems = [
         id: uuidv4(),
         itemName: "تایید رانندگان",
         path: "/admin/drivers/unverified-driver",
+      },
+      {
+        id: uuidv4(),
+        itemName: "مشاهده خشکشویی‌ها",
+        path: "/admin/dryers/show-dryers",
+      },
+      {
+        id: uuidv4(),
+        itemName: "تایید خشکشویی‌ها",
+        path: "/admin/dryers/unverified-dryer",
       },
     ],
   },

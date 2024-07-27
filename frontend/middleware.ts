@@ -67,6 +67,15 @@ export async function middleware(request: NextRequest) {
   }
 
   if (
+    (pathname === "/dryer/orders/history" ||
+      pathname === "/dryer/orders/service") &&
+    tokenValue?.infos?.is_dryer &&
+    !tokenValue.infos?.is_register_by_admin
+  ) {
+    return NextResponse.redirect(new URL("/dryer", request.url));
+  }
+
+  if (
     pathname.startsWith("/dryer") &&
     !pathname.startsWith("/dryer/register") &&
     !pathname.startsWith("/dryer/login") &&

@@ -9,7 +9,8 @@ export type OrdersInTemplate= {
     created_at: string;
     address: string;
     situation: string;
-    is_pay_money: boolean
+    is_pay_money: boolean;
+    is_debt_settlement_laundry: boolean
   };
   
   export type OrdersTemplate = {

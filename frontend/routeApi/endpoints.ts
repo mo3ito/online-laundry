@@ -67,3 +67,6 @@ export const ADMIN_GET_ALL_CATEGORY_IMAGES = `${BASE_URL_ADMIN}/get-all-category
 export const ADMIN_DELETE_CATEGORY_IMAGES = `${BASE_URL_ADMIN}/delete-category-image`;
 export const ADMIN_GET_ALL_TYPE_IMAGES = `${BASE_URL_ADMIN}/get-all-type-images`;
 export const ADMIN_DELETE_TYPE_IMAGES = `${BASE_URL_ADMIN}/delete-type-image`;
+export const ADMIN_GET_ALL_UNVERIFY_DRYER= `${BASE_URL_ADMIN}/unverified-dryer-by-admin`;
+export const ADMIN_CONFIRM_VERIFY_DRYER= `${BASE_URL_ADMIN}/confirm-verified-dryer-by-admin`;
+export const ADMIN_UNVERIFY_DRYER= `${BASE_URL_ADMIN}/delete-unverified-dryer`;
