@@ -20,6 +20,9 @@ const {
   deleteCategoryImage,
   deleteTypeImage,
   deleteCustomer,
+  unverifiedDryerByAdmin,
+  confirmVerifiedDryerByAdmin,
+  deleteUnverifiedDryer
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -38,5 +41,8 @@ router.get("/admin/get-all-category-images", getAllCategoryImages);
 router.get("/admin/get-all-type-images", getAllTypeImages);
 router.delete("/admin/delete-category-image", deleteCategoryImage);
 router.delete("/admin/delete-type-image", deleteTypeImage);
+router.get("/admin/unverified-dryer-by-admin", unverifiedDryerByAdmin);
+router.post("/admin/confirm-verified-dryer-by-admin",confirmVerifiedDryerByAdmin)
+router.delete("/admin/delete-unverified-dryer",deleteUnverifiedDryer)
 
 module.exports = router;

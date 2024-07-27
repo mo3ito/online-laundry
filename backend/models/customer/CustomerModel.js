@@ -14,18 +14,14 @@ const CustomersSchema = new Schema({
     type: String,
     required: true,
   },
-  orders: {
-    type: [],
-    default: [],
-  },
   created_at: {
     type: Date,
     default: Date.now,
   },
-  is_customer:{
+  is_customer: {
     type: String,
-    default: true
-  }
+    default: true,
+  },
 });
 
 const Customers = mongoose.model("customers", CustomersSchema);

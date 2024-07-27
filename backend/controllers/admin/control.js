@@ -6,6 +6,7 @@ const AdminModel = require("../../models/admin/AdminModel");
 const CustomerModel = require("../../models/customer/CustomerModel");
 const OrdersModel = require("../../models/orders/Orders");
 const PaidOrdersModel = require("../../models/orders/PaidOrders");
+const DryerModel = require("../../models/dryer/DryerModel");
 const JDate = require("jalali-date");
 
 const verifyDriver = async (req, res) => {
@@ -445,6 +446,94 @@ const deleteCustomer = async (req, res) => {
   }
 };
 
+const unverifiedDryerByAdmin = async (req, res) => {
+  const adminId = req.headers.authorization;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const allAwatingRegisterByAdmin = await DryerModel.find({
+      is_register_by_admin: false,
+    });
+
+    const allUnverifiedDryrs = await allAwatingRegisterByAdmin.map((item) => {
+      const jdate = new JDate(item.created_at);
+      const formatedDate = jdate.date.join("/");
+
+      return { ...item.toObject(), created_at_shamsi: formatedDate };
+    });
+
+    return res.status(200).json(allUnverifiedDryrs);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+const confirmVerifiedDryerByAdmin = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { dryer_id } = req.body;
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const dryer = await DryerModel.findById(dryer_id);
+    dryer.is_register_by_admin = true;
+
+    await dryer.save();
+
+    const allUnverifiedDryer = await DryerModel.find({
+      is_register_by_admin: false,
+    });
+
+    return res.status(200).json(allUnverifiedDryer);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+const deleteUnverifiedDryer = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { dryer_id } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    await DryerModel.deleteOne({ _id: dryer_id });
+
+    const allUnverifiedDryer = await DryerModel.find({
+      is_register_by_admin: false,
+    });
+
+    return res.status(200).json(allUnverifiedDryer);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -460,4 +549,7 @@ module.exports = {
   deleteCategoryImage,
   deleteTypeImage,
   deleteCustomer,
+  unverifiedDryerByAdmin,
+  confirmVerifiedDryerByAdmin,
+  deleteUnverifiedDryer
 };

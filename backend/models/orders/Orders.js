@@ -34,9 +34,9 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
-  situation:{
+  situation: {
     type: String,
-    default: "در انتظار تحویل"
+    default: "در انتظار تحویل",
   },
 });
 
@@ -74,10 +74,14 @@ const OrdersSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  is_pay_money:{
+  is_pay_money: {
     type: Boolean,
     default: false,
-  }
+  },
+  is_debt_settlement_laundry: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Orders = mongoose.model("orders", OrdersSchema);

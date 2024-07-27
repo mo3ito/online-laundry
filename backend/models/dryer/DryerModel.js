@@ -26,6 +26,14 @@ const DryerSchema = new Schema({
     type: String,
     default: true,
   },
+  is_register_by_admin: {
+    type: Boolean,
+    default: false,
+  },
+  location_laundry: {
+    type: Array,
+    default: [],
+  },
 });
 
 const Dryer = mongoose.model("dryers", DryerSchema);
