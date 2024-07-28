@@ -2,12 +2,12 @@ import deleteData from "@/services/deleteData";
 import { DryerTypes } from "@/types/admin";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
-import { ADMIN_DELETE_UNVERIFY_DRYER } from "@/routeApi/endpoints";
+import { ADMIN_DELETE_VERIFY_DRYER } from "@/routeApi/endpoints";
 
-const deleteUnveifiedDryer = async (
+const submitDeleteVerifyDryers = async (
   dryerId: string,
   _id: string | undefined,
-  setAllUnverifiedDryers: Dispatch<SetStateAction<DryerTypes[] | []>>,
+  setAllDryerVerified: Dispatch<SetStateAction<DryerTypes[] | []>>,
   onToggleShowDeleteModal: (value: boolean) => unknown
 ) => {
   const body = {
@@ -15,14 +15,14 @@ const deleteUnveifiedDryer = async (
   };
 
   try {
-    const deleteUnverifiedDryerResponse = await deleteData(
-      ADMIN_DELETE_UNVERIFY_DRYER,
+    const deleteDryerResponse = await deleteData(
+      ADMIN_DELETE_VERIFY_DRYER,
       body,
       _id
     );
-    if (deleteUnverifiedDryerResponse.status === 200) {
-      setAllUnverifiedDryers(deleteUnverifiedDryerResponse.data);
-      toast.success("حذف خشکشویی با موفقیت انجام شد");
+    if (deleteDryerResponse.status === 200) {
+      await setAllDryerVerified(deleteDryerResponse.data);
+      toast.success("خشکشویی با موفقیت حذف شد");
     }
   } catch (error: any) {
     console.error("خطا در ارتباط با سرور:", error);
@@ -40,4 +40,4 @@ const deleteUnveifiedDryer = async (
   }
 };
 
-export default deleteUnveifiedDryer;
+export default submitDeleteVerifyDryers;
