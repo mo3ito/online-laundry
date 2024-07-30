@@ -35,6 +35,10 @@ export default function payment() {
           { allDryers.map(item=> <option value={item._id}>{`${item.name} ${item.last_name} (خشکشویی ${item.laundry_name})`}</option>)}
           
         </select>
+
+        <section className="w-full">
+
+        </section>
       </div>
     </div>
   );

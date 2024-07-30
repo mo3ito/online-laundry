@@ -113,7 +113,7 @@ export default function DriverOrdersShow({
                     <p>مبلغ کل سفارشات</p>
                     <p>{order.all_price.toLocaleString("en-US")} تومان</p>
                   </div>
-                  <div className="w-full h-max bg-sky-300 p-2 mb-2 rounded-lg">
+                  <section className="w-full h-max bg-sky-300 p-2 mb-2 rounded-lg">
                     <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                       <p>نام خشکشویی</p>
                       <p>{order?.service_laundry?.laundry_name}</p>
@@ -122,7 +122,7 @@ export default function DriverOrdersShow({
                       <p>آدرس خشکشویی</p>
                       <p>{order?.service_laundry?.laundry_address}</p>
                     </div>
-                  </div>
+                  </section>
                   <div className="w-full flex items-center justify-center max-[280px]:gap-x-2 gap-x-3 ">
                     <DefaultButton
                       content="نمایش آدرس"

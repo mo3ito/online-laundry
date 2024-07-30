@@ -34,6 +34,8 @@ export default function ShowOrdersForadmin({
     }
   }, [data]);
 
+  console.log(allData);
+
   useEffect(() => {
     if (allData) {
       const { count, totalCost } = allData.reduce(
@@ -105,46 +107,56 @@ export default function ShowOrdersForadmin({
                     <p className="">{order.phone_number}</p>
                   </div>
                   <header className="text-center my-3">سفارشات</header>
-                  {order.orders.map((order) => (
+                  {order.orders.map((item) => (
                     <ul>
                       <li
-                        key={order.orders_id}
+                        key={item.orders_id}
                         className="border border-sky-500 p-4 rounded-lg mb-3 bg-sky-200"
                       >
                         <article>
                           <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
                             <p>نوع لباس:</p>
-                            <p className="">{order.type_clothing}</p>
+                            <p className="">{item.type_clothing}</p>
                           </div>
                           <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                             <p>نوع خدمات:</p>
-                            <p>{order.service_type}</p>
+                            <p>{item.service_type}</p>
                           </div>
                           <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                             <p>مبلغ واحد:</p>
                             <p>
-                              {Number(order.cost).toLocaleString("en-US")} تومان
+                              {Number(item.cost).toLocaleString("en-US")} تومان
                             </p>
                           </div>
                           <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                             <p>تعداد:</p>
-                            <p>{order.count}</p>
+                            <p>{item.count}</p>
                           </div>
                           <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                             <p>مبلغ:</p>
                             <p>
-                              {Number(order.totalCost).toLocaleString("en-US")}{" "}
+                              {Number(item.totalCost).toLocaleString("en-US")}{" "}
                               تومان
                             </p>
                           </div>
                           <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                             <p>تاریخ ثبت:</p>
-                            <p>{order.created_at}</p>
+                            <p>{item.created_at}</p>
                           </div>
                           <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                             <p>آدرس:</p>
-                            <p>{order.address}</p>
+                            <p>{item.address}</p>
                           </div>
+                          <section className="w-full h-max bg-sky-300 p-2 mb-2 rounded-lg">
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>نام خشکشویی</p>
+                              <p>{order?.service_laundry?.laundry_name}</p>
+                            </div>
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>آدرس خشکشویی</p>
+                              <p>{order?.service_laundry?.laundry_address}</p>
+                            </div>
+                          </section>
                         </article>
                       </li>
                     </ul>
