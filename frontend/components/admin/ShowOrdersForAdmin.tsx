@@ -28,6 +28,7 @@ export default function ShowOrdersForadmin({
     "get all paid orders",
   ]);
 
+  
   useEffect(() => {
     if (data) {
       setAllData(data.data);
