@@ -12,7 +12,7 @@ const ordersForDryer = async (req, res) => {
       });
     }
 
-    const orders = await OrdersModel.find({ is_done_all_order: false });
+    const orders = await OrdersModel.find({ is_done_all_order: false , "service_laundry.laundry_id": dryerId   });
 
     const filteredCollections = await orders.filter((item) =>
       item.orders.every((item) => item.situation === "تحویل گرفته شده")
@@ -40,7 +40,7 @@ const doneOrdersByDryer = async (req, res) => {
       });
     }
 
-    const orders = await OrdersModel.find({ is_done_all_order: true });
+    const orders = await OrdersModel.find({ is_done_all_order: true , "service_laundry.laundry_id" : dryerId });
     const reverseOrders = await orders.toReversed()
 
     return res.status(200).json(reverseOrders);

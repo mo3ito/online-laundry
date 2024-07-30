@@ -533,7 +533,7 @@ const deleteUnverifiedDryer = async (req, res) => {
   }
 };
 
-const getAllDryer = async (req, res) => {
+const getAllVerifyDryers = async (req, res) => {
   const adminId = req.headers.authorization;
 
   try {
@@ -590,6 +590,34 @@ const deleteDryer = async (req, res) => {
   }
 };
 
+const enterCoordinatesDryer = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { dryer_id, longitude, latitude } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    const dryer = await DryerModel.findById(dryer_id);
+    dryer.location_laundry.coordinates[0] = longitude;
+    dryer.location_laundry.coordinates[1] = latitude;
+    await dryer.save();
+
+    return res.status(200).json({
+      message: "مختصات با موفقیت ثبت شد",
+    });
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -608,6 +636,7 @@ module.exports = {
   unverifiedDryerByAdmin,
   confirmVerifiedDryerByAdmin,
   deleteUnverifiedDryer,
-  getAllDryer,
+  getAllVerifyDryers,
   deleteDryer,
+  enterCoordinatesDryer,
 };

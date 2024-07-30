@@ -40,6 +40,18 @@ const OrderSchema = new Schema({
   },
 });
 
+const ServiceLaundrySchema = new Schema({
+  laundry_id: String,
+  laundry_name: {
+    type: String,
+  },
+  laundry_address: {
+    type: String,
+  },
+  coordinates:[Number]
+
+});
+
 const OrdersSchema = new Schema({
   customer_id: {
     type: String,
@@ -77,6 +89,10 @@ const OrdersSchema = new Schema({
   is_pay_money: {
     type: Boolean,
     default: false,
+  },
+  service_laundry: {
+    type: ServiceLaundrySchema,
+    default: {},
   },
   is_debt_settlement_laundry: {
     type: Boolean,

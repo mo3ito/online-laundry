@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const createToken = require("../../utils/createToken");
 
 const registerDryer = async (req, res) => {
-  const { name, last_name, phone_number, password } = req.body;
+  const { name, last_name, phone_number, password , laundry_name , laundry_address } = req.body;
 
   try {
     const isExistAdmin = await DryerModel.findOne({ phone_number });
@@ -20,18 +20,20 @@ const registerDryer = async (req, res) => {
       !name.trim() ||
       !last_name.trim() ||
       !phone_number ||
+      !laundry_name ||
+      !laundry_address ||
       !phone_number.trim()
     ) {
       return res.status(400).json({
         message:
-          "نام، نام خانوادگی، شماره موبایل یا رمز عبور وارد نشده یا فقط شامل فضاهای خالی است",
+          "نام، نام خانوادگی، شماره موبایل، نام خشکشویی، آدرس یا رمز عبور وارد نشده یا فقط شامل فضاهای خالی است",
       });
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const infos = { name, last_name, phone_number, password: hashedPassword };
+    const infos = { name, last_name, phone_number, password: hashedPassword , laundry_address , laundry_name };
 
     const newDryer = await new DryerModel(infos);
     newDryer.save();

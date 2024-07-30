@@ -2,6 +2,7 @@ const OrdersModel = require("../../models/orders/Orders");
 const CustomersModel = require("../../models/customer/CustomerModel");
 const createToken = require("../../utils/createToken");
 const JDate = require("jalali-date");
+const DryerModel = require("../../models/dryer/DryerModel");
 
 const sendOrders = async (req, res) => {
   const customerId = req.headers.authorization;
@@ -44,6 +45,24 @@ const sendOrders = async (req, res) => {
 
     console.log(formatedDate);
 
+    const findNearestDryer = async (longitude, latitude) => {
+      try {
+        const dryer = await DryerModel.findOne({
+          location_laundry: {
+            $nearSphere: {
+              $geometry: { type: "Point", coordinates: [longitude, latitude] },
+            },
+          },
+        });
+        return dryer;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const findedDryer = await findNearestDryer(longitude, latitude);
+    console.log("findedDryer", findedDryer);
+
     const ordersInfos = {
       customer_id: customerId,
       name,
@@ -57,6 +76,12 @@ const sendOrders = async (req, res) => {
       address,
       latitude,
       longitude,
+      service_laundry: {
+        laundry_id: findedDryer._id,
+        laundry_name: findedDryer.laundry_name,
+        laundry_address: findedDryer.laundry_address,
+        coordinates: findedDryer.location_laundry.coordinates,
+      },
     };
 
     const newOrdersModel = await new OrdersModel(ordersInfos);
