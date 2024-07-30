@@ -10,7 +10,7 @@ const {
   verifyDriver,
   deleteDriver,
   getAlcustomers,
-  paidOrders,
+  PaidOrdersCustomer,
   gotOrders,
   deleteOrder,
   deletePaidOrder,
@@ -26,6 +26,8 @@ const {
   getAllVerifyDryers,
   deleteDryer,
   enterCoordinatesDryer,
+  unpaidDryerOrders,
+  payDryerOrders,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -35,7 +37,7 @@ router.put("/admin/verify-driver", verifyDriver);
 router.delete("/admin/delete-driver", deleteDriver);
 router.get("/admin/get-all-customers", getAlcustomers);
 router.delete("/admin/delete-customer", deleteCustomer);
-router.get("/admin/paid-orders", paidOrders);
+router.get("/admin/paid-orders", PaidOrdersCustomer);
 router.get("/admin/got-orders", gotOrders);
 router.delete("/admin/delete-order", deleteOrder);
 router.delete("/admin/delete-paid-order", deletePaidOrder);
@@ -53,5 +55,7 @@ router.delete("/admin/delete-unverified-dryer", deleteUnverifiedDryer);
 router.get("/admin/get-all-verify-dryers", getAllVerifyDryers);
 router.delete("/admin/delete-verified-dryer", deleteDryer);
 router.post("/admin/enter-coordinates-dryer", enterCoordinatesDryer);
+router.post("/admin/unpaid-dryer-orders", unpaidDryerOrders);
+router.post("/admin/pay-dryer-orders", payDryerOrders);
 
 module.exports = router;

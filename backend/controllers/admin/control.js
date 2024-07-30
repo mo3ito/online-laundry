@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const fs = require("fs").promises;
 const path = require("path");
 const getAllImages = require("../../utils/getAllImages");
@@ -5,8 +6,9 @@ const DriverModel = require("../../models/driver/DriverModel");
 const AdminModel = require("../../models/admin/AdminModel");
 const CustomerModel = require("../../models/customer/CustomerModel");
 const OrdersModel = require("../../models/orders/Orders");
-const PaidOrdersModel = require("../../models/orders/PaidOrders");
+const PaidOrdersCustomerModel = require("../../models/orders/PaidOrdersCustomer");
 const DryerModel = require("../../models/dryer/DryerModel");
+const PaidDryersModel = require("../../models/orders/PaidDryers");
 const JDate = require("jalali-date");
 
 const verifyDriver = async (req, res) => {
@@ -182,7 +184,7 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-const paidOrders = async (req, res) => {
+const PaidOrdersCustomer = async (req, res) => {
   const adminId = req.headers.authorization;
 
   try {
@@ -193,14 +195,14 @@ const paidOrders = async (req, res) => {
       });
     }
 
-    const paidOrders = await OrdersModel.find({ is_pay_money: true });
+    const PaidOrdersCustomer = await OrdersModel.find({ is_pay_money: true });
 
-    await PaidOrdersModel.insertMany(paidOrders);
+    await PaidOrdersCustomerModel.insertMany(PaidOrdersCustomer);
 
     await OrdersModel.deleteMany({ is_pay_money: true });
-    const allPaidOrders = await PaidOrdersModel.find({});
+    const allPaidOrdersCustomer = await PaidOrdersCustomerModel.find({});
 
-    res.status(200).json(allPaidOrders);
+    res.status(200).json(allPaidOrdersCustomer);
   } catch (error) {
     console.error("خطا در انتقال سفارشات پرداخت شده:", error);
     res.status(500).json({
@@ -272,9 +274,9 @@ const deletePaidOrder = async (req, res) => {
       });
     }
 
-    await PaidOrdersModel.findByIdAndDelete(orderId);
+    await PaidOrdersCustomerModel.findByIdAndDelete(orderId);
 
-    const orders = await PaidOrdersModel.find({});
+    const orders = await PaidOrdersCustomerModel.find({});
 
     return res.status(200).json(orders);
   } catch (error) {
@@ -618,12 +620,94 @@ const enterCoordinatesDryer = async (req, res) => {
   }
 };
 
+const unpaidDryerOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { dryer_id } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    const dryer = await DryerModel.findById(dryer_id);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    if (!dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی یافت نشد",
+      });
+    }
+
+    const ordersDryerDone = await PaidOrdersCustomerModel.find({
+      "service_laundry.laundry_id": dryer_id,
+    });
+
+    return res.status(200).json(ordersDryerDone);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+const payDryerOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { orders_id_array } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+    const ObjectId = mongoose.Types.ObjectId;
+
+    const objectIdArray = orders_id_array.map((id) => {
+      if (!ObjectId.isValid(id)) {
+        throw new Error(`Invalid ObjectId: ${id}`);
+      }
+      return ObjectId.createFromHexString(id);
+    });
+
+    await PaidOrdersCustomerModel.updateMany(
+      { _id: { $in: objectIdArray } },
+      { $set: { is_debt_settlement_laundry: true } }
+    );
+
+    const updatedOrders = await PaidOrdersCustomerModel.find({
+      is_debt_settlement_laundry: true,
+    });
+
+    if (updatedOrders.length > 0) {
+      await PaidDryersModel.insertMany(updatedOrders);
+    }
+
+    await PaidOrdersCustomerModel.deleteMany({
+      is_debt_settlement_laundry: true,
+    });
+
+    const allOrders = await PaidOrdersCustomerModel.find({});
+
+    res.status(200).json({
+      allOrders,
+    });
+  } catch (error) {
+    console.error("Error processing orders:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
 module.exports = {
   getAllDriver,
   verifyDriver,
   deleteDriver,
   getAlcustomers,
-  paidOrders,
+  PaidOrdersCustomer,
   gotOrders,
   deleteOrder,
   deletePaidOrder,
@@ -639,4 +723,6 @@ module.exports = {
   getAllVerifyDryers,
   deleteDryer,
   enterCoordinatesDryer,
+  unpaidDryerOrders,
+  payDryerOrders,
 };

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const OrdersSchema = new Schema({
+const OrderSchema = new Schema({
   service_type: {
     type: String,
     required: true,
@@ -34,14 +34,24 @@ const OrdersSchema = new Schema({
     type: String,
     required: true,
   },
-  situation:{
+  situation: {
     type: String,
-    required: true
+    default: "در انتظار تحویل",
   },
-
 });
 
-const PaidOrdersSchema = new Schema({
+const ServiceLaundrySchema = new Schema({
+  laundry_id: String,
+  laundry_name: {
+    type: String,
+  },
+  laundry_address: {
+    type: String,
+  },
+  coordinates:[Number]
+
+});
+const PaidOrdersCustomerSchema = new Schema({
   customer_id: {
     type: String,
     required: true,
@@ -53,7 +63,7 @@ const PaidOrdersSchema = new Schema({
     type: String,
   },
   orders: {
-    type: [OrdersSchema],
+    type: [OrderSchema],
     required: true,
   },
   phone_number: {
@@ -75,8 +85,23 @@ const PaidOrdersSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  is_pay_money: {
+    type: Boolean,
+    default: false,
+  },
+  service_laundry: {
+    type: ServiceLaundrySchema,
+    default: {},
+  },
+  is_debt_settlement_laundry: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const PaidOrders = mongoose.model("paid-orders", PaidOrdersSchema);
+const PaidOrdersCustomer = mongoose.model(
+  "paid-orders-customer",
+  PaidOrdersCustomerSchema
+);
 
-module.exports = PaidOrders;
+module.exports = PaidOrdersCustomer;

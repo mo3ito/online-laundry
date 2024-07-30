@@ -2,6 +2,7 @@ const OrdersModel = require("../../models/orders/Orders");
 const DriverModel = require("../../models/driver/DriverModel");
 const CustomerModel = require("../../models/customer/CustomerModel");
 const DryerModel = require("../../models/dryer/DryerModel");
+const PaidOrdersCustomer = require("../../models/orders/PaidOrdersCustomer")
 
 const getAllOrdersIsNotDone = async (req, res) => {
   const driverId = req.headers.authorization;
@@ -240,6 +241,15 @@ const payOrdersMoney = async (req, res) => {
       { orders: ordersTarget },
       { $set: { is_pay_money: true } }
     );
+
+
+    const allOrdersPaid = await OrdersModel.find({is_pay_money : true})
+
+    await PaidOrdersCustomer.insertMany(allOrdersPaid)
+
+    await OrdersModel.deleteMany({is_pay_money : true})
+   
+
 
     return res.status(200).json({
       message: "پرداخت با موفقیت ثبت شد",
