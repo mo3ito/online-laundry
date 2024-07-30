@@ -73,3 +73,4 @@ export const ADMIN_DELETE_UNVERIFY_DRYER = `${BASE_URL_ADMIN}/delete-unverified-
 export const ADMIN_GET_ALL_VERIFY_DRYERS = `${BASE_URL_ADMIN}/get-all-verify-dryers`;
 export const ADMIN_DELETE_VERIFY_DRYER = `${BASE_URL_ADMIN}/delete-verified-dryer`;
 export const ADMIN_ENTER_COORDINATES_DRYER = `${BASE_URL_ADMIN}/enter-coordinates-dryer`;
+export const ADMIN_UNPAID_DRYER_ORDERS = `${BASE_URL_ADMIN}/unpaid-dryer-orders`;

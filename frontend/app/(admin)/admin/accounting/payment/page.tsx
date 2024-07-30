@@ -13,6 +13,7 @@ import { OrdersTemplate } from "@/types/context/Orders";
 import deleteOrderHandler from "@/utils/admin/deleteOrderHandler";
 import React, { useEffect, useState } from "react";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
+import { ADMIN_UNPAID_DRYER_ORDERS } from "@/routeApi/endpoints";
 
 export default function payment() {
   const { infos } = useAuthContext();
@@ -28,7 +29,7 @@ export default function payment() {
   const [allUnpaidDryerOrders, setAllUnpaidDryerOrders] = useState([]);
   const [isShowModalDeleteGotOrder, setIsShowModalDeleteGotOrder] =
     useState<boolean>(false);
-  const [orderId, setOrderId] = useState<string>("");
+  const [ordersId, setOrdersId] = useState<string[]>([]);
 
   useEffect(() => {
     if (data) {
@@ -36,7 +37,8 @@ export default function payment() {
     }
   }, [data]);
 
-    const {allTotalPrice , allCountOrders} = useCalculateOrders(allUnpaidDryerOrders )
+  const { allTotalPrice, allCountOrders } =
+    useCalculateOrders(allUnpaidDryerOrders);
 
   console.log(dryerId);
 
@@ -47,7 +49,7 @@ export default function payment() {
 
     try {
       const response = await sendData(
-        "http://localhost:4000/admin/unpaid-dryer-orders",
+        ADMIN_UNPAID_DRYER_ORDERS,
         body,
         infos?._id
       );
@@ -57,14 +59,27 @@ export default function payment() {
     } catch (error) {}
   };
 
-
-
-  const handleDeleteOrder = async (orderId: string) => {
-    await setOrderId(orderId);
-    setIsShowModalDeleteGotOrder(true);
+  const handleCheckboxChange = (orderId: string) => {
+    setOrdersId((prevOrdersId: string[]) => {
+      if (prevOrdersId.includes(orderId)) {
+        return prevOrdersId.filter((id) => id !== orderId);
+      } else {
+        return [...prevOrdersId, orderId];
+      }
+    });
   };
 
-  console.log(allUnpaidDryerOrders);
+  const allIdHandler = () => {
+    if (ordersId.length === allUnpaidDryerOrders.length) {
+      // Deselect all
+      setOrdersId([]);
+    } else {
+      // Select all
+      setOrdersId(allUnpaidDryerOrders.map((item: OrdersTemplate) => item._id));
+    }
+  };
+
+  console.log(ordersId);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -91,6 +106,7 @@ export default function payment() {
           <DefaultButton
             content="انتخاب همه"
             className="w-1/2 bg-sky-500 h-10 rounded-lg"
+            onClick={allIdHandler}
           />
           <DefaultButton
             content="تسویه"
@@ -118,9 +134,14 @@ export default function payment() {
             {allUnpaidDryerOrders?.map((order: OrdersTemplate) => (
               <li
                 key={order._id}
-                className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-4 shadow-xl max-[280px]:text-xs text-sm sm:text-base "
+                className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-8 shadow-xl max-[280px]:text-xs text-sm sm:text-base "
               >
-                <input className="size-5" type="checkbox" />
+                <input
+                  onChange={() => handleCheckboxChange(order._id)}
+                  className="size-5"
+                  type="checkbox"
+                  checked={ ordersId.includes(order._id)}
+                />
                 <article>
                   <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
                     <p>نام</p>
@@ -188,13 +209,6 @@ export default function payment() {
                     </ul>
                   ))}
                 </article>
-                {
-                  <DefaultButton
-                    content="حذف"
-                    className="!bg-red-400 w-full h-10 rounded-lg"
-                    onClick={() => handleDeleteOrder(order._id)}
-                  />
-                }
               </li>
             ))}
           </ul>

@@ -9,6 +9,7 @@ import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
 import { ShowOrdersForadminProps } from "@/types/admin";
 import deleteOrderHandler from "@/utils/admin/deleteOrderHandler";
+import useCalculateOrders from "@/hooks/useCalculateOrders";
 
 export default function ShowOrdersForadmin({
   ordersApi,
@@ -18,8 +19,7 @@ export default function ShowOrdersForadmin({
   emptyMessage,
 }: ShowOrdersForadminProps) {
   const { infos } = useAuthContext();
-  const [allCountOrders, setAllCountOrders] = useState<number>(0);
-  const [allTotalPrice, setAllTotalPrice] = useState<number>(0);
+
   const [isShowModalDeleteGotOrder, setIsShowModalDeleteGotOrder] =
     useState<boolean>(false);
   const [orderId, setOrderId] = useState<string>("");
@@ -28,44 +28,15 @@ export default function ShowOrdersForadmin({
     "get all paid orders",
   ]);
 
-  
   useEffect(() => {
     if (data) {
       setAllData(data.data);
     }
   }, [data]);
 
+  const { allTotalPrice, allCountOrders } = useCalculateOrders(allData);
+
   console.log(allData);
-
-  useEffect(() => {
-    if (allData) {
-      const { count, totalCost } = allData.reduce(
-        (
-          acc: { count: number; totalCost: number },
-          customer: OrdersTemplate
-        ) => {
-          const customerOrderCount = customer.orders.reduce(
-            (orderAcc, order) => {
-              return {
-                count: orderAcc.count + order.count,
-                totalCost: orderAcc.totalCost + order.totalCost,
-              };
-            },
-            { count: 0, totalCost: 0 }
-          );
-
-          return {
-            count: acc.count + customerOrderCount.count,
-            totalCost: acc.totalCost + customerOrderCount.totalCost,
-          };
-        },
-        { count: 0, totalCost: 0 }
-      );
-
-      setAllCountOrders(count);
-      setAllTotalPrice(totalCost);
-    }
-  }, [allData]);
 
   const handleDeleteOrder = async (orderId: string) => {
     await setOrderId(orderId);
