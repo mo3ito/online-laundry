@@ -11,7 +11,7 @@ import PayModal from "./PayModal";
 import { DataType } from "@/types/driver";
 import useDriverContext from "@/hooks/useDriverContext";
 import { DriverOrdersShowProps } from "@/types/driver";
-import { OrdersTemplate , OrdersInTemplate } from "@/types/context/Orders";
+import { OrdersTemplate, OrdersInTemplate } from "@/types/context/Orders";
 import getOrdersHandler from "@/utils/driver/getOrdersHandler";
 import payOrderMoneyHandler from "@/utils/driver/payOrderMoneyHandler";
 
@@ -32,9 +32,9 @@ export default function DriverOrdersShow({
   const [ordersInfo, setOrdersInfo] = useState<DataType | null>(null);
   const [isShowModalSendOrder, setIsShowModalSendOrder] =
     useState<boolean>(false);
-  const [ordersForDriver, setOrdersForDriver] = useState<
-    OrdersTemplate[] | []
-  >([]);
+  const [ordersForDriver, setOrdersForDriver] = useState<OrdersTemplate[] | []>(
+    []
+  );
   const { setTotalIsNotDoneOrders } = useDriverContext();
   const [ishowModalGetOrders, setIsShowModalGetOrders] =
     useState<boolean>(false);
@@ -68,12 +68,15 @@ export default function DriverOrdersShow({
     isGet ? setIsShowModalGetOrders(true) : setIsShowModalSendOrder(true);
   };
 
+  console.log(ordersForDriver);
+  
+
   if (isLoading) {
     return <LoadingPage />;
   }
   return (
     <div
-    style={{ height: `calc(100vh - 124px)` }}
+      style={{ height: `calc(100vh - 124px)` }}
       className="mx-auto w-full sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto border border-sky-500 pb-28"
     >
       <HeaderComponent title={header} />
@@ -109,6 +112,16 @@ export default function DriverOrdersShow({
                   <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
                     <p>مبلغ کل سفارشات</p>
                     <p>{order.all_price.toLocaleString("en-US")} تومان</p>
+                  </div>
+                  <div className="w-full h-max bg-sky-300 p-2 mb-2 rounded-lg">
+                    <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                      <p>نام خشکشویی</p>
+                      <p>{order?.service_laundry?.laundry_name}</p>
+                    </div>
+                    <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                      <p>آدرس خشکشویی</p>
+                      <p>{order?.service_laundry?.laundry_address}</p>
+                    </div>
                   </div>
                   <div className="w-full flex items-center justify-center max-[280px]:gap-x-2 gap-x-3 ">
                     <DefaultButton

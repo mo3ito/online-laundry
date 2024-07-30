@@ -70,5 +70,6 @@ export const ADMIN_DELETE_TYPE_IMAGES = `${BASE_URL_ADMIN}/delete-type-image`;
 export const ADMIN_GET_ALL_UNVERIFY_DRYER = `${BASE_URL_ADMIN}/unverified-dryer-by-admin`;
 export const ADMIN_CONFIRM_VERIFY_DRYER = `${BASE_URL_ADMIN}/confirm-verified-dryer-by-admin`;
 export const ADMIN_DELETE_UNVERIFY_DRYER = `${BASE_URL_ADMIN}/delete-unverified-dryer`;
-export const ADMIN_GET_ALL_DRYERS = `${BASE_URL_ADMIN}/get-all-dryers`;
+export const ADMIN_GET_ALL_VERIFY_DRYERS = `${BASE_URL_ADMIN}/get-all-verify-dryers`;
 export const ADMIN_DELETE_VERIFY_DRYER = `${BASE_URL_ADMIN}/delete-verified-dryer`;
+export const ADMIN_ENTER_COORDINATES_DRYER = `${BASE_URL_ADMIN}/enter-coordinates-dryer`;

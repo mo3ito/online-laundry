@@ -67,7 +67,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (
-    (pathname === "/dryer/orders/history" ||
+    (pathname === "/dryer/orders/unsettled-orders" ||
       pathname === "/dryer/orders/service") &&
     tokenValue?.infos?.is_dryer &&
     !tokenValue.infos?.is_register_by_admin

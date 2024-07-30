@@ -6,13 +6,12 @@ import useAuthContext from "@/hooks/useAuthContext";
 import { DriversType } from "@/types/admin";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { ADMIN_GET_ALL_VERIFY_DRYERS } from "@/routeApi/endpoints";
-import Modal from "@/components/Modal";
 import DefaultButton from "@/components/share/defaultButton";
-import submitDeleteVerifyDryers from "@/utils/admin/submitDeleteVerifyDryers";
+import EnterCoordinatesDryerModal from "@/components/admin/EnterCoordinatesDryerModal";
 
 export default function page() {
   const { infos } = useAuthContext();
-  const [isShowModalDeleteDryer, setIsShowModalDeleteDryer] =
+  const [isShowModalEnterLatLong, setIsShowModalEnterLatLong] =
     useState<boolean>(false);
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
@@ -51,7 +50,7 @@ export default function page() {
   }
   return (
     <div>
-      <ShowHeaderTitleFixed content="خشکشویی‌ها" />
+      <ShowHeaderTitleFixed content="ثبت مختصات خشکشویی" />
       {allDryerVerified?.length > 0 ? (
         <section className="w-full h-max px-4 mt-28 md:mt-64 pb-10">
           <table className="table-auto w-full text-center  max-[280px]:text-[10px] text-sm sm:text-base">
@@ -79,10 +78,10 @@ export default function page() {
                   <td>
                     <DefaultButton
                       onClick={() =>
-                        verifyIdHandler(item._id, setIsShowModalDeleteDryer)
+                        verifyIdHandler(item._id, setIsShowModalEnterLatLong)
                       }
-                      className="!bg-red-400 w-full py-1 rounded-lg"
-                      content="حذف"
+                      className="!bg-green-500 w-full py-1 rounded-lg"
+                      content="وارد کردن مختصات"
                     />
                   </td>
                 </tr>
@@ -93,18 +92,11 @@ export default function page() {
       ) : (
         <p className="mt-72 text-center">هیچ خشکشویی‌ای وجود ندارد</p>
       )}
-      <Modal
-        messageContent="آیا از حذف خشکشویی اطمینان دارید؟"
-        isShowModal={isShowModalDeleteDryer}
-        setIsShowModal={setIsShowModalDeleteDryer}
-        confirmOnClick={() =>
-          submitDeleteVerifyDryers(
-            dryerId,
-            infos?._id,
-            setAllDryerVerified,
-            (value) => setIsShowModalDeleteDryer(value)
-          )
-        }
+      <EnterCoordinatesDryerModal
+        isShowModal={isShowModalEnterLatLong}
+        setIsShowModal={setIsShowModalEnterLatLong}
+        adminId={infos?._id}
+        dryerId={dryerId}
       />
     </div>
   );

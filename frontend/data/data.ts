@@ -61,16 +61,26 @@ const adminMnuItems = [
         itemName: "تایید خشکشویی‌ها",
         path: "/admin/dryers/unverified-dryer",
       },
+      {
+        id: uuidv4(),
+        itemName: "ثبت مختصات خشکشویی",
+        path: "/admin/dryers/enter-lat-long",
+      },
     ],
   },
   {
     id: uuidv4(),
-    name: "مشتریان",
+    name: "حسابرسی",
     list: [
       {
         id: uuidv4(),
-        itemName: "مشاهده مشتریان",
-        path: "/admin/customers/show-customers",
+        itemName: "حساب پرداخت نشده",
+        path: "/admin/accounting/payment",
+      },
+      {
+        id: uuidv4(),
+        itemName: "حساب پرداخت شده",
+        path: "/admin/accounting/paid",
       },
     ],
   },
@@ -92,6 +102,11 @@ const adminMnuItems = [
         id: uuidv4(),
         itemName: "سفارشات تحویل گرفته شده",
         path: "/admin/reports/got-orders",
+      },
+      {
+        id: uuidv4(),
+        itemName: "مشاهده مشتریان",
+        path: "/admin/customers/show-customers",
       },
     ],
   },

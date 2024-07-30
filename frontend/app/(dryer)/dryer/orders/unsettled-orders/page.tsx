@@ -40,7 +40,7 @@ export default function page() {
       style={{ height: `calc(100vh - 128px)` }}
       className="w-full  bg-slate-100 border border-sky-500  mx-auto sm:w-5/6 md:w-5/6 lg:w-4/6  shadow-xl  overflow-auto pb-10"
     >
-      <HeaderComponent as="header" title="تاریخچه سفارشات" />
+      <HeaderComponent as="header" title="سفارشات تسویه نشده" />
 
       <section className="w-full">
         <ul className="w-full h-max max-[280px]:px-3 px-6 sm:px-8 pb-28">
