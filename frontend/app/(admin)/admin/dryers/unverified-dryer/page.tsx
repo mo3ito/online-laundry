@@ -24,7 +24,7 @@ export default function Page() {
     ["get all unverified dryers"]
   );
   const [allUnverifiedDryers, setAllUnverifiedDryers] = useState<
-    DryerTypes[] | []
+  DryerTypes[] | []
   >([]);
 
   useEffect(() => {

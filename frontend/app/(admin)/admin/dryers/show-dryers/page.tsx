@@ -3,7 +3,7 @@ import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import useAuthContext from "@/hooks/useAuthContext";
-import { DriversType } from "@/types/admin";
+import { DryerTypes } from "@/types/admin";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import { ADMIN_GET_ALL_VERIFY_DRYERS } from "@/routeApi/endpoints";
 import Modal from "@/components/Modal";
@@ -19,7 +19,7 @@ export default function page() {
     ADMIN_GET_ALL_VERIFY_DRYERS,
     ["get all verified dryers"]
   );
-  const [allDryerVerified, setAllDryerVerified] = useState<DriversType[] | []>(
+  const [allDryerVerified, setAllDryerVerified] = useState<DryerTypes[] | []>(
     []
   );
   const [dryerId, setDryerId] = useState<string>("");
@@ -28,7 +28,7 @@ export default function page() {
     const filterDriver = async () => {
       if (data) {
         const registeredDrivers = await data.data?.filter(
-          (item: DriversType) => item.is_register_by_admin
+          (item: DryerTypes) => item.is_register_by_admin
         );
         setAllDryerVerified(registeredDrivers);
       }

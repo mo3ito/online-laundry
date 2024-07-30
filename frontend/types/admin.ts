@@ -33,7 +33,18 @@ export type DriversType = {
   created_at_shamsi: string;
 };
 
-export type DryerTypes = DriversType
+export type DryerTypes = {
+  _id: string;
+  name: string;
+  last_name: string;
+  phone_number: string;
+  is_dryer: boolean;
+  password: string;
+  is_register_by_admin: boolean;
+  created_at: string;
+  created_at_shamsi: string;
+  laundry_name: string
+}
 
 export type CustomersType = {
   _id: string;
