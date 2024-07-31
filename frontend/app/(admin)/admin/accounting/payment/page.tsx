@@ -1,7 +1,7 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import Modal from "@/components/Modal";
-import ShowOrdersForadmin from "@/components/admin/ShowOrdersForAdmin";
 import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed";
 import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
@@ -10,12 +10,10 @@ import { ADMIN_GET_ALL_VERIFY_DRYERS } from "@/routeApi/endpoints";
 import sendData from "@/services/sendData";
 import { DryerTypes } from "@/types/admin";
 import { OrdersTemplate } from "@/types/context/Orders";
-import deleteOrderHandler from "@/utils/admin/deleteOrderHandler";
-import React, { useEffect, useState } from "react";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
-import { ADMIN_UNPAID_DRYER_ORDERS } from "@/routeApi/endpoints";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import getUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
+import payMoneyToDryerHandler from "@/utils/admin/payMoneyToDryerHandler";
 
 export default function payment() {
   const { infos } = useAuthContext();
@@ -28,12 +26,13 @@ export default function payment() {
   );
   const [allDryers, setAllDryers] = useState<DryerTypes[] | []>([]);
 
-  const [allUnpaidDryerOrders, setAllUnpaidDryerOrders] = useState([]);
+  const [allUnpaidDryerOrders, setAllUnpaidDryerOrders] = useState<
+    OrdersTemplate[] | []
+  >([]);
   const [isShowModalPayMoney, setIsShowModalPayMoney] =
     useState<boolean>(false);
   const [dryerId, setDryerId] = useState<string>("");
   const [ordersId, setOrdersId] = useState<string[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     if (data) {
@@ -45,24 +44,6 @@ export default function payment() {
     useCalculateOrders(allUnpaidDryerOrders);
 
   console.log(ordersId);
-
-  const getUnpaidDryerOrders = async (dryerId: string) => {
-    setDryerId(dryerId);
-    const body = {
-      dryer_id: dryerId,
-    };
-
-    try {
-      const response = await sendData(
-        ADMIN_UNPAID_DRYER_ORDERS,
-        body,
-        infos?._id
-      );
-      if (response.status === 200) {
-        setAllUnpaidDryerOrders(response.data);
-      }
-    } catch (error) {}
-  };
 
   const handleCheckboxChange = (orderId: string) => {
     setOrdersId((prevOrdersId: string[]) => {
@@ -88,40 +69,6 @@ export default function payment() {
       : toast.warn("شما سفارشی را برای پرداخت انتخاب نکرده‌اید");
   };
 
-  const payMoneyToDryerHandler = async () => {
-    const body = {
-      dryer_id: dryerId,
-      orders_id_array: ordersId,
-    };
-
-    try {
-      const payMoneyResponse = await sendData(
-        "http://localhost:4000/admin/pay-dryer-orders",
-        body,
-        infos?._id
-      );
-      if (payMoneyResponse.status === 200) {
-        console.log(payMoneyResponse);
-        await setAllUnpaidDryerOrders(payMoneyResponse.data);
-        await getUnpaidDryerOrders(dryerId);
-        toast.success("پرداخت با موفقیت ثبت شد");
-      }
-    } catch (error: any) {
-      console.error("خطا در ارتباط با سرور:", error);
-
-      if (error.response && error.response.status === 400) {
-        const errorMessage: string =
-          error.response.data?.message || "خطایی رخ داده است.";
-        toast.error(errorMessage);
-      } else {
-        console.log("خطا:", error);
-        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
-      }
-    } finally {
-      setIsShowModalPayMoney(false);
-    }
-  };
-
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -131,7 +78,14 @@ export default function payment() {
       <ShowHeaderTitleFixed content="تسویه با خشکشویی" />
       <section className="w-full h-max sticky top-28 md:top-56 bg-slate-100 pb-3 md:py-3 z-40">
         <select
-          onChange={(event) => getUnpaidDryerOrders(event?.target.value)}
+          onChange={(event) =>
+            getUnpaidDryerOrders(
+              event?.target.value,
+              setDryerId,
+              infos?._id,
+              setAllUnpaidDryerOrders
+            )
+          }
           className="w-full z-50 h-10 rounded-lg mb-3 outline-none px-2 border border-sky-500 text-zinc-500 bg-white"
           name=""
           id=""
@@ -267,7 +221,16 @@ export default function payment() {
         messageContent="آیا از تسویه اطمینان دارید؟"
         isShowModal={isShowModalPayMoney}
         setIsShowModal={setIsShowModalPayMoney}
-        confirmOnClick={payMoneyToDryerHandler}
+        confirmOnClick={() =>
+          payMoneyToDryerHandler(
+            dryerId,
+            setDryerId,
+            ordersId,
+            setAllUnpaidDryerOrders,
+            infos?._id,
+            (value) => setIsShowModalPayMoney(value)
+          )
+        }
       />
     </div>
   );
