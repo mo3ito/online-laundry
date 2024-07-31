@@ -6,18 +6,23 @@ import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed
 import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
-import { ADMIN_GET_ALL_VERIFY_DRYERS } from "@/routeApi/endpoints";
-import sendData from "@/services/sendData";
+import {
+  ADMIN_GET_ALL_VERIFY_DRYERS,
+  ADMIN_GET_MONEY_PAID_DRYER_ORDERS,
+  ADMIN_DELETE_MONEY_PAID_TO_DRYERS_ORDERS,
+} from "@/routeApi/endpoints";
 import { DryerTypes } from "@/types/admin";
 import { OrdersTemplate } from "@/types/context/Orders";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
 import { toast } from "react-toastify";
-import getUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
-import payMoneyToDryerHandler from "@/utils/admin/payMoneyToDryerHandler";
+import getpaidAndUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
+import deleteMoneyPaidAndUnpaidToDryersOrders from "@/utils/admin/deleteMoneyPaidAndUnpaidToDryersOrders";
+import handleCheckboxChange from "@/utils/admin/handleCheckBoxChange";
+import allIdHandler from "@/utils/admin/allIdHandler";
 
 export default function payment() {
   const { infos } = useAuthContext();
-  const [isShowModalDeleteDryer, setIsShowModalDeleteDryer] =
+  const [isShowModalDeleteUnpaidToDryer, setIsShowModalDeleteUnpaidToDryer] =
     useState<boolean>(false);
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
@@ -26,11 +31,10 @@ export default function payment() {
   );
   const [allDryers, setAllDryers] = useState<DryerTypes[] | []>([]);
 
-  const [allMoneyPaidDryerOrders, setAllMoneyPaidDryerOrders] = useState<
+  const [allPaidDryerOrders, setAllPaidDryerOrders] = useState<
     OrdersTemplate[] | []
   >([]);
-  const [isShowModalPayMoney, setIsShowModalPayMoney] =
-    useState<boolean>(false);
+
   const [dryerId, setDryerId] = useState<string>("");
   const [ordersId, setOrdersId] = useState<string[]>([]);
 
@@ -41,22 +45,11 @@ export default function payment() {
   }, [data]);
 
   const { allTotalPrice, allCountOrders } =
-    useCalculateOrders(allMoneyPaidDryerOrders);
+    useCalculateOrders(allPaidDryerOrders);
 
   console.log(ordersId);
-
-  const handleCheckboxChange = (orderId: string) => {
-    setOrdersId((prevOrdersId: string[]) => {
-      if (prevOrdersId.includes(orderId)) {
-        return prevOrdersId.filter((id) => id !== orderId);
-      } else {
-        return [...prevOrdersId, orderId];
-      }
-    });
-  };
-
-
-
+  console.log("dryerId", dryerId);
+  console.log("ordersId", ordersId);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -64,21 +57,19 @@ export default function payment() {
 
   return (
     <div className="container  h-max min-h-screen mx-auto  flex flex-col items-center  pb-20 px-4 mt-28 md:mt-58">
-      <ShowHeaderTitleFixed content="حساب‌های پرداخت شده به خشکشویی‌ها" />
+      <ShowHeaderTitleFixed content="حساب‌های پرداخت شده به خشکشویی" />
       <section className="w-full h-max sticky top-28 md:top-56 bg-slate-100 pb-3 md:py-3 z-40">
         <select
           onChange={(event) =>
-            getUnpaidDryerOrders(
+            getpaidAndUnpaidDryerOrders(
               event?.target.value,
               setDryerId,
               infos?._id,
-              setAllMoneyPaidDryerOrders,
-              "http://localhost:4000/admin/get-money-paid-dryer-orders"
+              setAllPaidDryerOrders,
+              ADMIN_GET_MONEY_PAID_DRYER_ORDERS
             )
           }
           className="w-full z-50 h-10 rounded-lg mb-3 outline-none px-2 border border-sky-500 text-zinc-500 bg-white"
-          name=""
-          id=""
         >
           <option value="">خشکشویی را انتخاب کنید</option>
           {allDryers.map((item) => (
@@ -87,13 +78,29 @@ export default function payment() {
             </option>
           ))}
         </select>
+        <div className="w-full flex items-center gap-x-2 ">
+          <DefaultButton
+            content="انتخاب همه"
+            className="w-1/2 bg-sky-300 h-10 rounded-lg"
+            onClick={() =>
+              allIdHandler(ordersId, setOrdersId, allPaidDryerOrders)
+            }
+          />
+          <DefaultButton
+            content="حذف"
+            className="w-1/2 bg-sky-300 h-10 rounded-lg"
+            onClick={() =>
+              ordersId.length > 0
+                ? setIsShowModalDeleteUnpaidToDryer(true)
+                : toast.warn("شما هیچ سفارشی را انتخاب نکرده‌اید")
+            }
+          />
+        </div>
       </section>
       <div className=" md:mt-28  w-full">
         <section className="max-[280px]:text-xs text-sm sm:text-base">
           <div className={allCountOrders && allTotalPrice ? "block" : "hidden"}>
-            <p className="">
-              تعداد سفارشات : {allMoneyPaidDryerOrders.length} عدد
-            </p>
+            <p className="">تعداد سفارشات : {allPaidDryerOrders.length} عدد</p>
             <p className="">
               تعداد کل لباس‌ها در سفارشات : {allCountOrders} عدد
             </p>
@@ -104,15 +111,17 @@ export default function payment() {
         </section>
 
         <section className="w-full h-max mt-6 ">
-          {allMoneyPaidDryerOrders.length > 0 ? (
+          {allPaidDryerOrders.length > 0 ? (
             <ul className="w-full h-max   ">
-              {allMoneyPaidDryerOrders?.map((order: OrdersTemplate) => (
+              {allPaidDryerOrders?.map((order: OrdersTemplate) => (
                 <li
                   key={order._id}
                   className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-8 shadow-xl max-[280px]:text-xs text-sm sm:text-base "
                 >
                   <input
-                    onChange={() => handleCheckboxChange(order._id)}
+                    onChange={() =>
+                      handleCheckboxChange(order._id, setOrdersId)
+                    }
                     className="size-5"
                     type="checkbox"
                     checked={ordersId.includes(order._id)}
@@ -190,23 +199,26 @@ export default function payment() {
             </ul>
           ) : (
             <p className="text-center text-sm sm:text-lg">
-              هیچ سفارشی برای تسویه وجود ندارد
+              هیچ سفارش پرداخت شده‌ای وجود ندارد
             </p>
           )}
         </section>
       </div>
       <Modal
-        messageContent="آیا از تسویه اطمینان دارید؟"
-        isShowModal={isShowModalPayMoney}
-        setIsShowModal={setIsShowModalPayMoney}
+        messageContent="آیا از حذف اطمینان دارید؟"
+        isShowModal={isShowModalDeleteUnpaidToDryer}
+        setIsShowModal={setIsShowModalDeleteUnpaidToDryer}
         confirmOnClick={() =>
-          payMoneyToDryerHandler(
+          deleteMoneyPaidAndUnpaidToDryersOrders(
             dryerId,
             setDryerId,
             ordersId,
-            setAllMoneyPaidDryerOrders,
+            setOrdersId,
             infos?._id,
-            (value) => setIsShowModalPayMoney(value)
+            ADMIN_DELETE_MONEY_PAID_TO_DRYERS_ORDERS,
+            setAllPaidDryerOrders,
+            ADMIN_GET_MONEY_PAID_DRYER_ORDERS,
+            (value) => setIsShowModalDeleteUnpaidToDryer(value)
           )
         }
       />

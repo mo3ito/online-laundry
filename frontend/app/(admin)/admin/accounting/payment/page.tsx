@@ -8,7 +8,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import {
   ADMIN_GET_ALL_VERIFY_DRYERS,
-  ADMIN_GET_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS,
+  ADMIN_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS,
   ADMIN_UNPAID_DRYER_ORDERS,
 } from "@/routeApi/endpoints";
 import { DryerTypes } from "@/types/admin";
@@ -18,6 +18,8 @@ import { toast } from "react-toastify";
 import getpaidAndUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
 import payMoneyToDryerHandler from "@/utils/admin/payMoneyToDryerHandler";
 import deleteMoneyPaidAndUnpaidToDryersOrders from "@/utils/admin/deleteMoneyPaidAndUnpaidToDryersOrders";
+import handleCheckboxChange from "@/utils/admin/handleCheckBoxChange";
+import allIdHandler from "@/utils/admin/allIdHandler";
 
 export default function payment() {
   const { infos } = useAuthContext();
@@ -48,24 +50,6 @@ export default function payment() {
     useCalculateOrders(allUnpaidDryerOrders);
 
   console.log(ordersId);
-
-  const handleCheckboxChange = (orderId: string) => {
-    setOrdersId((prevOrdersId: string[]) => {
-      if (prevOrdersId.includes(orderId)) {
-        return prevOrdersId.filter((id) => id !== orderId);
-      } else {
-        return [...prevOrdersId, orderId];
-      }
-    });
-  };
-
-  const allIdHandler = () => {
-    if (ordersId.length === allUnpaidDryerOrders.length) {
-      setOrdersId([]);
-    } else {
-      setOrdersId(allUnpaidDryerOrders.map((item: OrdersTemplate) => item._id));
-    }
-  };
 
   const handlePayMoneyToDryer = () => {
     ordersId.length > 0
@@ -107,7 +91,9 @@ export default function payment() {
           <DefaultButton
             content="انتخاب همه"
             className="w-1/2 bg-sky-300 h-10 rounded-lg"
-            onClick={allIdHandler}
+            onClick={() =>
+              allIdHandler(ordersId, setOrdersId, allUnpaidDryerOrders)
+            }
           />
           <DefaultButton
             content="تسویه"
@@ -149,7 +135,9 @@ export default function payment() {
                   className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-8 shadow-xl max-[280px]:text-xs text-sm sm:text-base "
                 >
                   <input
-                    onChange={() => handleCheckboxChange(order._id)}
+                    onChange={() =>
+                      handleCheckboxChange(order._id, setOrdersId)
+                    }
                     className="size-5"
                     type="checkbox"
                     checked={ordersId.includes(order._id)}
@@ -259,7 +247,7 @@ export default function payment() {
             ordersId,
             setOrdersId,
             infos?._id,
-            ADMIN_GET_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS,
+            ADMIN_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS,
             setAllUnpaidDryerOrders,
             ADMIN_UNPAID_DRYER_ORDERS,
             (value) => setIsShowModalDeleteUnpaidToDryer(value)

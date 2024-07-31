@@ -76,4 +76,5 @@ export const ADMIN_ENTER_COORDINATES_DRYER = `${BASE_URL_ADMIN}/enter-coordinate
 export const ADMIN_UNPAID_DRYER_ORDERS = `${BASE_URL_ADMIN}/unpaid-dryer-orders`;
 export const ADMIN_PAY_DRYER_ORDERS = `${BASE_URL_ADMIN}/pay-dryer-orders`;
 export const ADMIN_GET_MONEY_PAID_DRYER_ORDERS = `${BASE_URL_ADMIN}/get-money-paid-dryer-orders`;
-export const ADMIN_GET_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS = `${BASE_URL_ADMIN}/delete-money-unpaid-to-dryers-orders`;
+export const ADMIN_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS = `${BASE_URL_ADMIN}/delete-money-unpaid-to-dryers-orders`;
+export const ADMIN_DELETE_MONEY_PAID_TO_DRYERS_ORDERS = `${BASE_URL_ADMIN}/delete-money-paid-to-dryers-orders`;
