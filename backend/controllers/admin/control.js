@@ -654,7 +654,7 @@ const unpaidDryerOrders = async (req, res) => {
 
 const payDryerOrders = async (req, res) => {
   const adminId = req.headers.authorization;
-  const { orders_id_array } = req.body;
+  const { orders_id_array, dryer_id } = req.body;
 
   try {
     const admin = await AdminModel.findById(adminId);
@@ -673,7 +673,7 @@ const payDryerOrders = async (req, res) => {
     });
 
     await PaidOrdersCustomerModel.updateMany(
-      { _id: { $in: objectIdArray } },
+      { _id: { $in: objectIdArray }, "service_laundry.laundry_id": dryer_id },
       { $set: { is_debt_settlement_laundry: true } }
     );
 
@@ -689,11 +689,11 @@ const payDryerOrders = async (req, res) => {
       is_debt_settlement_laundry: true,
     });
 
-    const allOrders = await PaidOrdersCustomerModel.find({});
-
-    res.status(200).json({
-      allOrders,
+    const unpaidOrdersDryer = await PaidOrdersCustomerModel.find({
+      is_debt_settlement_laundry: false,
     });
+
+    return res.status(200).json(unpaidOrdersDryer);
   } catch (error) {
     console.error("Error processing orders:", error);
     res.status(500).json({
