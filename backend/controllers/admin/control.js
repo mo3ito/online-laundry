@@ -9,6 +9,7 @@ const OrdersModel = require("../../models/orders/Orders");
 const PaidOrdersCustomerModel = require("../../models/orders/PaidOrdersCustomer");
 const DryerModel = require("../../models/dryer/DryerModel");
 const PaidDryersModel = require("../../models/orders/PaidDryers");
+
 const JDate = require("jalali-date");
 
 const verifyDriver = async (req, res) => {
@@ -702,6 +703,127 @@ const payDryerOrders = async (req, res) => {
   }
 };
 
+const getMoneyPaidDryerOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { dryer_id } = req.body;
+
+  try {
+    const admin = await AdminModel.findById(adminId);
+    const dryer = await DryerModel.findById(dryer_id);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    if (!dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی یافت نشد",
+      });
+    }
+
+    const moneyPaidOrders = await PaidDryersModel.find({
+      "service_laundry.laundry_id": dryer_id,
+    });
+
+    return res.status(200).json(moneyPaidOrders);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+
+
+const deleteMoneyUnpaidToDryersOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { orders_id_array, dryer_id } = req.body;
+  try {
+    const admin = await AdminModel.findById(adminId);
+    const dryer = await DryerModel.findById(dryer_id);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    if (!dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی یافت نشد",
+      });
+    }
+
+    const ObjectId = mongoose.Types.ObjectId;
+
+    const objectIdArray = orders_id_array.map((id) => {
+      if (!ObjectId.isValid(id)) {
+        throw new Error(`Invalid ObjectId: ${id}`);
+      }
+      return ObjectId.createFromHexString(id);
+    });
+
+    await PaidOrdersCustomerModel.deleteMany({
+      _id: { $in: objectIdArray },
+      "service_laundry.laundry_id": dryer_id,
+    });
+
+    const allOrders = await PaidOrdersCustomerModel.find({is_debt_settlement_laundry : false});
+
+    return res.status(200).json(allOrders);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
+
+const deleteMoneyPaidToDryersOrders = async (req, res) => {
+  const adminId = req.headers.authorization;
+  const { orders_id_array, dryer_id } = req.body;
+  try {
+    const admin = await AdminModel.findById(adminId);
+    const dryer = await DryerModel.findById(dryer_id);
+    if (!admin) {
+      return res.status(400).json({
+        message: "ادمینی با این آیدی یافت نشد",
+      });
+    }
+
+    if (!dryer) {
+      return res.status(400).json({
+        message: "خشکشویی با این آیدی یافت نشد",
+      });
+    }
+
+    const ObjectId = mongoose.Types.ObjectId;
+
+    const objectIdArray = orders_id_array.map((id) => {
+      if (!ObjectId.isValid(id)) {
+        throw new Error(`Invalid ObjectId: ${id}`);
+      }
+      return ObjectId.createFromHexString(id);
+    });
+
+    await PaidDryersModel.deleteMany({
+      _id: { $in: objectIdArray },
+      "service_laundry.laundry_id": dryer_id,
+    });
+
+    const allOrders = await PaidDryersModel.find({is_debt_settlement_laundry : false});
+
+    return res.status(200).json(allOrders);
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({
+      message: "خطای سرور",
+    });
+  }
+};
+
 module.exports = {
   getAllDriver,
   verifyDriver,
@@ -725,4 +847,7 @@ module.exports = {
   enterCoordinatesDryer,
   unpaidDryerOrders,
   payDryerOrders,
+  getMoneyPaidDryerOrders,
+  deleteMoneyUnpaidToDryersOrders,
+  deleteMoneyPaidToDryersOrders
 };

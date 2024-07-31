@@ -28,6 +28,9 @@ const {
   enterCoordinatesDryer,
   unpaidDryerOrders,
   payDryerOrders,
+  getMoneyPaidDryerOrders,
+  deleteMoneyUnpaidToDryersOrders,
+  deleteMoneyPaidToDryersOrders,
 } = require("../controllers/admin/control");
 
 router.post("/admin/register", adminRegister);
@@ -57,5 +60,14 @@ router.delete("/admin/delete-verified-dryer", deleteDryer);
 router.post("/admin/enter-coordinates-dryer", enterCoordinatesDryer);
 router.post("/admin/unpaid-dryer-orders", unpaidDryerOrders);
 router.post("/admin/pay-dryer-orders", payDryerOrders);
+router.post("/admin/get-money-paid-dryer-orders", getMoneyPaidDryerOrders);
+router.delete(
+  "/admin/delete-money-unpaid-to-dryers-orders",
+  deleteMoneyUnpaidToDryersOrders
+);
+router.delete(
+  "/admin/delete-money-paid-to-dryers-orders",
+  deleteMoneyPaidToDryersOrders
+);
 
 module.exports = router;
