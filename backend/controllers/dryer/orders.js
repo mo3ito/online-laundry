@@ -1,5 +1,6 @@
 const OrdersModel = require("../../models/orders/Orders");
 const DryerModel = require("../../models/dryer/DryerModel");
+const PaidOrdersCustomerModel = require("../../models/orders/PaidOrdersCustomer")
 
 const ordersForDryer = async (req, res) => {
   const dryerId = req.headers.authorization;
@@ -40,7 +41,8 @@ const doneOrdersByDryer = async (req, res) => {
       });
     }
 
-    const orders = await OrdersModel.find({ is_done_all_order: true , "service_laundry.laundry_id" : dryerId });
+
+    const orders = await PaidOrdersCustomerModel.find({ is_done_all_order: true , "service_laundry.laundry_id" : dryerId });
     const reverseOrders = await orders.toReversed()
 
     return res.status(200).json(reverseOrders);
