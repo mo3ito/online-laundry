@@ -14,6 +14,8 @@ import deleteOrderHandler from "@/utils/admin/deleteOrderHandler";
 import React, { useEffect, useState } from "react";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
 import { ADMIN_UNPAID_DRYER_ORDERS } from "@/routeApi/endpoints";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function payment() {
   const { infos } = useAuthContext();
@@ -25,11 +27,13 @@ export default function payment() {
     ["get all verified dryers"]
   );
   const [allDryers, setAllDryers] = useState<DryerTypes[] | []>([]);
-  const [dryerId, setDryerId] = useState<string>("");
+
   const [allUnpaidDryerOrders, setAllUnpaidDryerOrders] = useState([]);
-  const [isShowModalDeleteGotOrder, setIsShowModalDeleteGotOrder] =
+  const [isShowModalPayMoney, setIsShowModalPayMoney] =
     useState<boolean>(false);
+  const [dryerId, setDryerId] = useState<string>("");
   const [ordersId, setOrdersId] = useState<string[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (data) {
@@ -40,9 +44,10 @@ export default function payment() {
   const { allTotalPrice, allCountOrders } =
     useCalculateOrders(allUnpaidDryerOrders);
 
-  console.log(dryerId);
+  console.log(ordersId);
 
   const getUnpaidDryerOrders = async (dryerId: string) => {
+    setDryerId(dryerId);
     const body = {
       dryer_id: dryerId,
     };
@@ -71,15 +76,51 @@ export default function payment() {
 
   const allIdHandler = () => {
     if (ordersId.length === allUnpaidDryerOrders.length) {
-      // Deselect all
       setOrdersId([]);
     } else {
-      // Select all
       setOrdersId(allUnpaidDryerOrders.map((item: OrdersTemplate) => item._id));
     }
   };
 
-  console.log(ordersId);
+  const handlePayMoneyToDryer = () => {
+    ordersId.length > 0
+      ? setIsShowModalPayMoney(true)
+      : toast.warn("شما سفارشی را برای پرداخت انتخاب نکرده‌اید");
+  };
+
+  const payMoneyToDryerHandler = async () => {
+    const body = {
+      dryer_id: dryerId,
+      orders_id_array: ordersId,
+    };
+
+    try {
+      const payMoneyResponse = await sendData(
+        "http://localhost:4000/admin/pay-dryer-orders",
+        body,
+        infos?._id
+      );
+      if (payMoneyResponse.status === 200) {
+        console.log(payMoneyResponse);
+        await setAllUnpaidDryerOrders(payMoneyResponse.data);
+        await getUnpaidDryerOrders(dryerId);
+        toast.success("پرداخت با موفقیت ثبت شد");
+      }
+    } catch (error: any) {
+      console.error("خطا در ارتباط با سرور:", error);
+
+      if (error.response && error.response.status === 400) {
+        const errorMessage: string =
+          error.response.data?.message || "خطایی رخ داده است.";
+        toast.error(errorMessage);
+      } else {
+        console.log("خطا:", error);
+        toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
+      }
+    } finally {
+      setIsShowModalPayMoney(false);
+    }
+  };
 
   if (isLoading) {
     return <LoadingPage />;
@@ -111,6 +152,7 @@ export default function payment() {
           <DefaultButton
             content="تسویه"
             className="w-1/2 bg-sky-500 h-10 rounded-lg"
+            onClick={handlePayMoneyToDryer}
           />
         </div>
       </section>
@@ -130,90 +172,103 @@ export default function payment() {
         </section>
 
         <section className="w-full h-max mt-6 ">
-          <ul className="w-full h-max   ">
-            {allUnpaidDryerOrders?.map((order: OrdersTemplate) => (
-              <li
-                key={order._id}
-                className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-8 shadow-xl max-[280px]:text-xs text-sm sm:text-base "
-              >
-                <input
-                  onChange={() => handleCheckboxChange(order._id)}
-                  className="size-5"
-                  type="checkbox"
-                  checked={ ordersId.includes(order._id)}
-                />
-                <article>
-                  <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
-                    <p>نام</p>
-                    <p className="">
-                      {order.name} {order.last_name}
-                    </p>
-                  </div>
-                  <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
-                    <p>شماره موبایل</p>
-                    <p className="">{order.phone_number}</p>
-                  </div>
-                  <header className="text-center my-3">سفارشات</header>
-                  {order.orders.map((item) => (
-                    <ul>
-                      <li
-                        key={item.orders_id}
-                        className="border border-sky-500 p-4 rounded-lg mb-3 bg-sky-200"
-                      >
-                        <article>
-                          <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
-                            <p>نوع لباس:</p>
-                            <p className="">{item.type_clothing}</p>
-                          </div>
-                          <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                            <p>نوع خدمات:</p>
-                            <p>{item.service_type}</p>
-                          </div>
-                          <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                            <p>مبلغ واحد:</p>
-                            <p>
-                              {Number(item.cost).toLocaleString("en-US")} تومان
-                            </p>
-                          </div>
-                          <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                            <p>تعداد:</p>
-                            <p>{item.count}</p>
-                          </div>
-                          <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                            <p>مبلغ:</p>
-                            <p>
-                              {Number(item.totalCost).toLocaleString("en-US")}{" "}
-                              تومان
-                            </p>
-                          </div>
-                          <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                            <p>تاریخ ثبت:</p>
-                            <p>{item.created_at}</p>
-                          </div>
-                          <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                            <p>آدرس:</p>
-                            <p>{item.address}</p>
-                          </div>
-                          <section className="w-full h-max bg-sky-300 p-2 mb-2 rounded-lg">
-                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                              <p>نام خشکشویی</p>
-                              <p>{order?.service_laundry?.laundry_name}</p>
+          {allUnpaidDryerOrders.length > 0 ? (
+            <ul className="w-full h-max   ">
+              {allUnpaidDryerOrders?.map((order: OrdersTemplate) => (
+                <li
+                  key={order._id}
+                  className=" border-2 border-sky-200 bg-sky-100 p-3 rounded-lg mb-8 shadow-xl max-[280px]:text-xs text-sm sm:text-base "
+                >
+                  <input
+                    onChange={() => handleCheckboxChange(order._id)}
+                    className="size-5"
+                    type="checkbox"
+                    checked={ordersId.includes(order._id)}
+                  />
+                  <article>
+                    <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
+                      <p>نام</p>
+                      <p className="">
+                        {order.name} {order.last_name}
+                      </p>
+                    </div>
+                    <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
+                      <p>شماره موبایل</p>
+                      <p className="">{order.phone_number}</p>
+                    </div>
+                    <header className="text-center my-3">سفارشات</header>
+                    {order.orders.map((item) => (
+                      <ul>
+                        <li
+                          key={item.orders_id}
+                          className="border border-sky-500 p-4 rounded-lg mb-3 bg-sky-200"
+                        >
+                          <article>
+                            <div className="flex max-[280px]:justify-start justify-between items-center mb-3 gap-x-4">
+                              <p>نوع لباس:</p>
+                              <p className="">{item.type_clothing}</p>
                             </div>
                             <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
-                              <p>آدرس خشکشویی</p>
-                              <p>{order?.service_laundry?.laundry_address}</p>
+                              <p>نوع خدمات:</p>
+                              <p>{item.service_type}</p>
                             </div>
-                          </section>
-                        </article>
-                      </li>
-                    </ul>
-                  ))}
-                </article>
-              </li>
-            ))}
-          </ul>
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>مبلغ واحد:</p>
+                              <p>
+                                {Number(item.cost).toLocaleString("en-US")}{" "}
+                                تومان
+                              </p>
+                            </div>
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>تعداد:</p>
+                              <p>{item.count}</p>
+                            </div>
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>مبلغ:</p>
+                              <p>
+                                {Number(item.totalCost).toLocaleString("en-US")}{" "}
+                                تومان
+                              </p>
+                            </div>
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>تاریخ ثبت:</p>
+                              <p>{item.created_at}</p>
+                            </div>
+                            <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                              <p>آدرس:</p>
+                              <p>{item.address}</p>
+                            </div>
+                            <section className="w-full h-max bg-sky-300 p-2 mb-2 rounded-lg">
+                              <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                                <p>نام خشکشویی</p>
+                                <p>{order?.service_laundry?.laundry_name}</p>
+                              </div>
+                              <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2">
+                                <p>آدرس خشکشویی</p>
+                                <p>{order?.service_laundry?.laundry_address}</p>
+                              </div>
+                            </section>
+                          </article>
+                        </li>
+                      </ul>
+                    ))}
+                  </article>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-center text-sm sm:text-lg">
+              هیچ سفارشی برای تسویه وجود ندارد
+            </p>
+          )}
         </section>
       </div>
+      <Modal
+        messageContent="آیا از تسویه اطمینان دارید؟"
+        isShowModal={isShowModalPayMoney}
+        setIsShowModal={setIsShowModalPayMoney}
+        confirmOnClick={payMoneyToDryerHandler}
+      />
     </div>
   );
 }
