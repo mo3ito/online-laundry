@@ -100,18 +100,18 @@ export default function payment() {
         <div className="w-full flex items-center gap-x-2 ">
           <DefaultButton
             content="انتخاب همه"
-            className="w-1/2 bg-sky-500 h-10 rounded-lg"
+            className="w-1/2 bg-sky-300 h-10 rounded-lg"
             onClick={allIdHandler}
           />
           <DefaultButton
             content="تسویه"
-            className="w-1/2 bg-sky-500 h-10 rounded-lg"
+            className="w-1/2 bg-sky-300 h-10 rounded-lg"
             onClick={handlePayMoneyToDryer}
           />
         </div>
       </section>
       <div className=" md:mt-28  w-full">
-        <section className=" text-sm sm:text-base">
+        <section className="max-[280px]:text-xs text-sm sm:text-base">
           <div className={allCountOrders && allTotalPrice ? "block" : "hidden"}>
             <p className="">
               تعداد سفارشات : {allUnpaidDryerOrders.length} عدد
