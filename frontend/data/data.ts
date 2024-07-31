@@ -90,7 +90,7 @@ const adminMnuItems = [
     list: [
       {
         id: uuidv4(),
-        itemName: "کل سفارشات",
+        itemName: "کل سفارشات پرداخت نشده",
         path: "/admin/reports/all-orders",
       },
       {

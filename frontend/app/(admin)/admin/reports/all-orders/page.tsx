@@ -11,7 +11,7 @@ export default function page() {
       ordersApi={ADMIN_GET_ALL_ORDERS}
       isDeleteButton={true}
       dleteOrderApi={ADMIN_DELETE_ORDERS}
-      headersPage="کل سفارشات"
+      headersPage="کل سفارشات پرداخت نشده"
       emptyMessage="هیچ سفارشی وجود ندارد"
     />
   );
