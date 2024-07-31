@@ -1,9 +1,12 @@
-import { ADMIN_PAY_DRYER_ORDERS } from "@/routeApi/endpoints";
+import {
+  ADMIN_PAY_DRYER_ORDERS,
+  ADMIN_UNPAID_DRYER_ORDERS,
+} from "@/routeApi/endpoints";
 import sendData from "@/services/sendData";
 import { OrdersTemplate } from "@/types/context/Orders";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
-import getUnpaidDryerOrders from "./getUnpaidDryerOrders";
+import getpaidAndUnpaidDryerOrders from "./getUnpaidDryerOrders";
 
 const payMoneyToDryerHandler = async (
   dryerId: string,
@@ -23,11 +26,12 @@ const payMoneyToDryerHandler = async (
     if (payMoneyResponse.status === 200) {
       console.log(payMoneyResponse);
       await setAllUnpaidDryerOrders(payMoneyResponse.data);
-      await getUnpaidDryerOrders(
+      await getpaidAndUnpaidDryerOrders(
         dryerId,
         setDryerId,
         _id,
-        setAllUnpaidDryerOrders
+        setAllUnpaidDryerOrders,
+        ADMIN_UNPAID_DRYER_ORDERS
       );
       toast.success("پرداخت با موفقیت ثبت شد");
     }

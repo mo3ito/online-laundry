@@ -6,13 +6,16 @@ import ShowHeaderTitleFixed from "@/components/customerSite/ShowheaderTitleFixed
 import DefaultButton from "@/components/share/defaultButton";
 import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
-import { ADMIN_GET_ALL_VERIFY_DRYERS } from "@/routeApi/endpoints";
+import {
+  ADMIN_GET_ALL_VERIFY_DRYERS,
+  ADMIN_UNPAID_DRYER_ORDERS,
+} from "@/routeApi/endpoints";
 import sendData from "@/services/sendData";
 import { DryerTypes } from "@/types/admin";
 import { OrdersTemplate } from "@/types/context/Orders";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
 import { toast } from "react-toastify";
-import getUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
+import getpaidAndUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
 import payMoneyToDryerHandler from "@/utils/admin/payMoneyToDryerHandler";
 
 export default function payment() {
@@ -79,11 +82,12 @@ export default function payment() {
       <section className="w-full h-max sticky top-28 md:top-56 bg-slate-100 pb-3 md:py-3 z-40">
         <select
           onChange={(event) =>
-            getUnpaidDryerOrders(
+            getpaidAndUnpaidDryerOrders(
               event?.target.value,
               setDryerId,
               infos?._id,
-              setAllUnpaidDryerOrders
+              setAllUnpaidDryerOrders,
+              ADMIN_UNPAID_DRYER_ORDERS
             )
           }
           className="w-full z-50 h-10 rounded-lg mb-3 outline-none px-2 border border-sky-500 text-zinc-500 bg-white"

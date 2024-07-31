@@ -1,13 +1,13 @@
-import { ADMIN_UNPAID_DRYER_ORDERS } from "@/routeApi/endpoints";
 import sendData from "@/services/sendData";
 import { OrdersTemplate } from "@/types/context/Orders";
 import { Dispatch, SetStateAction } from "react";
 
-const getUnpaidDryerOrders = async (
+const getpaidAndUnpaidDryerOrders = async (
   dryerId: string,
   setDryerId: Dispatch<SetStateAction<string>>,
   _id: string | undefined,
-  setAllUnpaidDryerOrders: Dispatch<SetStateAction<OrdersTemplate[] | []>>
+  setAllOrders: Dispatch<SetStateAction<OrdersTemplate[] | []>>,
+  apiAddress: string
 ) => {
   setDryerId(dryerId);
   const body = {
@@ -15,11 +15,11 @@ const getUnpaidDryerOrders = async (
   };
 
   try {
-    const response = await sendData(ADMIN_UNPAID_DRYER_ORDERS, body, _id);
+    const response = await sendData(apiAddress, body, _id);
     if (response.status === 200) {
-      setAllUnpaidDryerOrders(response.data);
+      setAllOrders(response.data);
     }
   } catch (error) {}
 };
 
-export default getUnpaidDryerOrders;
+export default getpaidAndUnpaidDryerOrders;
