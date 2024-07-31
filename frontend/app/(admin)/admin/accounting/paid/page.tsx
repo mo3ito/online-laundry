@@ -12,7 +12,7 @@ import { DryerTypes } from "@/types/admin";
 import { OrdersTemplate } from "@/types/context/Orders";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
 import { toast } from "react-toastify";
-import getpaidAndUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
+import getUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
 import payMoneyToDryerHandler from "@/utils/admin/payMoneyToDryerHandler";
 
 export default function payment() {
@@ -40,9 +40,8 @@ export default function payment() {
     }
   }, [data]);
 
-  const { allTotalPrice, allCountOrders } = useCalculateOrders(
-    allMoneyPaidDryerOrders
-  );
+  const { allTotalPrice, allCountOrders } =
+    useCalculateOrders(allMoneyPaidDryerOrders);
 
   console.log(ordersId);
 
@@ -56,6 +55,9 @@ export default function payment() {
     });
   };
 
+
+
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -66,7 +68,7 @@ export default function payment() {
       <section className="w-full h-max sticky top-28 md:top-56 bg-slate-100 pb-3 md:py-3 z-40">
         <select
           onChange={(event) =>
-            getpaidAndUnpaidDryerOrders(
+            getUnpaidDryerOrders(
               event?.target.value,
               setDryerId,
               infos?._id,
@@ -188,7 +190,7 @@ export default function payment() {
             </ul>
           ) : (
             <p className="text-center text-sm sm:text-lg">
-              هیچ سفارشی پرداخت شده‌ای وجود ندارد
+              هیچ سفارشی برای تسویه وجود ندارد
             </p>
           )}
         </section>

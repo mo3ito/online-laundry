@@ -8,19 +8,20 @@ import useAuthContext from "@/hooks/useAuthContext";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
 import {
   ADMIN_GET_ALL_VERIFY_DRYERS,
+  ADMIN_GET_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS,
   ADMIN_UNPAID_DRYER_ORDERS,
 } from "@/routeApi/endpoints";
-import sendData from "@/services/sendData";
 import { DryerTypes } from "@/types/admin";
 import { OrdersTemplate } from "@/types/context/Orders";
 import useCalculateOrders from "@/hooks/useCalculateOrders";
 import { toast } from "react-toastify";
 import getpaidAndUnpaidDryerOrders from "@/utils/admin/getUnpaidDryerOrders";
 import payMoneyToDryerHandler from "@/utils/admin/payMoneyToDryerHandler";
+import deleteMoneyPaidAndUnpaidToDryersOrders from "@/utils/admin/deleteMoneyPaidAndUnpaidToDryersOrders";
 
 export default function payment() {
   const { infos } = useAuthContext();
-  const [isShowModalDeleteDryer, setIsShowModalDeleteDryer] =
+  const [isShowModalDeleteUnpaidToDryer, setIsShowModalDeleteUnpaidToDryer] =
     useState<boolean>(false);
   const { data, isLoading } = useGetReactQuery(
     infos?._id,
@@ -72,6 +73,9 @@ export default function payment() {
       : toast.warn("شما سفارشی را برای پرداخت انتخاب نکرده‌اید");
   };
 
+  console.log("dryerId", dryerId);
+  console.log("ordersId", ordersId);
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -91,8 +95,6 @@ export default function payment() {
             )
           }
           className="w-full z-50 h-10 rounded-lg mb-3 outline-none px-2 border border-sky-500 text-zinc-500 bg-white"
-          name=""
-          id=""
         >
           <option value="">خشکشویی را انتخاب کنید</option>
           {allDryers.map((item) => (
@@ -111,6 +113,15 @@ export default function payment() {
             content="تسویه"
             className="w-1/2 bg-sky-300 h-10 rounded-lg"
             onClick={handlePayMoneyToDryer}
+          />
+          <DefaultButton
+            content="حذف"
+            className="w-1/2 bg-sky-300 h-10 rounded-lg"
+            onClick={() =>
+              ordersId.length > 0
+                ? setIsShowModalDeleteUnpaidToDryer(true)
+                : toast.warn("شما هیچ سفارشی را انتخاب نکرده‌اید")
+            }
           />
         </div>
       </section>
@@ -233,6 +244,25 @@ export default function payment() {
             setAllUnpaidDryerOrders,
             infos?._id,
             (value) => setIsShowModalPayMoney(value)
+          )
+        }
+      />
+
+      <Modal
+        messageContent="آیا از حذف اطمینان دارید؟"
+        isShowModal={isShowModalDeleteUnpaidToDryer}
+        setIsShowModal={setIsShowModalDeleteUnpaidToDryer}
+        confirmOnClick={() =>
+          deleteMoneyPaidAndUnpaidToDryersOrders(
+            dryerId,
+            setDryerId,
+            ordersId,
+            setOrdersId,
+            infos?._id,
+            ADMIN_GET_DELETE_MONEY_UNPAID_TO_DRYERS_ORDERS,
+            setAllUnpaidDryerOrders,
+            ADMIN_UNPAID_DRYER_ORDERS,
+            (value) => setIsShowModalDeleteUnpaidToDryer(value)
           )
         }
       />

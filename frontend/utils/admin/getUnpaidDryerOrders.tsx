@@ -1,6 +1,7 @@
 import sendData from "@/services/sendData";
 import { OrdersTemplate } from "@/types/context/Orders";
 import { Dispatch, SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 const getpaidAndUnpaidDryerOrders = async (
   dryerId: string,
@@ -19,7 +20,18 @@ const getpaidAndUnpaidDryerOrders = async (
     if (response.status === 200) {
       setAllOrders(response.data);
     }
-  } catch (error) {}
+  } catch (error: any) {
+    console.error("خطا در ارتباط با سرور:", error);
+
+    if (error.response && error.response.status === 400) {
+      const errorMessage: string =
+        error.response.data?.message || "خطایی رخ داده است.";
+      toast.error(errorMessage);
+    } else {
+      console.log("خطا:", error);
+      toast.error("متاسفانه خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
+    }
+  }
 };
 
 export default getpaidAndUnpaidDryerOrders;
