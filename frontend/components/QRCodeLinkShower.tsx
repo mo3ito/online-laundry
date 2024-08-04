@@ -26,7 +26,7 @@ export default function QRCodeLinkShower({
 
   const handleDownload = () => {
     const canvas = document
-      .getElementById("qrcode")
+      .getElementById(id)
       ?.getElementsByTagName("canvas")[0];
     canvas?.toBlob((blob) => {
       if (blob) {
@@ -57,7 +57,7 @@ export default function QRCodeLinkShower({
                   imageSettings={{
                     src: "/images/logo512.png",
                     height: 50,
-                    width: 60,
+                    width: 50,
                     excavate: true,
                   }}
                 />
