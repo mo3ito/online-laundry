@@ -7,7 +7,6 @@ import DefaultButton from "@/components/share/defaultButton";
 import Modal from "@/components/Modal";
 import deleteHandler from "@/utils/orders/deleteHandler";
 import useGetReactQuery from "@/hooks/useGetReactQuery";
-import { useRouter } from "next/navigation";
 import { GET_ORDERS_CUSTOER } from "@/routeApi/endpoints";
 import { OrdersRegistered } from "@/types/context/OrderCard";
 import useOrderCardContext from "@/hooks/useOrderCardContext";
@@ -16,7 +15,6 @@ export default function page() {
   const { infos, login } = useAuthContext();
   const [isShowDelteModal, setIsShowDeleteModal] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string>("");
-  const router = useRouter();
   const { setRegisteredOrders, registeredOrders } = useOrderCardContext();
   const { data, isLoading } = useGetReactQuery(infos?._id, GET_ORDERS_CUSTOER, [
     "get registerd orders",
@@ -35,7 +33,27 @@ export default function page() {
     }
   };
 
-  console.log(registeredOrders);
+  const [allCountOrders, setAllCountOrders] = useState<number>(0);
+  const [allTotalPrice, setAllTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    if (registeredOrders && registeredOrders.length > 0) {
+      const { totalCount, totalPrice } = registeredOrders.reduce(
+        (acc, order) => {
+          acc.totalCount += order.count;
+          acc.totalPrice += order.totalCost;
+          return acc;
+        },
+        { totalCount: 0, totalPrice: 0 }
+      );
+
+      setAllCountOrders(totalCount);
+      setAllTotalPrice(totalPrice);
+    }
+  }, [registeredOrders]);
+
+  console.log("Total Count of Orders:", allCountOrders);
+  console.log("Total Price of Orders:", allTotalPrice);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -50,7 +68,7 @@ export default function page() {
         <HeaderComponent title="سفارشات ثبت شده" />
 
         {registeredOrders?.length ? (
-          <section className="w-full">
+          <section className="w-full  pb-28">
             <section className=" h-max border bg-yellow-200 p-2 rounded-lg shadow-xl  max-[280px]:text-xs text-sm sm:text-base mx-6 sm:mx-8 mb-4">
               <span className="inline-block text-base sm:text-lg">
                 <svg
@@ -64,11 +82,11 @@ export default function page() {
                 توجه
               </span>
               <p className="mt-2 ">
-                چنانچه مجموع مبلغ کل سفارش‌ها کمتر از ۱۰۰ هزار تومان باشد هزینه پیک در
-                نظر گرفته می‌شود.
+                چنانچه مجموع مبلغ کل سفارش‌ها کمتر از ۱۰۰ هزار تومان باشد هزینه
+                پیک در نظر گرفته می‌شود.
               </p>
             </section>
-            <ul className="w-full h-max px-6 sm:px-8 pb-28">
+            <ul className="w-full h-max px-6 sm:px-8 ">
               {registeredOrders?.map((order: OrdersRegistered) => (
                 <li
                   key={order.orders_id}
@@ -127,6 +145,16 @@ export default function page() {
                 </li>
               ))}
             </ul>
+            <section className=" h-max border border-sky-500 p-2 rounded-lg shadow-xl  max-[280px]:text-xs text-sm sm:text-base mx-6 sm:mx-8">
+              <div className="flex max-[280px]:justify-start justify-between  items-center mb-3 gap-x-2  w-full  ">
+                <p>تعداد کل سفارشات </p>
+                <p>{allCountOrders} عدد</p>
+              </div>
+              <div className="flex max-[280px]:justify-start justify-between  items-center  gap-x-2  w-full mb-3 ">
+                <p>مبلغ کل</p>
+                <p>{allTotalPrice?.toLocaleString("en-US")} تومان</p>
+              </div>
+            </section>
           </section>
         ) : (
           <p className="text-center mt-32">سبد سفارشات ثبت شده شما خالی است</p>
