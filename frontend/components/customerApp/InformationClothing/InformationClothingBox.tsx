@@ -25,7 +25,7 @@ export default function InformationClothingBox() {
       {!isLoading ? (
         <main className=" max-[280px]:px-3 px-6  sm:px-8">
           <section>
-            <ul className="w-full">
+            <ul className="w-full pb-28">
               {allGroupTypeData?.data.map(
                 (item: InformationClothingsItemProps) => (
                   <InformationClothingsItem {...item} />
