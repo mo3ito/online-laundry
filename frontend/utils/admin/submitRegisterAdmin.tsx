@@ -75,7 +75,7 @@ const submitRegisterAdmin = async (
       await login(response.data.infos, response.data.token);
       setIsLoadingForRegister(false);
       toast.success("ثبت‌نام با موفقیت انجام شد");
-      router.push(pathRoute);
+      window.location.href = pathRoute
     } else {
       setIsLoadingForRegister(false);
     }

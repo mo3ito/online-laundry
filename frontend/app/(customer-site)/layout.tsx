@@ -7,7 +7,7 @@ import Footer from "@/components/customerSite/Footer";
 
 export const metadata: Metadata = {
   title: "خشکشویی آنلاین مسیتوپاک",
-  description: "خشکشویی، رنگرزی",
+  description: "خشکشویی، رنگرزی, خشکشویی آنلاین اراک",
 };
 
 export default function RootLayout({
