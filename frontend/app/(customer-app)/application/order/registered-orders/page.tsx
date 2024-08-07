@@ -82,7 +82,7 @@ export default function page() {
                 توجه
               </span>
               <p className="mt-2 ">
-                برای سفارش‌های بیشتر از ۲۰۰ هزارتومان هزینه پیک رایگان می‌باشد.
+                برای سفارش‌های بیشتر از ۲۰۰ هزار تومان هزینه پیک رایگان می‌باشد.
               </p>
             </section>
             <ul className="w-full h-max px-6 sm:px-8 ">
