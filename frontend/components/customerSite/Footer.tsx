@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="w-full h-max py-8 bg-gray-200 flex flex-col md:flex-row items-center md:justify-around justify-center ">
       <section className="font-bold mx-2 mb-2 md:mb-0 text-sm md:text-base leading-loose md:leading-loose">
         <h2 className="mb-2 text-lg font-bold">خشکشویی‌ طرف قرارداد</h2>
-        <section className="border border-zinc-400 rounded-lg p-2">
+        <section >
           <h3 className="text-sky-500 text-lg">خشکشویی آپادانا</h3>
           <p>
             <span>آدرس:</span>{" "}
