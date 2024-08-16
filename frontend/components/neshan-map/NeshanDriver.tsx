@@ -71,7 +71,7 @@ export default function NeshanDriver({
           </div>
         </h1>
       )}
-      <div className="absolute bottom-28 right-4 flex items-center justify-center gap-x-4">
+      <div className="absolute bottom-36 right-4 flex items-center justify-center gap-x-4">
         <button
           onClick={() => findLocationHandleDriver(setLatLongDriver, mapRef)}
           className="size-max bg-white rounded-full  p-2 border border-sky-500"
