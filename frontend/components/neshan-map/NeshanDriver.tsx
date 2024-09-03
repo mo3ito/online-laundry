@@ -47,7 +47,7 @@ export default function NeshanDriver({
     <div className="relative w-full h-[91%]">
       <NeshanMap
         ref={mapRef}
-        mapKey="web.1b9b48ae807d4009b26658e973d92ce1"
+        mapKey="map key"
         defaultType="neshan"
         center={latLong || defaultCenter}
         style={{ height: "100%", width: "100%" }}
